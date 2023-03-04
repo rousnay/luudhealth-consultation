@@ -14,8 +14,8 @@ import { trophyImage } from "../assets";
 
 import { ProductsCard } from "../components";
 
-import { Form, FormLayout, Checkbox, TextField, Button } from '@shopify/polaris';
-import { useState, useCallback, useEffect } from 'react';
+import {Form, FormLayout, Checkbox, TextField, Button} from '@shopify/polaris';
+import {useState, useCallback, useEffect} from 'react';
 // import axios from "axios";
 
 const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxNSIsImp0aSI6IjRlZTlmMGRkMGY0NWNmNDc0ZThiNmE5NWY4NDM2NWEyMmViYzIzNDNiZTljYmYwODVhOWY4NDZiNzQwNjUzZTA0M2RlNzkzMzQ5YTQyYTc1IiwiaWF0IjoxNjc0NzMzNzEyLjE1MTM1OCwibmJmIjoxNjc0NzMzNzEyLjE1MTM2LCJleHAiOjIxNDgwODc1NzIuMDUzMDc4LCJzY29wZXMiOlsib3JkZXItY3JlYXRlIiwiY29uc3VsdGF0aW9uLWNyZWF0ZSIsImFzc2V0LWNyZWF0ZSIsInByZXNjcmlwdGlvbi1jcmVhdGUiXSwib3JnYW5pc2F0aW9uIjoiMGMwZTcxNzctMzExNi00NTZhLWFiMzItMjBiNWM2MjE1OGMzIiwidHlwZSI6Im1hY2hpbmUifQ.fPbqO5QIrOzIV5YvBUCS6gRXVx8aRkVw7AwYH-yJMsM39FiEU8nMvgiewM7iwVEnRnwH7I16_v59PAMMcVXAnVl4NmYekSnC29OWnOjPLDxJSL-u1hPf_Lu8-rMwyfGpa2wO4fYKQpeRShO4561P5d5b8rZwyFBU3rcsZQ7b4KXmgHKwyy0v0WocifufZXM5ByKK5QWUyvuzsYo069z2mKLft0fEQXVUbfrNKRTKwfGrEqIqGef2c3X3rIWppW7J5H0iTW-4sR8eAdYNMqE2GLHZDv8-z2jsWhkdihYHLiPRkLC4HX6g7K1HfoHOg7RYOL5eN-s3OHqRiDHlmcY9HK1O6zTRHCpFNaGSWU0GM1alsSlQ6QoOeg7svj1A0kAo_kY1M3O0yXe9uol4kkkt4VlUp__eOrlaA7ELCDESkhLMkuTR41L5N-mhIBQ7rk23yBd1t428TVEk5-La7cip5w3sKzaakbfqkwxfinu08w1XZHkFe0Gx_yV0ksEA54itmwqyAJGKqHWseeCASkUAPTBF1R-wgwlPUN5365IphqmPPuVGE0YYXIagPtJpkvTtoV1iFN1b5SkXYgYi2NqqWIBcmazbWfN4lB-JEhWTRSygUGacKiCCMLQd9xneDTEcbFz6UZijEccu6cqoULHlX9WjrTLufj2pOzMs6LuzEVI';
@@ -43,29 +43,29 @@ export default function HomePage() {
   );
 
   // Function to collect data
-  const getTIPquestions = async () => {
+const getTIPquestions = async () => {
 
-    const response = await fetch(h
+  const response = await fetch(
     "https://api-aws.dev.theindependentpharmacy.co.uk/v1/partners/consultations/generate",
-      {
-        method: "post",
-        headers: {
-          Client: client_id,
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: body,
-      }
-    ).then((response) => response.json());
+    {
+      method: "post",
+      headers: {
+        Client: client_id,
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: body,
+    }
+  ).then((response) => response.json());
 
 
-    setQuestions(response);
-  };
+  setQuestions(response);
+};
 
-  useEffect(() => {
-    console.log(questions);
-  }, [questions]);
+useEffect(() => {
+  console.log(questions);
+}, [questions]);
 
   const handleEmailChange = useCallback((value) => setEmail(value), []);
 
@@ -83,7 +83,7 @@ export default function HomePage() {
             >
               <Stack.Item fill>
                 <TextContainer spacing="loose">
-                  <Heading>Nice work on building a Shopify apps- 🎉</Heading>
+                  <Heading>Nice work on building a Shopify app -S 🎉</Heading>
                   <p>
                     Your app is ready to explore! It contains everything you
                     need to get started including the{" "}
@@ -136,29 +136,29 @@ export default function HomePage() {
         </Layout.Section>
         <Layout.Section>
           <Form onSubmit={getTIPquestions}>
-            <FormLayout>
-              <Checkbox
-                label="Sign up for the Polaris newsletter"
-                checked={newsletter}
-                onChange={handleNewsLetterChange}
-              />
+      <FormLayout>
+        <Checkbox
+          label="Sign up for the Polaris newsletter"
+          checked={newsletter}
+          onChange={handleNewsLetterChange}
+        />
 
-              <TextField
-                value={email}
-                onChange={handleEmailChange}
-                label="Email"
-                type="email"
-                autoComplete="email"
-                helpText={
-                  <span>
-                    We’ll use this email address to inform you on future changes to
-                    Polaris.
-                  </span>
-                }
-              />
-              <Button submit>Get Questions</Button>
-            </FormLayout>
-          </Form>
+        <TextField
+          value={email}
+          onChange={handleEmailChange}
+          label="Email"
+          type="email"
+          autoComplete="email"
+          helpText={
+            <span>
+              We’ll use this email address to inform you on future changes to
+              Polaris.
+            </span>
+          }
+        />
+        <Button submit>Get Questions</Button>
+      </FormLayout>
+    </Form>
         </Layout.Section>
       </Layout>
     </Page>
