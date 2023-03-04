@@ -5,63 +5,63 @@ import {
   TextContainer,
   Image,
   Stack,
-  Link,
   Heading,
-  Form, FormLayout, Checkbox, TextField, Button
+  Form,
+  FormLayout,
+  TextField,
+  Button,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { trophyImage } from "../assets";
-import { ProductsCard } from "../components";
-import {useState, useCallback, useEffect} from 'react';
+import { useState, useCallback, useEffect } from "react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 
 export default function HomePage() {
   const fetch = useAuthenticatedFetch();
-  const [newsletter, setNewsletter] = useState(false);
-  const [email, setEmail] = useState('');
 
-  const [questions, setQuestions] = useState();
+  const [treatmentId, setTreatmentId] = useState("");
+  const [consultancy, setConsultancy] = useState();
 
-  const handleSubmit = useCallback((_event) => {
-    setEmail('');
-    setNewsletter(false);
-  }, []);
-
-  const handleNewsLetterChange = useCallback(
-    (value) => setNewsletter(value),
-    [],
+  const handleTreatmentIdChange = useCallback(
+    (value) => setTreatmentId(value)
   );
 
-  // Function to collect data
 
-const getTIPquestions = useCallback(
-  () => {
+  // const payload = {
+  //   'treatmentId': parseFloat(treatmentId),
+  //   'type': 'NEW',
+  // };
+
+  const getTIPquestions = useCallback(() => {
+    setConsultancy();
     (async () => {
       const url = `/api/tip/consultancy`;
-      const method = "GET";
+      const method = "POST";
       const response = await fetch(url, {
         method,
-        // headers: { "Content-Type": "application/json" },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'treatmentId': parseFloat(treatmentId),
+          'type': 'NEW',
+        }),
       });
-      if (response.status == 200) {
-        const QRCode = await response.text();
-        setQuestions(QRCode);
-      }
-      else  {
-        setQuestions("QRCode");
+      if (response.status === 200) {
+        const fullResponse = await response.json();
+        setConsultancy(fullResponse?.data[0]);
+      } else {
+        setConsultancy("Something went wrong with TIP API");
       }
     })();
     return { status: "success" };
-  },
-  [questions, setQuestions]
-);
+  }, [treatmentId, consultancy, setConsultancy]);
 
-
-useEffect(() => {
-  console.log(questions);
-}, [questions]);
-
-  const handleEmailChange = useCallback((value) => setEmail(value), []);
+  useEffect(() => {
+    console.log(treatmentId);
+    console.log(consultancy);
+  }, [treatmentId,consultancy]);
 
   return (
     <Page narrowWidth>
@@ -79,7 +79,8 @@ useEffect(() => {
                 <TextContainer spacing="loose">
                   <Heading>TIP Consultancy APP 🎉</Heading>
                   <p>
-                    App to display dynamic form in product page based on the chosen medication.
+                    App to display dynamic form in product page based on the
+                    chosen medication.
                   </p>
                 </TextContainer>
               </Stack.Item>
@@ -96,33 +97,50 @@ useEffect(() => {
           </Card>
         </Layout.Section>
         <Layout.Section>
-        </Layout.Section>
-        <Layout.Section>
           <Form onSubmit={getTIPquestions}>
-      <FormLayout>
-        <Checkbox
-          label="Sign up for the Polaris newsletter"
-          checked={newsletter}
-          onChange={handleNewsLetterChange}
-        />
-
-        <TextField
-          value={email}
-          onChange={handleEmailChange}
-          label="Email"
-          type="email"
-          autoComplete="email"
-          helpText={
-            <span>
-              We’ll use this email address to inform you on future changes to
-              Polaris.
-            </span>
-          }
-        />
-        <Button submit>Get Questions</Button>
-      </FormLayout>
-    </Form>
+            <FormLayout>
+              <TextField
+                value={treatmentId}
+                onChange={handleTreatmentIdChange}
+                label="Set Treatment ID"
+                type="text"
+                autoComplete="text"
+                helpText={
+                  <span>
+                    Please input your treatment ID to get the consultancy questionnaire
+                  </span>
+                }
+              />
+              <Button submit>Get Questions</Button>
+            </FormLayout>
+          </Form>
         </Layout.Section>
+
+        {consultancy &&
+          <Layout.Section>
+
+            <TextContainer>
+                <Heading>{consultancy?.title}</Heading>
+                <p>
+                Treatment ID: {treatmentId}, Consultancy ID: {consultancy?.id}
+                </p>
+                <p>
+                {consultancy?.description}
+                </p>
+                <br></br>
+            </TextContainer>
+
+            {consultancy?.questions.map((question, index) => {
+              return (
+                <div key={index}>
+                  <span dangerouslySetInnerHTML={{__html: question?.question_text}}></span>
+                  <TextField label={question?.question_text} autoComplete="off" />
+                </div>
+                )
+            })}
+          </Layout.Section>
+          }
+
       </Layout>
     </Page>
   );

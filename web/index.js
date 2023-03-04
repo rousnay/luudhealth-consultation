@@ -2,7 +2,6 @@
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
-import os from 'os';
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
@@ -73,19 +72,19 @@ app.get("/api/products/create", async (_req, res) => {
 });
 
 // Start TIP API Backend
-const response = await fetch(`${TIP_HOST}/v1/partners/consultations/generate`, {
-  method: "post",
-  headers: tip_header,
-  body: JSON.stringify({
-    treatmentId: 6257,
-    type: "NEW",
-  }),
-}).then((response) => response.json());
-
-app.get("/api/tip/consultancy", async (req, res) => {
+app.post("/api/tip/consultancy", async (req, res) => {
+  const payload = req.body;
+  const response = await fetch(
+    `${TIP_HOST}/v1/partners/consultations/generate`,
+    {
+      method: "post",
+      headers: tip_header,
+      body: JSON.stringify(payload),
+    }
+  ).then((response) => response.json());
+  console.log(payload);
   res.json(response);
-  console.log(response?.data[0]?.title);
-  res.status(200).end(); // Responding is important
+  res.status(200).end();
 });
 // End TIP API Backend
 
@@ -99,5 +98,4 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 console.log(PORT);
-console.log(os.hostname());
 app.listen(PORT);
