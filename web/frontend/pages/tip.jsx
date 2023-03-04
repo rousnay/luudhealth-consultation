@@ -1,7 +1,7 @@
 import { Card, Page, Layout, TextContainer, Heading } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 
-export default function PageName() {
+export default function TIP() {
   return (
     <Page>
       <TitleBar

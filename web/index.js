@@ -2,8 +2,12 @@
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
-import serveStatic from "serve-static";
+import os from 'os';
+import fetch from "node-fetch";
+import dotenv from "dotenv";
+dotenv.config();
 
+import serveStatic from "serve-static";
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
@@ -14,6 +18,19 @@ const STATIC_PATH =
   process.env.NODE_ENV === "production"
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
+
+// Start Define TIP API Env
+
+const TIP_CLIENT_ID = process.env.TIP_CLIENT_ID;
+const TIP_TOKEN = process.env.TIP_TOKEN;
+const TIP_HOST = process.env.TIP_HOST;
+const tip_header = {
+  Client: TIP_CLIENT_ID,
+  Authorization: "Bearer " + TIP_TOKEN,
+  Accept: "application/json",
+  "Content-Type": "application/json",
+};
+// End Define TIP API Env
 
 const app = express();
 
@@ -55,6 +72,23 @@ app.get("/api/products/create", async (_req, res) => {
   res.status(status).send({ success: status === 200, error });
 });
 
+// Start TIP API Backend
+const response = await fetch(`${TIP_HOST}/v1/partners/consultations/generate`, {
+  method: "post",
+  headers: tip_header,
+  body: JSON.stringify({
+    treatmentId: 6257,
+    type: "NEW",
+  }),
+}).then((response) => response.json());
+
+app.get("/api/tip/consultancy", async (req, res) => {
+  res.json(response);
+  console.log(response?.data[0]?.title);
+  res.status(200).end(); // Responding is important
+});
+// End TIP API Backend
+
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
@@ -64,4 +98,6 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
     .send(readFileSync(join(STATIC_PATH, "index.html")));
 });
 
+console.log(PORT);
+console.log(os.hostname());
 app.listen(PORT);
