@@ -121,13 +121,10 @@ export default function HomePage() {
 
             <TextContainer>
                 <Heading>{consultancy?.title}</Heading>
-                <p>
+                <p style={{ marginBottom: "30px", paddingBottom: "30px", borderBottom: "1px solid #bbb" }}>
+                {consultancy?.description} <br/>
                 Treatment ID: {treatmentId}, Consultancy ID: {consultancy?.id}
                 </p>
-                <p>
-                {consultancy?.description}
-                </p>
-                <br></br>
             </TextContainer>
 
             {consultancy?.questions.map((question, index) => {
