@@ -132,7 +132,7 @@ export default function HomePage() {
 
             {consultancy?.questions.map((question, index) => {
               return (
-                <div key={index}>
+                <div style={{ marginBottom: "30px" }} key={index}>
                   <span dangerouslySetInnerHTML={{__html: question?.question_text}}></span>
                   <TextField label={`Question Type: ${question?.question_type}`} autoComplete="off" />
                 </div>
