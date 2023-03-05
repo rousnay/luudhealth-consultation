@@ -134,7 +134,7 @@ export default function HomePage() {
               return (
                 <div key={index}>
                   <span dangerouslySetInnerHTML={{__html: question?.question_text}}></span>
-                  <TextField label={question?.question_text} autoComplete="off" />
+                  <TextField label={`Question Type: ${question?.question_type}`} autoComplete="off" />
                 </div>
                 )
             })}
