@@ -5,7 +5,7 @@ export default function TIP() {
   return (
     <Page>
       <TitleBar
-        title="Page name"
+        title="TIP"
         primaryAction={{
           content: "Primary action",
           onAction: () => console.log("Primary action"),
