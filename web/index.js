@@ -86,8 +86,15 @@ app.post("/api/tip/consultancy", async (req, res) => {
   res.json(response);
   res.status(200).end();
 });
-// End TIP API Backend
 
+app.get("/api/tip/form", async (req, res) => {
+  const payload = req.body;
+  res.json(payload);
+  console.log(payload);
+  res.status(200).end();
+});
+
+// End TIP API Backend
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
