@@ -88,7 +88,7 @@ app.use(express.json());
 
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
-app.post("/proxy_route/consultancy", verifyProxy, async (req, res) => {
+app.post("/proxy_route/consultancy", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
     `${TIP_HOST}/v1/partners/consultations/generate`,
