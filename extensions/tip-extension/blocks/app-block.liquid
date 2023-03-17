@@ -1,5 +1,5 @@
 <span style="color: {{ block.settings.color }}">
-App blocks let you build powerful integrations with online store themes.
+  App blocks let you build powerful integrations with online store themes.
 </span>
 
 {% render "app_snippet" %}
@@ -8,12 +8,17 @@ App blocks let you build powerful integrations with online store themes.
     "name": "Hello World",
     "target": "section",
     "enabled_on": {
-      "templates": ["index"]
+      "templates": ["index", "page"]
     },
     "stylesheet": "app.css",
     "javascript": "app.js",
     "settings": [
-        { "label": "Color", "id": "color", "type": "color", "default": "#000000" }
+      {
+        "label": "Color",
+        "id": "color",
+        "type": "color",
+        "default": "#000000"
+      }
     ]
   }
 {% endschema %}
