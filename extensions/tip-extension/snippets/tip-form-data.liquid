@@ -1,4 +1,9 @@
-{% assign fillColor = fill %}
+{{ 'stylesheet' | asset_url | stylesheet_tag }}
+<script src="{{ 'javascript' | asset_url }}" defer></script>
+<script>
+  console.log("TIP App: Theme extension loaded! - 2");
+</script>
+{% assign fillColor = "gray" %}
 
 
 <div class="tip-simple-form">
@@ -15,6 +20,7 @@
   <input type="submit" value="Send">
 </form>
 </div>
+
 <div class="prapp-stars">
   {% for i in (1..5) %}
     {% assign half = i | minus: 0.5 %}

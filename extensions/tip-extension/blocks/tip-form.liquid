@@ -1,0 +1,24 @@
+<span style="color: {{ block.settings.color }}">
+  Your personalized Consultacny Form.
+</span>
+
+{% render "tip-form-data" %}
+{% schema %}
+  {
+    "name": "Consultancy Form",
+    "target": "section",
+    "enabled_on": {
+      "templates": ["index", "page"]
+    },
+    "stylesheet": "tip-app.css",
+    "javascript": "tip-app.js",
+    "settings": [
+      {
+        "label": "Color",
+        "id": "color",
+        "type": "color",
+        "default": "#000000"
+      }
+    ]
+  }
+{% endschema %}
