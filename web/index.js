@@ -14,9 +14,8 @@ import GDPRWebhookHandlers from "./gdpr.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 
-import { createVerifyAppProxyMiddleware } from "shopify-verify-app-proxy-middleware";
-
-import { verifyAppProxyHmac } from "shopify-application-proxy-verification";
+// import { createVerifyAppProxyMiddleware } from "shopify-verify-app-proxy-middleware";
+// import { verifyAppProxyHmac } from "shopify-application-proxy-verification";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -59,33 +58,33 @@ app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
 
-const verifyAppProxyMiddleware =
-  createVerifyAppProxyMiddleware(SHOPIFY_API_SECRET);
+// const verifyAppProxyMiddleware =
+//   createVerifyAppProxyMiddleware(SHOPIFY_API_SECRET);
 
-app.get("/route_api", verifyAppProxyMiddleware, async (req, res) => {
-  // this request handler will only be hit if the incoming request is verified
-  console.log("TIP API is live!");
-  res.status(200).end();
-});
+// app.get("/route_api", verifyAppProxyMiddleware, async (req, res) => {
+//   // this request handler will only be hit if the incoming request is verified
+//   console.log("TIP API is live!");
+//   res.status(200).end();
+// });
 
-app.get("/route_api/tip", async (req, res) => {
-  console.log("TIP API is live!");
-  res.status(200).end();
-});
+// app.get("/route_api/tip", async (req, res) => {
+//   console.log("TIP API is live!");
+//   res.status(200).end();
+// });
 
-const verifyAppProxyRequest = (req, res, next) => {
-  if (verifyAppProxyHmac(req.query, process.env.SHOPIFY_SECRET)) {
-    // if ((verifyAppProxyHmac(req.query), SHOPIFY_API_SECRET)) {
-    return next();
-  }
-  return res.status(403).json({ errorMessage: "I don\t think so." });
-};
+// const verifyAppProxyRequest = (req, res, next) => {
+//   if (verifyAppProxyHmac(req.query, process.env.SHOPIFY_SECRET)) {
+//     // if ((verifyAppProxyHmac(req.query), SHOPIFY_API_SECRET)) {
+//     return next();
+//   }
+//   return res.status(403).json({ errorMessage: "I don\t think so." });
+// };
 
-app.get("/api/reviews", verifyAppProxyRequest, async (req, res) => {
-  // res.json("TIP API is live!");
-  console.log("TIP API is live!");
-  res.status(200).end();
-});
+// app.get("/api/reviews", verifyAppProxyRequest, async (req, res) => {
+//   // res.json("TIP API is live!");
+//   console.log("TIP API is live!");
+//   res.status(200).end();
+// });
 
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
