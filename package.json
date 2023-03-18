@@ -18,9 +18,7 @@
     "body-parser": "^1.20.2",
     "cryptr": "^6.2.0",
     "dotenv": "^16.0.3",
-    "node-fetch": "^3.3.0",
-    "shopify-application-proxy-verification": "^1.1.4",
-    "shopify-verify-app-proxy-middleware": "^0.0.2"
+    "node-fetch": "^3.3.0"
   },
   "author": "rousnay"
 }
