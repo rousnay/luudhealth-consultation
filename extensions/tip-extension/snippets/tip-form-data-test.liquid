@@ -1,109 +1,44 @@
 {{ 'stylesheet' | asset_url | stylesheet_tag }}
 <script src="{{ 'javascript' | asset_url }}" defer></script>
 <script>
-  console.log("TIP App: Theme extension loaded! - 2");
+  console.log("TIP App: Theme extension loaded! - 3");
 </script>
 
-<!-- /snippets/newsletter-form.liquid -->
-
 <h6>
-  Stay in the Know More..!
+  Test data
 </h6>
 <br>
 
-<input
-  type="hidden"
-  name="contact[tags]"
-  value="newsletter">
-<input
-  type="hidden"
-  name="contact[accepts_marketing]"
-  value="true">
-<div class="input-group input-group--inner-button float__wrapper">
-  <label for="email">Your Email</label>
-  <input
-    class="input-group-field"
-    type="email"
-    placeholder="Your Email"
-    id="email"
-    aria-label="Your Email"
-    autocorrect="off"
-    autocapitalize="off"
-    name="contact[email]"
-    data-newsletter-field
-    required />
-
-</div>
-
-<div class="input-group input-group--inner-button float__wrapper">
-  <label for="phone">PHONE</label>
-  <input
-    class="input-group-field"
-    type="tel"
-    name="phone"
-    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-    placeholder="123-456-7890"
-    id="phone"
-    aria-label="Enter your phone number"
-    name="contact[phone]"
-    data-newsletter-field />
-
-</div>
 <button
   type="submit"
   aria-label="submit"
   name="submit"
   id="submit"
-  onclick="addUser()">Submit
+  onclick="testAPI_1()">Submit
 </button>
-
-<details>
-  <summary>Details</summary>
-</details>
-
-<style>
-  form#footer-newsletter {
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-  }
-
-  .input-group.input-group--inner-button.float__wrapper {
-    margin: 0 0 10px;
-  }
-</style>
-
 
 <script type="text/javascript">
 
-  function addUser(){
-  let phone = document.getElementById("phone").value;
-                  let email = document.getElementById("email").value;
-  
-                  console.log("phone");
-                  console.log(phone);
-                  console.log("email");
-                  console.log(email);
-                  const treatmentId = 6257;
-  
-  
-                  (async () => {
-                    const url = `/apps/tip/consultancy`;
-                    const method = "GET";
-                    const response = await fetch(url, {
-                      method,
-                      headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                      },
-  
-                    });
-                    if (response.status === 200) {
-                      const fullResponse = await response.json();
-                      console.log(fullResponse?.data[0]);
-                    } else {
-                      console.log("Something went wrong with TIP API");
-                      console.log(response);
-                    }
-                  })();
-                }</script>
+  function testAPI_1(){
+  (async () => {
+            const url = `/apps/tip/check`;
+            const method = "POST";
+            const response = await fetch(url, {
+              method,
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                'treatmentId': "N/A",
+                'type': 'NEW',
+              }),
+            });
+            if (response.status === 200) {
+              console.log("testAPI_1 Working!");
+            } else {
+              console.log("Something went wrong with TIP API");
+              console.log(response);
+            }
+          })();
+        }</script>

@@ -104,6 +104,13 @@ app.post("/proxy_route/consultancy", async (req, res) => {
   res.status(200).end();
 });
 
+app.post("/proxy_route/check", async (req, res) => {
+  const payload = req.body;
+  console.log(payload);
+  console.log("payload");
+  res.status(200).end();
+});
+
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
     session: res.locals.shopify.session,
