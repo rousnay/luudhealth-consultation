@@ -15,6 +15,8 @@ import GDPRWebhookHandlers from "./gdpr.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 
+import { DB, connectToDB } from "./db.js";
+
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
 const STATIC_PATH =
@@ -23,7 +25,7 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/your-database-name";
+  process.env.MONGODB_URI || "mongodb://localhost:27017/consultancy";
 
 mongoose
   .connect(MONGODB_URI, {
@@ -32,6 +34,30 @@ mongoose
   })
   .then(() => console.log("Database Connected Successfully"))
   .catch((err) => console.log(err));
+
+app.post("/api/articles/:name/comments", async (req, res) => {
+  const { name } = req.params;
+  const { email, uid } = req.user;
+  const { text } = req.body;
+
+  const articles = DB.collection("articles");
+  const article = await articles.findOne({ name });
+
+  if (article) {
+    await articles.updateOne(
+      { name },
+      { $push: { comments: { postedBy: email, text } } }
+    );
+    const updatedArticle = await articles.findOne({ name });
+
+    const upvoteIds = updatedArticle.upvoteIds || [];
+    updatedArticle.canUpvote = uid && !upvoteIds.includes(uid);
+
+    res.json(updatedArticle);
+  } else {
+    res.sendStatus(404);
+  }
+});
 
 // Start Define TIP API Env
 const TIP_HOST = process.env.TIP_HOST;
@@ -84,6 +110,36 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
   console.log("URL", the_url);
   console.log("Body", payload);
   console.log("Response", response);
+  const cons_form_data = response?.data[0];
+  const cons_form_id = response?.data[0]?.id;
+  const cons_form_questions = response?.data[0]?.questions;
+
+  // const generated_form = DB.collection("generated_form");
+  // const form_id = await generated_form.findOne( cons_form_id );
+  // if (form_id) {
+  //   await articles.updateOne(
+  //     { form_id },
+  //     { $push: { comments: { postedBy: email, text } } }
+  //   );
+  //   const updatedArticle = await articles.findOne({ name });
+  //   const upvoteIds = updatedArticle.upvoteIds || [];
+  //   updatedArticle.canUpvote = uid && !upvoteIds.includes(uid);
+  //   res.json(updatedArticle);
+  // } else {
+  //   res.sendStatus(404);
+  // }
+
+  try {
+    const generated_form = DB.collection("generated_form");
+    // const form_id = await generated_form.findOne( cons_form_id );
+    // create a document to insert
+    const result = await generated_form.insertOne(cons_form_data);
+    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+  } catch (err) {
+    console.dir(err);
+  } finally {
+    await client.close();
+  }
 
   res.json(response);
   res.status(200).end();
