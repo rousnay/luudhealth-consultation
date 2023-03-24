@@ -22,15 +22,16 @@ const STATIC_PATH =
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/your-database-name";
-mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Database Connected Successfully"))
-  .catch((err) => console.log(err));
+// const MONGODB_URI =
+//   process.env.MONGODB_URI || "mongodb://localhost:27017/your-database-name";
+
+// mongoose
+//   .connect(MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("Database Connected Successfully"))
+//   .catch((err) => console.log(err));
 
 // Start Define TIP API Env
 const TIP_HOST = process.env.TIP_HOST;
@@ -78,7 +79,7 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
     }
   ).then((response) => response.json());
   console.log(payload);
-  console.log("payload");
+  console.log("/proxy_route/consultancy/generate");
   res.json(response);
   res.status(200).end();
 });
@@ -95,7 +96,7 @@ app.post("/proxy_route/consultancy", async (req, res) => {
     }
   ).then((response) => response.json());
   console.log(payload);
-  console.log(MONGODB_URI);
+  console.log("/proxy_route/consultancy");
   res.json(response);
   res.status(200).end();
 });
