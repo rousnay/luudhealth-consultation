@@ -105,4 +105,15 @@ export default {
       console.log("--- /Product update ---");
     },
   },
+
+  PRODUCTS_CREATE: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/api/webhooks",
+    callback: async (topic, shop, body, webhookId) => {
+      console.log("--- Product update ---");
+      const payload = JSON.parse(body);
+      console.log(payload);
+      console.log("--- /Product update ---");
+    },
+  },
 };
