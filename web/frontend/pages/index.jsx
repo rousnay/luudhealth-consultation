@@ -50,6 +50,7 @@ export default function HomePage() {
       });
       if (response.status === 200) {
         const fullResponse = await response.json();
+        console.log(await fullResponse);
         setConsultancy(fullResponse?.data[0]);
       } else {
         setConsultancy("Something went wrong with TIP API");

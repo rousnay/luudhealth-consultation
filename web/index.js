@@ -22,8 +22,8 @@ const STATIC_PATH =
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
 
-// const MONGODB_URI =
-//   process.env.MONGODB_URI || "mongodb://localhost:27017/your-database-name";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/your-database-name";
 
 // mongoose
 //   .connect(MONGODB_URI, {
@@ -79,12 +79,12 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
     }
   ).then((response) => response.json());
   console.log(payload);
-  console.log("/proxy_route/consultancy/generate");
+  console.log("POST: Theme / Generate");
   res.json(response);
   res.status(200).end();
 });
 
-//Consultations: Generate Configuration
+//Consultations: Create Configuration
 app.post("/proxy_route/consultancy", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
@@ -96,7 +96,7 @@ app.post("/proxy_route/consultancy", async (req, res) => {
     }
   ).then((response) => response.json());
   console.log(payload);
-  console.log("/proxy_route/consultancy");
+  console.log("POST: Theme / Create");
   res.json(response);
   res.status(200).end();
 });
@@ -126,7 +126,7 @@ app.post("/api/tip/consultancy", async (req, res) => {
     }
   ).then((response) => response.json());
   console.log(payload);
-  console.log("payload");
+  console.log("POST: APP / Generate");
   res.json(response);
   res.status(200).end();
 });
@@ -163,4 +163,5 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 console.log(PORT);
+console.log(MONGODB_URI);
 app.listen(PORT);
