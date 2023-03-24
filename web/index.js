@@ -48,6 +48,25 @@ const tip_header = {
 };
 // End Define TIP API Env
 
+const handleWebhookRequest = async (topic, shop, body, webhookId) => {
+  const sessionId = shopify.session.getOfflineId({ shop });
+  console.log("--- Product update ---");
+  const payload = JSON.parse(body);
+  console.log(payload);
+  console.log("--- /Product update ---");
+  // Fetch the session from storage and process the webhook event
+};
+
+await shopify.webhooks.addHandlers({
+  PRODUCTS_CREATE: [
+    {
+      deliveryMethod: DeliveryMethod.Http,
+      callbackUrl: "/webhooks",
+      callback: handleWebhookRequest,
+    },
+  ],
+});
+
 const app = express();
 
 // Set up Shopify authentication and webhook handling
@@ -65,6 +84,45 @@ app.post(
 // All endpoints after this point will require an active session
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
+
+// Register webhooks after OAuth completes
+app.get("/auth/callback", async (req, res) => {
+  try {
+    const callbackResponse = await shopify.auth.callback({
+      rawRequest: req,
+      rawResponse: res,
+    });
+
+    const response = await shopify.webhooks.register({
+      session: callbackResponse.session,
+    });
+
+    if (!response["PRODUCTS_CREATE"][0].success) {
+      console.log(
+        `Failed to register PRODUCTS_CREATE webhook: ${response["PRODUCTS_CREATE"][0].result}`
+      );
+    }
+  } catch (error) {
+    console.error(error); // in practice these should be handled more gracefully
+  }
+
+  return res.redirect("/"); // or wherever you want your user to end up after OAuth completes
+});
+
+// Process webhooks
+app.post("/webhooks", express.text({ type: "*/*" }), async (req, res) => {
+  try {
+    // Note: the express.text() given above is an Express middleware that will read
+    // in the body as a string, and make it available at req.body, for this path only.
+    await shopify.webhooks.process({
+      rawBody: req.body, // is a string
+      rawRequest: req,
+      rawResponse: res,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 
 //API PROXY Route
 app.use("/proxy_route", verifyProxy, proxyRouter);
