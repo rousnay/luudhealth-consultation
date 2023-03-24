@@ -10,7 +10,7 @@ dotenv.config();
 import serveStatic from "serve-static";
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
-import GDPRWebhookHandlers from "./gdpr.js";
+import webhookHandlers from "./webhook-handlers.js";
 
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
@@ -59,7 +59,7 @@ app.get(
 );
 app.post(
   shopify.config.webhooks.path,
-  shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
+  shopify.processWebhooks({ webhookHandlers: webhookHandlers  })
 );
 
 // All endpoints after this point will require an active session
