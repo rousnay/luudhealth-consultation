@@ -114,7 +114,8 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
   } catch (err) {
     console.dir(err);
   } finally {
-    await client.close();
+    // await DB.close();
+    console.log("DB Clone");
   }
 
   res.json(response);
@@ -209,3 +210,10 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 
 console.log(PORT);
 app.listen(PORT);
+
+connectToDB(() => {
+  console.log("Successfully connect to the database!");
+  // app.listen(PORT, () => {
+  //   console.log("Server is listening to port" + PORT);
+  // });
+});

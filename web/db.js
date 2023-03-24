@@ -6,7 +6,7 @@ async function connectToDB(server) {
   const client = new MongoClient(MONGODB_URI);
   await client.connect();
   DB = client.db("consultancy");
-  server();
+  //   server();
 }
 
 export { DB, connectToDB };
