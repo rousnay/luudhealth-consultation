@@ -78,8 +78,11 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
       body: JSON.stringify(payload),
     }
   ).then((response) => response.json());
-  console.log(payload);
+
   console.log("POST: Theme / Generate");
+  console.log("Body", payload);
+  console.log("Response", response);
+
   res.json(response);
   res.status(200).end();
 });
@@ -95,16 +98,21 @@ app.post("/proxy_route/consultancy", async (req, res) => {
       body: JSON.stringify(payload),
     }
   ).then((response) => response.json());
-  console.log(payload);
+
   console.log("POST: Theme / Create");
+  console.log("Body", payload);
+  console.log("Response", response);
+
   res.json(response);
   res.status(200).end();
 });
 
 app.post("/proxy_route/check", async (req, res) => {
   const payload = req.body;
-  console.log(payload);
-  console.log("proxy_route/check");
+
+  console.log("POST: Theme / Check (demo)");
+  console.log("Body", payload);
+
   res.status(200).end();
 });
 
@@ -125,8 +133,11 @@ app.post("/api/tip/consultancy", async (req, res) => {
       body: JSON.stringify(payload),
     }
   ).then((response) => response.json());
-  console.log(payload);
+
   console.log("POST: APP / Generate");
+  console.log("Body", payload);
+  console.log("Response", response);
+
   res.json(response);
   res.status(200).end();
 });
@@ -163,5 +174,4 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 console.log(PORT);
-console.log(MONGODB_URI);
 app.listen(PORT);
