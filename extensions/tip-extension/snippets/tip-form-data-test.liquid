@@ -9,6 +9,23 @@
 </h6>
 <br>
 
+
+<div class="input-group input-group--inner-button float__wrapper">
+  <label for="email">Your Email</label>
+  <input
+    class="input-group-field"
+    type="email"
+    placeholder="Your Email"
+    id="email"
+    aria-label="Your Email"
+    autocorrect="off"
+    autocapitalize="off"
+    name="contact[email]"
+    data-newsletter-field
+    required />
+
+</div>
+
 <button
   type="submit"
   aria-label="submit"
@@ -21,24 +38,24 @@
 
   function testAPI_1(){
   (async () => {
-            const url = `/apps/tip/check`;
-            const method = "POST";
-            const response = await fetch(url, {
-              method,
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                'treatmentId': "N/A",
-                'type': 'NEW',
-              }),
-            });
-            if (response.status === 200) {
-              console.log("testAPI_1 Working!");
-            } else {
-              console.log("Something went wrong with TIP API");
-              console.log(response);
-            }
-          })();
-        }</script>
+              const url = `/apps/tip/check`;
+              const method = "POST";
+              const response = await fetch(url, {
+                method,
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  'treatmentId': "N/A",
+                  'type': 'NEW',
+                }),
+              });
+              if (response.status === 200) {
+                console.log("testAPI_1 Working!");
+              } else {
+                console.log("Something went wrong with TIP API");
+                console.log(response);
+              }
+            })();
+          }</script>

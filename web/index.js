@@ -21,10 +21,18 @@ const STATIC_PATH =
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
 
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/your-database-name";
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 // Start Define TIP API Env
+const TIP_HOST = process.env.TIP_HOST;
+const TIP_API_VERSION = process.env.TIP_API_VERSION;
 const TIP_CLIENT_ID = process.env.TIP_CLIENT_ID;
 const TIP_TOKEN = process.env.TIP_TOKEN;
-const TIP_HOST = process.env.TIP_HOST;
 const tip_header = {
   Client: TIP_CLIENT_ID,
   Authorization: "Bearer " + TIP_TOKEN,
@@ -54,10 +62,11 @@ app.use(express.json());
 //API PROXY Route
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
-app.post("/proxy_route/consultancy", async (req, res) => {
+//Consultations: Generate Configuration
+app.post("/proxy_route/consultancy/generate", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
-    `${TIP_HOST}/v1/partners/consultations/generate`,
+    `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations/generate`,
     {
       method: "post",
       headers: tip_header,
@@ -70,10 +79,27 @@ app.post("/proxy_route/consultancy", async (req, res) => {
   res.status(200).end();
 });
 
+//Consultations: Generate Configuration
+app.post("/proxy_route/consultancy", async (req, res) => {
+  const payload = req.body;
+  const response = await fetch(
+    `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations`,
+    {
+      method: "post",
+      headers: tip_header,
+      body: JSON.stringify(payload),
+    }
+  ).then((response) => response.json());
+  console.log(payload);
+  console.log(MONGODB_URI);
+  res.json(response);
+  res.status(200).end();
+});
+
 app.post("/proxy_route/check", async (req, res) => {
   const payload = req.body;
   console.log(payload);
-  console.log("payload");
+  console.log("proxy_route/check");
   res.status(200).end();
 });
 
@@ -87,7 +113,7 @@ app.get("/api/tip", async (req, res) => {
 app.post("/api/tip/consultancy", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
-    `${TIP_HOST}/v1/partners/consultations/generate`,
+    `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations/generate`,
     {
       method: "post",
       headers: tip_header,

@@ -1,3 +1,29 @@
 .prapp-stars svg {
     width: 50px;
 }
+
+.field-wrapper {
+  margin-top: 30px;
+  background-color: beige;
+  padding: 15px 20px;
+}
+
+.field-wrapper span > p {
+  margin-top: 5px;
+}
+
+button#submit-consultancy {
+  float: right;
+  margin-top: 50px;
+}
+
+
+form#footer-newsletter {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+  }
+
+  .input-group.input-group--inner-button.float__wrapper {
+    margin: 0 0 10px;
+  }
