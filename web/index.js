@@ -2,6 +2,7 @@
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
+import mongoose from "mongoose";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
