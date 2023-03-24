@@ -59,7 +59,7 @@ app.get(
 );
 app.post(
   shopify.config.webhooks.path,
-  shopify.processWebhooks({ webhookHandlers: webhookHandlers  })
+  shopify.processWebhooks({ webhookHandlers })
 );
 
 // All endpoints after this point will require an active session

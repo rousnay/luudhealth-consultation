@@ -81,6 +81,20 @@ export default {
     },
   },
 
+  // PRODUCTS_UPDATE: {
+  //   deliveryMethod: DeliveryMethod.Http,
+  //   callbackUrl: "/api/webhooks",
+  //   callback: async (topic, shop, body, webhookId) => {
+  //     // Check we haven't already receieved this webhook
+  //     if (receievedWebhooks[webhookId]) return;
+  //     // Add to our list of receieved webhooks
+  //     receievedWebhooks[webhookId] = true;
+  //     // Add to our queue for processing
+  //     const product = JSON.parse(body);
+  //     productTaggingQueue.push({ shop, product });
+  //   },
+  // },
+
   PRODUCTS_UPDATE: {
     deliveryMethod: DeliveryMethod.Http,
     callbackUrl: "/api/webhooks",
