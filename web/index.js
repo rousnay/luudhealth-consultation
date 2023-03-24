@@ -35,30 +35,6 @@ mongoose
   .then(() => console.log("Database Connected Successfully"))
   .catch((err) => console.log(err));
 
-app.post("/api/articles/:name/comments", async (req, res) => {
-  const { name } = req.params;
-  const { email, uid } = req.user;
-  const { text } = req.body;
-
-  const articles = DB.collection("articles");
-  const article = await articles.findOne({ name });
-
-  if (article) {
-    await articles.updateOne(
-      { name },
-      { $push: { comments: { postedBy: email, text } } }
-    );
-    const updatedArticle = await articles.findOne({ name });
-
-    const upvoteIds = updatedArticle.upvoteIds || [];
-    updatedArticle.canUpvote = uid && !upvoteIds.includes(uid);
-
-    res.json(updatedArticle);
-  } else {
-    res.sendStatus(404);
-  }
-});
-
 // Start Define TIP API Env
 const TIP_HOST = process.env.TIP_HOST;
 const TIP_API_VERSION = process.env.TIP_API_VERSION;
