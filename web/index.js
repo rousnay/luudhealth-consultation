@@ -68,6 +68,7 @@ app.use(express.json());
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
 //Consultations: Generate Configuration
+const the_url = `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations/generate`;
 app.post("/proxy_route/consultancy/generate", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
@@ -80,6 +81,7 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
   ).then((response) => response.json());
 
   console.log("POST: Theme / Generate");
+  console.log("URL", the_url);
   console.log("Body", payload);
   console.log("Response", response);
 
