@@ -1,5 +1,5 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
-
+const receievedWebhooks = {};
 export default {
   /**
    * Customers can request their data from a store owner. When this happens,
@@ -81,41 +81,117 @@ export default {
     },
   },
 
-  // PRODUCTS_UPDATE: {
-  //   deliveryMethod: DeliveryMethod.Http,
-  //   callbackUrl: "/api/webhooks",
-  //   callback: async (topic, shop, body, webhookId) => {
-  //     // Check we haven't already receieved this webhook
-  //     if (receievedWebhooks[webhookId]) return;
-  //     // Add to our list of receieved webhooks
-  //     receievedWebhooks[webhookId] = true;
-  //     // Add to our queue for processing
-  //     const product = JSON.parse(body);
-  //     productTaggingQueue.push({ shop, product });
-  //   },
-  // },
-
   PRODUCTS_UPDATE: {
     deliveryMethod: DeliveryMethod.Http,
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
-      console.log("--- Product update ---");
-      const payload = JSON.parse(body);
-      console.log(payload);
-      console.log("--- /Product update ---");
-      console.log("+++++++++Webhook called!++++++++++++");
+      // Check we haven't already receieved this webhook
+      if (receievedWebhooks[webhookId]) return;
+      // Add to our list of receieved webhooks
+      receievedWebhooks[webhookId] = true;
+      // Add to our queue for processing
+      const product = JSON.parse(body);
+      console.log("+++++++++Product Update!++++++++++++");
+      console.log(product);
+      console.log("+++++++++receievedWebhooks:++++++++++++");
+      console.log(receievedWebhooks);
+
+      // productTaggingQueue.push({ shop, product });
     },
   },
 
-  PRODUCTS_CREATE: {
+  ORDERS_CREATE: {
     deliveryMethod: DeliveryMethod.Http,
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
-      console.log("--- Product update ---");
-      const payload = JSON.parse(body);
-      console.log(payload);
-      console.log("--- /Product update ---");
-      console.log("+++++++++Webhook called!++++++++++++");
+      // Check we haven't already receieved this webhook
+      if (receievedWebhooks[webhookId]) return;
+      // Add to our list of receieved webhooks
+      receievedWebhooks[webhookId] = true;
+      // Add to our queue for processing
+      const product = JSON.parse(body);
+      console.log("+++++++++Order Create!++++++++++++");
+      console.log(product);
+      console.log("+++++++++receievedWebhooks:++++++++++++");
+      console.log(receievedWebhooks);
+
+      // productTaggingQueue.push({ shop, product });
+    },
+  },
+
+  ORDERS_PAID: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/api/webhooks",
+    callback: async (topic, shop, body, webhookId) => {
+      // Check we haven't already receieved this webhook
+      if (receievedWebhooks[webhookId]) return;
+      // Add to our list of receieved webhooks
+      receievedWebhooks[webhookId] = true;
+      // Add to our queue for processing
+      const product = JSON.parse(body);
+      console.log("+++++++++Order Paid!++++++++++++");
+      console.log(product);
+      console.log("+++++++++receievedWebhooks:++++++++++++");
+      console.log(receievedWebhooks);
+
+      // productTaggingQueue.push({ shop, product });
+    },
+  },
+
+  ORDERS_UPDATED: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/api/webhooks",
+    callback: async (topic, shop, body, webhookId) => {
+      // Check we haven't already receieved this webhook
+      if (receievedWebhooks[webhookId]) return;
+      // Add to our list of receieved webhooks
+      receievedWebhooks[webhookId] = true;
+      // Add to our queue for processing
+      const product = JSON.parse(body);
+      console.log("+++++++++Order Updated!++++++++++++");
+      console.log(product);
+      console.log("+++++++++receievedWebhooks:++++++++++++");
+      console.log(receievedWebhooks);
+
+      // productTaggingQueue.push({ shop, product });
+    },
+  },
+
+  ORDERS_DELETE: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/api/webhooks",
+    callback: async (topic, shop, body, webhookId) => {
+      // Check we haven't already receieved this webhook
+      if (receievedWebhooks[webhookId]) return;
+      // Add to our list of receieved webhooks
+      receievedWebhooks[webhookId] = true;
+      // Add to our queue for processing
+      const product = JSON.parse(body);
+      console.log("+++++++++Order Delete!++++++++++++");
+      console.log(product);
+      console.log("+++++++++receievedWebhooks:++++++++++++");
+      console.log(receievedWebhooks);
+
+      // productTaggingQueue.push({ shop, product });
+    },
+  },
+
+  CUSTOMERS_CREATE: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/api/webhooks",
+    callback: async (topic, shop, body, webhookId) => {
+      // Check we haven't already receieved this webhook
+      if (receievedWebhooks[webhookId]) return;
+      // Add to our list of receieved webhooks
+      receievedWebhooks[webhookId] = true;
+      // Add to our queue for processing
+      const product = JSON.parse(body);
+      console.log("+++++++++Customer Create!++++++++++++");
+      console.log(product);
+      console.log("+++++++++receievedWebhooks:++++++++++++");
+      console.log(receievedWebhooks);
+
+      // productTaggingQueue.push({ shop, product });
     },
   },
 };

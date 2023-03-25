@@ -66,24 +66,6 @@ app.post(
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
 
-// Process webhooks
-// app.post("/api/webhooks", express.text({ type: "*/*" }), async (req, res) => {
-//   try {
-//     // Note: the express.text() given above is an Express middleware that will read
-//     // in the body as a string, and make it available at req.body, for this path only.
-//     await shopify.webhooks.process({
-//       rawBody: req.body, // is a string
-//       rawRequest: req,
-//       rawResponse: res,
-//     });
-//     console.log(req.body);
-//     console.log(res);
-//     console.log("*****Webhook called!*****");
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// });
-
 //API PROXY Route
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
