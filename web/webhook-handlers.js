@@ -103,6 +103,7 @@ export default {
       const payload = JSON.parse(body);
       console.log(payload);
       console.log("--- /Product update ---");
+      console.log("+++++++++Webhook called!++++++++++++");
     },
   },
 
@@ -114,6 +115,7 @@ export default {
       const payload = JSON.parse(body);
       console.log(payload);
       console.log("--- /Product update ---");
+      console.log("+++++++++Webhook called!++++++++++++");
     },
   },
 };

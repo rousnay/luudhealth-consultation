@@ -15,7 +15,7 @@ import webhookHandlers from "./webhook-handlers.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 
-import { DB, connectToDB } from "./db.js";
+// import { DB, connectToDB } from "./db.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -27,13 +27,13 @@ const STATIC_PATH =
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/consultancy";
 
-mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Database Connected Successfully"))
-  .catch((err) => console.log(err));
+// mongoose
+//   .connect(MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("Database Connected Successfully"))
+//   .catch((err) => console.log(err));
 
 // Start Define TIP API Env
 const TIP_HOST = process.env.TIP_HOST;
@@ -66,44 +66,23 @@ app.post(
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
 
-// Register webhooks after OAuth completes
-app.get("/api/auth/callback", async (req, res) => {
-  try {
-    const callbackResponse = await shopify.auth.callback({
-      rawRequest: req,
-      rawResponse: res,
-    });
-
-    const response = await shopify.webhooks.register({
-      session: callbackResponse.session,
-    });
-
-    if (!response["PRODUCTS_CREATE"][0].success) {
-      console.log(
-        `Failed to register PRODUCTS_CREATE webhook: ${response["PRODUCTS_CREATE"][0].result}`
-      );
-    }
-  } catch (error) {
-    console.error(error); // in practice these should be handled more gracefully
-  }
-
-  return res.redirect("/"); // or wherever you want your user to end up after OAuth completes
-});
-
 // Process webhooks
-app.post("/api/webhooks", express.text({ type: "*/*" }), async (req, res) => {
-  try {
-    // Note: the express.text() given above is an Express middleware that will read
-    // in the body as a string, and make it available at req.body, for this path only.
-    await shopify.webhooks.process({
-      rawBody: req.body, // is a string
-      rawRequest: req,
-      rawResponse: res,
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-});
+// app.post("/api/webhooks", express.text({ type: "*/*" }), async (req, res) => {
+//   try {
+//     // Note: the express.text() given above is an Express middleware that will read
+//     // in the body as a string, and make it available at req.body, for this path only.
+//     await shopify.webhooks.process({
+//       rawBody: req.body, // is a string
+//       rawRequest: req,
+//       rawResponse: res,
+//     });
+//     console.log(req.body);
+//     console.log(res);
+//     console.log("*****Webhook called!*****");
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// });
 
 //API PROXY Route
 app.use("/proxy_route", verifyProxy, proxyRouter);
@@ -144,18 +123,18 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
   //   res.sendStatus(404);
   // }
 
-  try {
-    const generated_form = DB.collection("generated_form");
-    // const form_id = await generated_form.findOne( cons_form_id );
-    // create a document to insert
-    const result = await generated_form.insertOne(cons_form_data);
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
-  } catch (err) {
-    console.dir(err);
-  } finally {
-    // await DB.close();
-    console.log("DB Clone");
-  }
+  // try {
+  //   const generated_form = DB.collection("generated_form");
+  //   // const form_id = await generated_form.findOne( cons_form_id );
+  //   // create a document to insert
+  //   const result = await generated_form.insertOne(cons_form_data);
+  //   console.log(`A document was inserted with the _id: ${result.insertedId}`);
+  // } catch (err) {
+  //   console.dir(err);
+  // } finally {
+  //   // await DB.close();
+  //   console.log("DB Clone");
+  // }
 
   res.json(response);
   res.status(200).end();
@@ -250,9 +229,9 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 console.log(PORT);
 app.listen(PORT);
 
-connectToDB(() => {
-  console.log("Successfully connect to the database!");
-  // app.listen(PORT, () => {
-  //   console.log("Server is listening to port" + PORT);
-  // });
-});
+// connectToDB(() => {
+//   console.log("Successfully connect to the database!");
+//   // app.listen(PORT, () => {
+//   //   console.log("Server is listening to port" + PORT);
+//   // });
+// });
