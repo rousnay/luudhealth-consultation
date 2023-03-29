@@ -1,21 +1,18 @@
 // //@ts-check
-import { join } from "path";
-import { readFileSync } from "fs";
-import express from "express";
-import mongoose from "mongoose";
-import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { join } from "path";
+import { readFileSync } from "fs";
+import express from "express";
+import fetch from "node-fetch";
 import serveStatic from "serve-static";
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import webhookHandlers from "./webhook-handlers.js";
-
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
-
-// import { DB, connectToDB } from "./db.js";
+import { DB, connectToDB } from "./db.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -23,17 +20,6 @@ const STATIC_PATH =
   process.env.NODE_ENV === "production"
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
-
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/consultancy";
-
-// mongoose
-//   .connect(MONGODB_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => console.log("Database Connected Successfully"))
-//   .catch((err) => console.log(err));
 
 // Start Define TIP API Env
 const TIP_HOST = process.env.TIP_HOST;
@@ -69,6 +55,28 @@ app.use(express.json());
 //API PROXY Route
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
+//Form: Questions to DB
+app.post("/proxy_route/consultancy/submit", async (req, res) => {
+  const payload = req.body;
+  console.log("POST: Theme -> Submit");
+  console.log("Body", payload);
+
+  // const cons_form_data = response?.data[0];
+  // const cons_form_id = response?.data[0]?.id;
+  // const cons_form_questions = response?.data[0]?.questions;
+
+  if (payload) {
+    const consultancy_data = DB.collection("consultancy_data");
+    const result = await consultancy_data.insertOne(payload);
+    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+  } else {
+    console.log("There is error in Payload!");
+  }
+
+  // res.json(response);
+  res.status(200).end();
+});
+
 //Consultations: Generate Configuration
 const the_url = `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations/generate`;
 app.post("/proxy_route/consultancy/generate", async (req, res) => {
@@ -82,41 +90,10 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
     }
   ).then((response) => response.json());
 
-  console.log("POST: Theme / Generate");
+  console.log("POST: Theme -> Generate");
   console.log("URL", the_url);
   console.log("Body", payload);
   console.log("Response", response);
-  const cons_form_data = response?.data[0];
-  const cons_form_id = response?.data[0]?.id;
-  const cons_form_questions = response?.data[0]?.questions;
-
-  // const generated_form = DB.collection("generated_form");
-  // const form_id = await generated_form.findOne( cons_form_id );
-  // if (form_id) {
-  //   await articles.updateOne(
-  //     { form_id },
-  //     { $push: { comments: { postedBy: email, text } } }
-  //   );
-  //   const updatedArticle = await articles.findOne({ name });
-  //   const upvoteIds = updatedArticle.upvoteIds || [];
-  //   updatedArticle.canUpvote = uid && !upvoteIds.includes(uid);
-  //   res.json(updatedArticle);
-  // } else {
-  //   res.sendStatus(404);
-  // }
-
-  // try {
-  //   const generated_form = DB.collection("generated_form");
-  //   // const form_id = await generated_form.findOne( cons_form_id );
-  //   // create a document to insert
-  //   const result = await generated_form.insertOne(cons_form_data);
-  //   console.log(`A document was inserted with the _id: ${result.insertedId}`);
-  // } catch (err) {
-  //   console.dir(err);
-  // } finally {
-  //   // await DB.close();
-  //   console.log("DB Clone");
-  // }
 
   res.json(response);
   res.status(200).end();
@@ -208,12 +185,10 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
     .send(readFileSync(join(STATIC_PATH, "index.html")));
 });
 
-console.log(PORT);
-app.listen(PORT);
-
-// connectToDB(() => {
-//   console.log("Successfully connect to the database!");
-//   // app.listen(PORT, () => {
-//   //   console.log("Server is listening to port" + PORT);
-//   // });
-// });
+connectToDB(() => {
+  console.log("Successfully connect to the database!");
+  console.log(`Backend Port:`, PORT);
+  app.listen(PORT, () => {
+    console.log("Server is listening to port" + PORT);
+  });
+});
