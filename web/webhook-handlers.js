@@ -1,8 +1,8 @@
 //@ts-check
 import { DeliveryMethod } from "@shopify/shopify-api";
-import { OrderSubmit } from "./consultancy-handlers.js";
+import { OrderSubmit } from "./tip-api-consultancy.js";
 
-const receievedWebhooks = {};
+const receivedWebhooks = {};
 export default {
   /**
    * Customers can request their data from a store owner. When this happens,
@@ -75,7 +75,7 @@ export default {
     deliveryMethod: DeliveryMethod.Http,
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
-      const payload = JSON.parse(body);
+      // const payload = JSON.parse(body);
       // Payload has the following shape:
       // {
       //   "shop_id": 954889,
@@ -89,17 +89,15 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       // Check we haven't already receieved this webhook
-      if (receievedWebhooks[webhookId]) return;
+      if (receivedWebhooks[webhookId]) return;
       // Add to our list of receieved webhooks
-      receievedWebhooks[webhookId] = true;
+      receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      const product = JSON.parse(body);
       console.log("+++++++++Product Update!++++++++++++");
+      // const product = JSON.parse(body);
       // console.log(product);
-      // OrderSubmit(product);
-      console.log("+++++++++receievedWebhooks:++++++++++++");
-      console.log(receievedWebhooks);
-
+      console.log("IDs of all received webhooks:");
+      console.log(receivedWebhooks);
       // productTaggingQueue.push({ shop, product });
     },
   },
@@ -109,17 +107,15 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       // Check we haven't already receieved this webhook
-      if (receievedWebhooks[webhookId]) return;
+      if (receivedWebhooks[webhookId]) return;
       // Add to our list of receieved webhooks
-      receievedWebhooks[webhookId] = true;
+      receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      const product = JSON.parse(body);
-      console.log("+++++++++Order Create!++++++++++++");
-      // console.log(product);
-      console.log("+++++++++receievedWebhooks:++++++++++++");
-      console.log(receievedWebhooks);
-
-      // productTaggingQueue.push({ shop, product });
+      console.log("+++++++++Orders Create!++++++++++++");
+      const ordersCreate = JSON.parse(body);
+      // console.log(ordersCreate);
+      console.log("IDs of all received webhooks:");
+      console.log(receivedWebhooks);
     },
   },
 
@@ -128,17 +124,15 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       // Check we haven't already receieved this webhook
-      if (receievedWebhooks[webhookId]) return;
+      if (receivedWebhooks[webhookId]) return;
       // Add to our list of receieved webhooks
-      receievedWebhooks[webhookId] = true;
+      receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      const product = JSON.parse(body);
-      console.log("+++++++++Order Updated!++++++++++++");
-      // console.log(product);
-      console.log("+++++++++receievedWebhooks:++++++++++++");
-      console.log(receievedWebhooks);
-
-      // productTaggingQueue.push({ shop, product });
+      console.log("+++++++++Orders Updated!++++++++++++");
+      // const ordersUpdated = JSON.parse(body);
+      // console.log(ordersUpdated);
+      console.log("IDs of all received webhooks:");
+      console.log(receivedWebhooks);
     },
   },
 
@@ -147,17 +141,15 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       // Check we haven't already receieved this webhook
-      if (receievedWebhooks[webhookId]) return;
+      if (receivedWebhooks[webhookId]) return;
       // Add to our list of receieved webhooks
-      receievedWebhooks[webhookId] = true;
+      receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      const product = JSON.parse(body);
       console.log("+++++++++Order Delete!++++++++++++");
-      // console.log(product);
-      console.log("+++++++++receievedWebhooks:++++++++++++");
-      console.log(receievedWebhooks);
-
-      // productTaggingQueue.push({ shop, product });
+      // const ordersDeleted = JSON.parse(body);
+      // console.log(ordersDeleted);
+      console.log("IDs of all received webhooks:");
+      console.log(receivedWebhooks);
     },
   },
 
@@ -166,17 +158,15 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       // Check we haven't already receieved this webhook
-      if (receievedWebhooks[webhookId]) return;
+      if (receivedWebhooks[webhookId]) return;
       // Add to our list of receieved webhooks
-      receievedWebhooks[webhookId] = true;
+      receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      const product = JSON.parse(body);
-      console.log("+++++++++Customer Create!++++++++++++");
-      // console.log(product);
-      console.log("+++++++++receievedWebhooks:++++++++++++");
-      console.log(receievedWebhooks);
-
-      // productTaggingQueue.push({ shop, product });
+      console.log("+++++++++Customers Create!++++++++++++");
+      // const customersCreate = JSON.parse(body);
+      // console.log(customersCreate);
+      console.log("IDs of all received webhooks:");
+      console.log(receivedWebhooks);
     },
   },
 
@@ -185,18 +175,16 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       // Check we haven't already receieved this webhook
-      if (receievedWebhooks[webhookId]) return;
+      if (receivedWebhooks[webhookId]) return;
       // Add to our list of receieved webhooks
-      receievedWebhooks[webhookId] = true;
+      receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      const order_info = JSON.parse(body);
-      console.log("+++++++++Order Paid!++++++++++++");
-      console.log(order_info);
-      OrderSubmit(order_info);
-      console.log("+++++++++receievedWebhooks:++++++++++++");
-      console.log(receievedWebhooks);
-
-      // productTaggingQueue.push({ shop, product });
+      console.log("+++++++++Orders Paid!++++++++++++");
+      const ordersPaid = JSON.parse(body);
+      OrderSubmit(ordersPaid);
+      console.log(ordersPaid?.customer);
+      console.log("IDs of all received webhooks:");
+      console.log(receivedWebhooks);
     },
   },
 };
