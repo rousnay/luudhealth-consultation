@@ -1,8 +1,10 @@
+<!--
 <span style="color: {{ block.settings.color }}">
-  Online ED treatments, discreetly delivered
+Online ED treatments, discreetly delivered
 </span>
+-->
 
-{% render "tip-consultancy-data" %}
+{% render "tip-consultancy-form" %}
 {% schema %}
   {
     "name": "Consultancy Form",
@@ -10,9 +12,8 @@
     "enabled_on": {
       "templates": ["index", "page"]
     },
-    "stylesheet_tip_app": "tip-app.css",
-    "javascript_tip_app": "tip-app.js",
-    "javascript_tip_consultancy": "tip-consultancy.js",
+    "stylesheet": "tip-app.css",
+    "javascript": "tip-consultancy.js",
     "settings": [
       {
         "label": "Color",

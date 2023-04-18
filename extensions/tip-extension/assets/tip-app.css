@@ -3325,6 +3325,11 @@ body {
   justify-content: center;
   align-items: center;
   height: 80%; */
+  background-color: hsl(210, 36%, 96%)!important;
+}
+
+h1.main-page-title.page-title {
+  display: none!important;
 }
 
 .page-container{

@@ -1,17 +1,13 @@
-<span style="color: {{ block.settings.color }}">
-  Online ED treatments, discreetly delivered
-</span>
-
-{% render "tip-consultancy-data" %}
+{% render "kit-activation-data" %}
 {% schema %}
   {
-    "name": "Consultancy Form",
+    "name": "KIT Activation",
     "target": "section",
     "enabled_on": {
       "templates": ["index", "page"]
     },
-    "stylesheet_kit_app": "kit-app.css",
-    "javascript_kit_app": "kit-app.js",
+    "stylesheet": "kit-app.css",
+    "javascript": "kit-app.js",
     "settings": [
       {
         "label": "Color",

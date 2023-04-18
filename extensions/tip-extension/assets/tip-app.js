@@ -381,7 +381,8 @@ ready(function () {
 
         continueToNextForm.addEventListener("click", (e) => {
           // window.location.replace("/personal_data/");
-          window.location.href = "/personal_data/";
+          console.log("hit hit hit...");
+          window.location.href = "/pages/medical-information";
         });
 
         initProcessForm();
