@@ -1,17 +1,18 @@
 <span style="color: {{ block.settings.color }}">
-  Your personalized Consultacny Form.
+  Online ED treatments, discreetly delivered
 </span>
 
-{% render "tip-form-data-test" %}
+{% render "tip-consultancy-data" %}
 {% schema %}
   {
-    "name": "Consultancy Form Test",
+    "name": "Consultancy Form",
     "target": "section",
     "enabled_on": {
-      "templates": ["page"]
+      "templates": ["index", "page"]
     },
-    "stylesheet": "tip-app.css",
-    "javascript": "tip-app.js",
+    "stylesheet_tip_app": "tip-app.css",
+    "javascript_tip_app": "tip-app.js",
+    "javascript_tip_consultancy": "tip-consultancy.js",
     "settings": [
       {
         "label": "Color",

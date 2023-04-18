@@ -1,0 +1,24 @@
+<span style="color: {{ block.settings.color }}">
+  Online ED treatments, discreetly delivered
+</span>
+
+{% render "tip-consultancy-data" %}
+{% schema %}
+  {
+    "name": "Consultancy Form",
+    "target": "section",
+    "enabled_on": {
+      "templates": ["index", "page"]
+    },
+    "stylesheet_kit_app": "kit-app.css",
+    "javascript_kit_app": "kit-app.js",
+    "settings": [
+      {
+        "label": "Color",
+        "id": "color",
+        "type": "color",
+        "default": "#000000"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,142 @@
+{{ 'stylesheet_tip_app' | asset_url | stylesheet_tag }}
+<script src="{{ 'javascript_tip_app' | asset_url }}" defer></script>
+<script src="{{ 'javascript_tip_consultancy' | asset_url }}" defer></script>
+<script>
+  console.log("TIP App: Theme extension loaded! - 2");
+</script>
+
+
+<!-- partial:index.partial.html -->
+<div class="mx-auto container page-container">
+
+  <section id="consultancy-header">
+    <h4>Welcome to</h4>
+    <h1>Luudhealth Consultancy</h1>
+    <p>Answer a few quick questions about your general health to get the most effective clinically proven treatments for you.</p>
+
+    <button type="button" id="start-consultancy">START ASSESSMENT</button>
+
+  </section>
+
+
+  <!-- <hr> -->
+
+  <!-- Progress Form -->
+  <form id="progress-form"
+    class="p-4 progress-form"
+    action="https://httpbin.org/post"
+    lang="en"
+    novalidate>
+
+    <!-- Step Navigation -->
+    <div
+      id="progress-form-tabs"
+      class="d-flex align-items-start mb-3 sm:mb-5 progress-form__tabs"
+      role="tablist"></div>
+    <!-- / End Step Navigation -->
+
+  </form>
+  <!-- / End Progress Form -->
+
+</div>
+<!-- partial -->
+
+
+<script type="text/javascript">
+  /*
+  const treatmentId = 6257;
+    let consultancy = [];
+  
+      const tipForm = document.getElementById('tip-form');
+      const field = document.createDocumentFragment();
+  
+      function startConsultancy(){
+      (async () => {
+      const url = `/apps/tip/consultancy/generate`;
+      const method = "POST";
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'treatmentId': parseFloat(treatmentId),
+          'type': 'NEW',
+        }),
+      });
+      if (response.status === 200) {
+        const fullResponse = await response.json();
+        console.log(fullResponse?.data[0]);
+        consultancy = fullResponse?.data[0]?.questions;
+        consultancy.map(function(question) {
+          //create element
+          let div = document.createElement('div');
+          let span = document.createElement('span');
+          let innerDiv = document.createElement('div');
+          let label = document.createElement('label');
+          let input = document.createElement('input');
+          //add inner html to the elements
+          span.innerHTML = `${question?.question_text}`;
+          label.innerHTML = `Question type: ${question?.question_type}`;
+          //add classes to the elements
+          div.classList.add("field-wrapper");
+          innerDiv.classList.add("field");
+          label.classList.add("field__label");
+          input.classList.add("field__input");
+          //setting attributes to the elements
+          label.setAttribute("for", question?.question_id);
+          input.setAttribute("name", question?.question_id);
+          input.setAttribute("type", "text");
+          input.setAttribute("placeholder", `Question type: ${question?.question_type}`);
+          //append child elements to the parents
+          innerDiv.appendChild(input);
+          innerDiv.appendChild(label);
+          div.appendChild(span);
+          div.appendChild(innerDiv);
+          field.appendChild(div);
+        });
+  
+      } else {
+        console.log("Something went wrong with TIP API");
+        console.log(response);
+      }
+      tipForm.appendChild(field);
+      })();
+      };
+  
+  
+      function submitConsultancy(){
+      let phone = document.getElementById("phone").value;
+      let email = document.getElementById("email").value;
+  
+      console.log("phone");
+      console.log(phone);
+      console.log("email");
+      console.log(email);
+      const treatmentIds = 6257;
+  
+      (async () => {
+        const url = `/apps/tip/consultancy`;
+        const method = "POST";
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            'treatmentId': parseFloat(treatmentIds),
+            'type': 'NEW',
+          }),
+        });
+        if (response.status === 200) {
+          const fullResponse = await response.json();
+          console.log(fullResponse?.data[0]);
+        } else {
+          console.log("Something went wrong with TIP API");
+          console.log(response);
+        }
+      })();
+            }
+               */</script>
