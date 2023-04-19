@@ -1,6 +1,6 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//   console.log("TIP App: Theme extension loaded!");
-// });
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("TIP App: Theme extension loaded!");
+});
 
 const questions = [
   {
@@ -370,7 +370,7 @@ ready(function () {
           "beforeend",
           `<section id="progress-form__thank-you" hidden>
             <p class="successful-submit">Consultancy data has been submitted successfully!</p>
-            <p>Next, you are going to tell us more about your personal and medical condition.</p>
+            <p>Now you are going to tell us more about your personal and medical condition.</p>
             <button type="button" id="continue-to-next-form">Continue</button>
           </section>`
         );
