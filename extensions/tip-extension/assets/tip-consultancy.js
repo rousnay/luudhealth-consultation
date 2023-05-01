@@ -742,20 +742,10 @@ const initProcessForm = function () {
         formTime = new Date().getTime();
 
         // Format the data entries
-        formFields = [];
-
-        for (const [name, value] of formData) {
-          formFields.push({
-            question: name,
-            answer: value,
-          });
-        }
-        //get form
-
         const consultancyFormObj = Object.fromEntries(formData);
+        const consultancyFormDataAsArray = Array.from(formData.entries());
+        const questionIds = consultancyFormDataAsArray.map((arr) => arr[0]);
 
-        // find duplicateQuestions Ids
-        const questionIds = formFields.map((obj) => obj.question);
         const uniqueQuestions = questionIds
           .map((id) => {
             return {
@@ -773,24 +763,20 @@ const initProcessForm = function () {
           (a) => uniqueQuestions[a] > 1
         );
 
-        console.log(duplicateQuestions);
-
         duplicateQuestions.map((ids) => {
           consultancyFormObj[ids] = formData.getAll(ids);
         });
 
         const consultancyFormArray = Object.keys(consultancyFormObj).map(
           (k) => ({
-            question: k,
             answer: consultancyFormObj[k],
+            question: k,
           })
         );
 
-        console.log(consultancyFormArray);
-        console.log(consultancyFormObj);
-
-        const consultancyData = { consultation: formFields };
+        const consultancyData = { consultation: consultancyFormArray };
         console.log(consultancyData);
+
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
         // POST the data and handle success or error
