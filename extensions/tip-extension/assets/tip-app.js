@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP App: Theme extension loaded!");
+  console.log("TIP App: Theme extension v: 27");
 });
 
 const questions = [
@@ -24,31 +24,6 @@ const questions = [
   },
   {
     question_id: 1822,
-    question_type: "multiple-selection",
-    question_text:
-      "<p><span>Have you ever successfully used any the following ED treatments?</span></p>",
-    question_description: "",
-    error_message: "",
-    helper_text: "",
-    more_detail_trigger: null,
-    deselect_trigger: null,
-    required: 1,
-    never_autofill: 0,
-    never_autofill_conditions: null,
-    highlight: 0,
-    highlight_colour: null,
-    options: [
-      "Viagra (sildenafil)",
-      "Cialis (tadalafil)",
-      "Levitra (vardenafil)",
-      "Other (please specify)",
-      "I have never used ED treatment",
-    ],
-    conditional: [],
-    expected_answers: [],
-  },
-  {
-    question_id: 1899,
     question_type: "multiple-selection",
     question_text:
       "<p><span>Have you ever successfully used any the following ED treatments?</span></p>",

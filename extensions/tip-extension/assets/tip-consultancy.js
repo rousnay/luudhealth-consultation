@@ -741,11 +741,23 @@ const initProcessForm = function () {
         const formData = new FormData(form);
         formTime = new Date().getTime();
 
-        // Format the data entries
+        //convert object properties string to integer
         const consultancyFormObj = Object.fromEntries(formData);
+        function convertIntObj(obj) {
+          const res = {};
+          for (const key in obj) {
+            const parsed = parseInt(obj[key], 10);
+            res[key] = isNaN(parsed) ? obj[key] : parsed;
+          }
+          return res;
+        }
+        const consultancyFormIntObj = convertIntObj(consultancyFormObj);
+
+        // Format the data entries
         const consultancyFormDataAsArray = Array.from(formData.entries());
         const questionIds = consultancyFormDataAsArray.map((arr) => arr[0]);
 
+        //Handle single and multiple (duplicate) checkbox's answers
         const uniqueQuestions = questionIds
           .map((id) => {
             return {
@@ -764,13 +776,16 @@ const initProcessForm = function () {
         );
 
         duplicateQuestions.map((ids) => {
-          consultancyFormObj[ids] = formData.getAll(ids);
+          consultancyFormIntObj[ids] = formData.getAll(ids);
         });
 
-        const consultancyFormArray = Object.keys(consultancyFormObj).map(
-          (k) => ({
-            answer: consultancyFormObj[k],
-            question: k,
+        console.log(consultancyFormIntObj);
+
+        //building form data for process
+        const consultancyFormArray = Object.keys(consultancyFormIntObj).map(
+          (key) => ({
+            question: key,
+            answer: consultancyFormIntObj[key],
           })
         );
 
@@ -804,6 +819,8 @@ const initProcessForm = function () {
       })
       .catch((invalidFields) => {
         // Show errors for any invalid fields
+        console.log(invalidFields);
+
         invalidFields.forEach((field) => {
           reportValidity(field);
         });
