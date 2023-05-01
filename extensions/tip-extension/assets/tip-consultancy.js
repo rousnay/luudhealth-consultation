@@ -741,33 +741,32 @@ const initProcessForm = function () {
         const formData = new FormData(form);
         formTime = new Date().getTime();
 
-        // console.log(form);
-        // console.log(formData);
-        // console.log(formData.entries());
-        // console.log(formData.values());
+        const consultancyFormObj = Object.fromEntries(formData);
+        const multipleSelectionArray = formData.getAll("1822");
+        consultancyFormObj[1822] = multipleSelectionArray;
 
-        const obj = Object.fromEntries(formData);
-        console.log(obj);
+        const consultancyFormArray = Object.keys(consultancyFormObj).map(
+          (k) => ({
+            question: k,
+            answer: consultancyFormObj[k],
+          })
+        );
 
-        const arr = formData.getAll("1822");
-        console.log(arr);
-
-        obj[1822] = arr;
-        console.log(obj);
-
-        for (const pair of formData.entries()) {
-          console.log(`${pair[0]}: ${pair[1]}`);
-        }
-        // const formManaged =
+        console.log(consultancyFormArray);
+        console.log(consultancyFormObj);
 
         // Format the data entries
         formFields = [];
+
         for (const [name, value] of formData) {
           formFields.push({
-            name: name,
-            value: value,
+            question: name,
+            answer: value,
           });
         }
+
+        const consultancyData = { consultation: formFields };
+        console.log(consultancyData);
 
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
