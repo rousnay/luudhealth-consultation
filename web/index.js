@@ -187,8 +187,7 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 
 connectToDB(() => {
   console.log("Successfully connect to the database!");
-  console.log(`Backend Port:`, PORT);
   app.listen(PORT, () => {
-    console.log("Server is listening to port" + PORT);
+    console.log("Server is listening to port: " + PORT);
   });
 });

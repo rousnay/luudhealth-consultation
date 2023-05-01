@@ -554,14 +554,18 @@ const initProcessForm = function () {
     "input",
     debounce((e) => {
       const { target } = e;
+      const isMultipleSelection = target.matches(
+        '[data-input-type="multiple-selection"]'
+      );
 
       validateStep(currentStep)
         .then(() => {
           // Update the progress bar (step complete)
           handleProgress(true);
-          // Progress to the next step
 
-          if (currentStep !== tabItems.length - 1) {
+          // Progress to the next step
+          const isLastTab = currentStep === tabItems.length - 1;
+          if (!isLastTab && !isMultipleSelection) {
             activateTab(currentStep + 1);
           }
         })
@@ -734,11 +738,30 @@ const initProcessForm = function () {
         disableSubmit();
 
         // Prepare the data
-        const formData = new FormData(form),
-          formTime = new Date().getTime(),
-          formFields = [];
+        const formData = new FormData(form);
+        formTime = new Date().getTime();
+
+        // console.log(form);
+        // console.log(formData);
+        // console.log(formData.entries());
+        // console.log(formData.values());
+
+        const obj = Object.fromEntries(formData);
+        console.log(obj);
+
+        const arr = formData.getAll("1822");
+        console.log(arr);
+
+        obj[1822] = arr;
+        console.log(obj);
+
+        for (const pair of formData.entries()) {
+          console.log(`${pair[0]}: ${pair[1]}`);
+        }
+        // const formManaged =
 
         // Format the data entries
+        formFields = [];
         for (const [name, value] of formData) {
           formFields.push({
             name: name,

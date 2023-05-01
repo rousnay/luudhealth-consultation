@@ -307,8 +307,9 @@ ready(function () {
               //setting attributes to the elements
               span.innerHTML = `${option}`;
               label.classList.add("form__choice-wrapper");
+              input.setAttribute("data-input-type", "multiple-selection");
               input.setAttribute("type", "checkbox");
-              input.setAttribute("name", `${option}`);
+              input.setAttribute("name", `${question?.question_id}`);
               input.setAttribute("value", `${option}`);
               //append child elements to the parents
               label.appendChild(input);
