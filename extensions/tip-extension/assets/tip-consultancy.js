@@ -741,9 +741,43 @@ const initProcessForm = function () {
         const formData = new FormData(form);
         formTime = new Date().getTime();
 
+        // Format the data entries
+        formFields = [];
+
+        for (const [name, value] of formData) {
+          formFields.push({
+            question: name,
+            answer: value,
+          });
+        }
+        //get form
+
         const consultancyFormObj = Object.fromEntries(formData);
-        const multipleSelectionArray = formData.getAll("1822");
-        consultancyFormObj[1822] = multipleSelectionArray;
+
+        // find duplicateQuestions Ids
+        const questionIds = formFields.map((obj) => obj.question);
+        const uniqueQuestions = questionIds
+          .map((id) => {
+            return {
+              count: 1,
+              qId: id,
+            };
+          })
+          .reduce((result, b) => {
+            result[b.qId] = (result[b.qId] || 0) + b.count;
+
+            return result;
+          }, {});
+
+        const duplicateQuestions = Object.keys(uniqueQuestions).filter(
+          (a) => uniqueQuestions[a] > 1
+        );
+
+        console.log(duplicateQuestions);
+
+        duplicateQuestions.map((ids) => {
+          consultancyFormObj[ids] = formData.getAll(ids);
+        });
 
         const consultancyFormArray = Object.keys(consultancyFormObj).map(
           (k) => ({
@@ -755,26 +789,15 @@ const initProcessForm = function () {
         console.log(consultancyFormArray);
         console.log(consultancyFormObj);
 
-        // Format the data entries
-        formFields = [];
-
-        for (const [name, value] of formData) {
-          formFields.push({
-            question: name,
-            answer: value,
-          });
-        }
-
         const consultancyData = { consultation: formFields };
         console.log(consultancyData);
-
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
         // POST the data and handle success or error
         getIP()
           .then((response) => {
             return {
-              fields: formFields,
+              fields: consultancyFormArray,
               meta: {
                 submittedAt: formTime,
                 ipAddress: response.ip,
