@@ -1,26 +1,26 @@
 <!--
-<span style="color: {{ block.settings.color }}">
-Online ED treatments, discreetly delivered
-</span>
+  <span style="color: {{ block.settings.color }}">
+  Online ED treatments, discreetly delivered
+  </span>
 -->
 
-{% render "tip-consultancy-form" %}
+{% render 'tip-consultancy-form' %}
 {% schema %}
-  {
-    "name": "Consultancy Form",
-    "target": "section",
-    "enabled_on": {
-      "templates": ["index", "page"]
-    },
-    "stylesheet": "tip-app.css",
-    "javascript": "tip-consultancy.js",
-    "settings": [
-      {
-        "label": "Color",
-        "id": "color",
-        "type": "color",
-        "default": "#000000"
-      }
-    ]
-  }
+{
+  "name": "Consultancy Form",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "stylesheet": "tip-app.css",
+  "javascript": "tip-consultancy.js",
+  "settings": [
+    {
+      "label": "Color",
+      "id": "color",
+      "type": "color",
+      "default": "#000000"
+    }
+  ]
+}
 {% endschema %}

@@ -84,23 +84,23 @@ export default {
     },
   },
 
-  PRODUCTS_UPDATE: {
-    deliveryMethod: DeliveryMethod.Http,
-    callbackUrl: "/api/webhooks",
-    callback: async (topic, shop, body, webhookId) => {
-      // Check we haven't already receieved this webhook
-      if (receivedWebhooks[webhookId]) return;
-      // Add to our list of receieved webhooks
-      receivedWebhooks[webhookId] = true;
-      // Add to our queue for processing
-      console.log("+++++++++Product Update!++++++++++++");
-      // const product = JSON.parse(body);
-      // console.log(product);
-      console.log("IDs of all received webhooks:");
-      console.log(receivedWebhooks);
-      // productTaggingQueue.push({ shop, product });
-    },
-  },
+  // PRODUCTS_UPDATE: {
+  //   deliveryMethod: DeliveryMethod.Http,
+  //   callbackUrl: "/api/webhooks",
+  //   callback: async (topic, shop, body, webhookId) => {
+  //     // Check we haven't already receieved this webhook
+  //     if (receivedWebhooks[webhookId]) return;
+  //     // Add to our list of receieved webhooks
+  //     receivedWebhooks[webhookId] = true;
+  //     // Add to our queue for processing
+  //     console.log("+++++++++Product Update!++++++++++++");
+  //     // const product = JSON.parse(body);
+  //     // console.log(product);
+  //     console.log("IDs of all received webhooks:");
+  //     console.log(receivedWebhooks);
+  //     // productTaggingQueue.push({ shop, product });
+  //   },
+  // },
 
   ORDERS_CREATE: {
     deliveryMethod: DeliveryMethod.Http,
