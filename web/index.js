@@ -13,6 +13,7 @@ import webhookHandlers from "./webhook-handlers.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 import { DB, connectToDB } from "./db.js";
+import { consultancySubmit, medicalSubmit } from "./tip-db-consultancy.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -55,30 +56,7 @@ app.use(express.json());
 //API PROXY Route
 app.use("/proxy_route", verifyProxy, proxyRouter);
 
-//Form: Questions to DB
-app.post("/proxy_route/consultancy/submit", async (req, res) => {
-  const payload = req.body;
-  console.log("POST: Theme -> Submit");
-  console.log("Body", payload);
-
-  // const cons_form_data = response?.data[0];
-  // const cons_form_id = response?.data[0]?.id;
-  // const cons_form_questions = response?.data[0]?.questions;
-
-  if (payload) {
-    const consultancy_data = DB.collection("consultancy_data");
-    const result = await consultancy_data.insertOne(payload);
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
-  } else {
-    console.log("There is error in Payload!");
-  }
-
-  // res.json(response);
-  res.status(200).end();
-});
-
 //Consultations: Generate Configuration
-const the_url = `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations/generate`;
 app.post("/proxy_route/consultancy/generate", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
@@ -90,12 +68,24 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
     }
   ).then((response) => response.json());
 
-  console.log("POST: Theme -> Generate");
-  console.log("URL", the_url);
   console.log("Body", payload);
-  console.log("Response", response);
-
   res.json(response);
+  res.status(200).end();
+});
+
+//Form: Consultations data into DB
+app.post("/proxy_route/consultancy/submit", async (req, res) => {
+  const payload = req.body;
+  consultancySubmit(payload);
+  console.log("payload", payload);
+  res.status(200).end();
+});
+
+//Form: Medical data into DB
+app.post("/proxy_route/medical/submit", async (req, res) => {
+  const payload = req.body;
+  medicalSubmit(payload);
+  console.log("payload", payload);
   res.status(200).end();
 });
 

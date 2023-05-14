@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP App: Theme extension v: 36");
+  console.log("TIP App: Theme extension v: 40");
 });
 console.clear();
 // const questions = [

@@ -807,7 +807,7 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
-        postData(API, consultancyData)
+        postData(API, consultancyFormArray)
           .then((response) => {
             setTimeout(() => {
               handleSuccess(response);
