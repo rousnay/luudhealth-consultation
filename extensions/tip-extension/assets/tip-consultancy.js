@@ -627,46 +627,6 @@ const initProcessForm = function () {
 
   // Form Submission
 
-  /*****************************************************************************
-   * Returns the user's IP address.
-   */
-
-  async function getIP(url = "https://api.ipify.org?format=json") {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    return response.json();
-  }
-
-  /*****************************************************************************
-   * POSTs to the specified endpoint.
-   */
-
-  async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    return response.json();
-  }
-
   /****************************************************************************/
 
   function disableSubmit() {
@@ -720,6 +680,47 @@ const initProcessForm = function () {
 
       submitButton.parentElement.prepend(errorText);
     }
+  }
+
+  /*****************************************************************************
+   * Returns the user's IP address.
+   */
+
+  async function getIP(url = "https://api.ipify.org?format=json") {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json();
+  }
+
+  /*****************************************************************************
+   * POSTs to the specified endpoint.
+   */
+
+  async function postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json();
   }
 
   /****************************************************************************/
@@ -795,26 +796,27 @@ const initProcessForm = function () {
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
         // POST the data and handle success or error
-        getIP()
-          .then((response) => {
-            return {
-              fields: consultancyFormArray,
-              meta: {
-                submittedAt: formTime,
-                ipAddress: response.ip,
-              },
-            };
-          })
-          .then((data) => postData(API, data))
+        // getIP()
+        //   .then((response) => {
+        //     return {
+        //       fields: consultancyFormArray,
+        //       meta: {
+        //         submittedAt: formTime,
+        //         ipAddress: response.ip,
+        //       },
+        //     };
+        //   })
+        //   .then((data) => postData(API, data))
+        postData(API, consultancyData)
           .then((response) => {
             setTimeout(() => {
               handleSuccess(response);
-            }, 5000); // An artificial delay to show the state of the submit button
+            }, 3000); // An artificial delay to show the state of the submit button
           })
           .catch((error) => {
             setTimeout(() => {
               handleError(error);
-            }, 5000); // An artificial delay to show the state of the submit button
+            }, 3000); // An artificial delay to show the state of the submit button
           });
       })
       .catch((invalidFields) => {
