@@ -3,19 +3,22 @@ import { DB } from "./db.js";
 
 //Webhook: User info to DB
 const OrderSubmit = async (webhookResponse) => {
-  console.log("Webhook: Order -> Submit");
-  console.log("Body", webhookResponse);
   const order_id = webhookResponse?.id;
+  const line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
+
+  console.log("Body", order_id);
 
   if (order_id) {
     const order_data = DB.collection("order_data");
     const orderCustomer = webhookResponse?.customer;
     const orderBillingAddress = webhookResponse?.billing_address;
     const orderShippingAddress = webhookResponse?.shipping_address;
+    const orderLineItems = webhookResponse?.line_items;
 
     const result = await order_data.insertOne({
       order_id: order_id,
       customer_id: orderCustomer?.id,
+      line_items_uuid: line_items_uuid,
       customer: {
         firstname: orderCustomer?.first_name,
         lastname: orderCustomer?.last_name,

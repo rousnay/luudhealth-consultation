@@ -28,3 +28,16 @@ let created_response = {
       "uuid": "IPS-C23445"
   }
 }
+
+
+ <input type="hidden" name="properties[Made to order]" value="Delivery Approx 4 weeks" />
+ <input type="text" name="properties[myOrder]" value="Delivery Approx 4 weeks" />
+ <input id="prop1" type="text" name="properties[_prop1]">
+  <div class="cf-field-wrapper cf-name-field">
+          <label for="cf-name" class="cf-label">Name:<span class="cf-chars">*</span></label>
+          <input type="text" id="cf-name" name="properties[Name]"  placeholder="Add first name" required="true" />
+  </div>
+ <p class="line-item-property__field">
+  <label for="prop1">Property 1</label>
+  <input id="prop1" type="text" name="properties[_prop1]">
+ </p>
