@@ -12,8 +12,8 @@ import productCreator from "./product-creator.js";
 import webhookHandlers from "./webhook-handlers.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
-import { DB, connectToDB } from "./db.js";
-import { consultancySubmit, medicalSubmit } from "./tip-db-consultancy.js";
+import { connectToDB } from "./db.js";
+import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
