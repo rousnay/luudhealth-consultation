@@ -5,7 +5,7 @@
 </script>
 
 <!-- partial:index.partial.html -->
-<div class="mx-auto container">
+<div class="mx-auto container tip-app-content">
   <!-- Progress Form -->
   <form
     id="progress-form"
@@ -325,7 +325,8 @@
     <!-- Thank You -->
     <section id="progress-form__thank-you" hidden>
       <p>Thank you for your submission!</p>
-      <p>We appreciate you contacting us. One of our team members will get back to you very&nbsp;soon.</p>
+      <p>You are almost done, please select the product in next screen</p>
+      <button type="button" id="continue-to-next-form">Continue</button>
     </section>
     <!-- / End Thank You -->
   </form>
@@ -335,4 +336,8 @@
 
 <script type="text/javascript">
   console.log('Medical form loaded!');
+  const continueToNextForm = document.getElementById('continue-to-next-form');
+  continueToNextForm.addEventListener('click', (e) => {
+    window.location.href = '/products/erectile-dysfunction';
+  });
 </script>

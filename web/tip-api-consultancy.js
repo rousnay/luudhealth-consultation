@@ -3,22 +3,26 @@ import { DB } from "./db.js";
 
 //Webhook: User info to DB
 const OrderSubmit = async (webhookResponse) => {
-  const order_id = webhookResponse?.id;
   const line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
+  const product_id = webhookResponse?.line_items[0]?.product_id;
 
-  console.log("Body", order_id);
+  console.log("product_id", product_id);
+  console.log("line_items_uuid", line_items_uuid);
 
-  if (order_id) {
+  if (product_id) {
     const order_data = DB.collection("order_data");
+    const createdAt = webhookResponse?.created_at;
+    const order_id = webhookResponse?.id;
     const orderCustomer = webhookResponse?.customer;
     const orderBillingAddress = webhookResponse?.billing_address;
     const orderShippingAddress = webhookResponse?.shipping_address;
-    const orderLineItems = webhookResponse?.line_items;
 
     const result = await order_data.insertOne({
-      order_id: order_id,
-      customer_id: orderCustomer?.id,
+      created_at: createdAt,
       line_items_uuid: line_items_uuid,
+      order_id: order_id,
+      product_id: product_id,
+      customer_id: orderCustomer?.id,
       customer: {
         firstname: orderCustomer?.first_name,
         lastname: orderCustomer?.last_name,

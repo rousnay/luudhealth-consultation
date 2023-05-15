@@ -702,6 +702,15 @@ const initProcessForm = function () {
   }
 
   /*****************************************************************************
+   * Generating UUID.
+   */
+
+  async function getUUID() {
+    const uuid = self.crypto.randomUUID();
+    return uuid;
+  }
+
+  /*****************************************************************************
    * POSTs to the specified endpoint.
    */
 
@@ -811,12 +820,12 @@ const initProcessForm = function () {
           .then((response) => {
             setTimeout(() => {
               handleSuccess(response);
-            }, 3000); // An artificial delay to show the state of the submit button
+            }, 1000); // An artificial delay to show the state of the submit button
           })
           .catch((error) => {
             setTimeout(() => {
               handleError(error);
-            }, 3000); // An artificial delay to show the state of the submit button
+            }, 1000); // An artificial delay to show the state of the submit button
           });
       })
       .catch((invalidFields) => {

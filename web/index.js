@@ -78,6 +78,7 @@ app.post("/proxy_route/consultancy/submit", async (req, res) => {
   const payload = req.body;
   consultancySubmit(payload);
   console.log("payload", payload);
+  res.json(payload);
   res.status(200).end();
 });
 
@@ -86,6 +87,7 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
   const payload = req.body;
   medicalSubmit(payload);
   console.log("payload", payload);
+  res.json(payload);
   res.status(200).end();
 });
 
