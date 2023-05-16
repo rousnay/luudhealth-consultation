@@ -1,0 +1,25 @@
+<!--
+  <span style="color: {{ block.settings.color }}">
+  Online ED treatments, discreetly delivered
+  </span>
+-->
+
+{% render 'tip-assessment-button-content' %}
+{% schema %}
+{
+  "name": "Assessment Button",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "stylesheet": "tip-app.css",
+  "settings": [
+    {
+      "label": "Color",
+      "id": "color",
+      "type": "color",
+      "default": "#000000"
+    }
+  ]
+}
+{% endschema %}

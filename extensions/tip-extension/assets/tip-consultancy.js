@@ -816,7 +816,16 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
-        postData(API, consultancyFormArray)
+        getUUID()
+          .then((uuid) => {
+            localStorage.setItem("line_items_uuid", uuid);
+            return {
+              line_items_uuid: uuid,
+              submitted_at: formTime,
+              consultancy: consultancyFormArray,
+            };
+          })
+          .then((data) => postData(API, data))
           .then((response) => {
             setTimeout(() => {
               handleSuccess(response);

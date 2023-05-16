@@ -640,6 +640,15 @@ ready(function () {
   }
 
   /*****************************************************************************
+   * Generating UUID.
+   */
+
+  async function getUUID() {
+    const uuid = localStorage.getItem("line_items_uuid");
+    return uuid;
+  }
+
+  /*****************************************************************************
    * Returns the user's IP address.
    */
 
@@ -721,7 +730,16 @@ ready(function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
-        postData(API, formFields)
+
+        getUUID()
+          .then((uuid) => {
+            return {
+              line_items_uuid: uuid,
+              submitted_at: formTime,
+              medical: formFields,
+            };
+          })
+          .then((data) => postData(API, data))
           .then((response) => {
             setTimeout(() => {
               handleSuccess(response);

@@ -1,0 +1,57 @@
+{{ 'stylesheet' | asset_url | stylesheet_tag }}
+<script src="{{ 'javascript' | asset_url }}" defer></script>
+<script>
+  console.log('TIP App: Assessment button loaded 1');
+</script>
+
+<div class="product-form__input">
+  <input type="hidden" form="{{ product_form_id }}" id="product-line-item-uuid" name="properties[_uuid]">
+</div>
+
+<div class="tip-app-content product-form__assessment-button">
+  <button type="button" id="start-consultancy">START ASSESSMENT</button>
+</div>
+
+<script type="text/javascript">
+  function getReady(fn) {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(fn, 1);
+      document.removeEventListener('DOMContentLoaded', fn);
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+
+  getReady(function () {
+    console.log('Assessment button loaded 2');
+
+    const product_variants = document.querySelector('.product-form__variants');
+    const product_quantity = document.querySelector('.product-form__quantity');
+    const product_buy_buttons = document.querySelector('.product-form__buy-buttons');
+    const product_assessment_button = document.querySelector('.product-form__assessment-button');
+    const product_line_item_uuid = document.getElementById('product-line-item-uuid');
+    const product_addToCart_button = document.getElementById('AddToCart');
+
+    const the_line_items_uuid = localStorage.getItem('line_items_uuid');
+
+    if (the_line_items_uuid) {
+      console.log(the_line_items_uuid);
+      product_line_item_uuid.value = the_line_items_uuid;
+      product_assessment_button.style.display = 'none';
+
+      product_addToCart_button.addEventListener('click', (e) => {
+        localStorage.removeItem('line_items_uuid');
+      });
+    } else {
+      product_variants.style.display = 'none';
+      product_quantity.style.display = 'none';
+      product_buy_buttons.style.display = 'none';
+      product_assessment_button.style.display = 'block';
+    }
+
+    const startConsultancy = document.getElementById('start-consultancy');
+    startConsultancy.addEventListener('click', (e) => {
+      window.location.href = '/pages/consultancy';
+    });
+  });
+</script>
