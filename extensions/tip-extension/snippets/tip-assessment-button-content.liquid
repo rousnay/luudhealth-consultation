@@ -4,8 +4,10 @@
   console.log('TIP App: Assessment button loaded 1');
 </script>
 
+{% assign section_id = section.id %}
+
 <div class="product-form__input">
-  <input type="hidden" form="{{ product_form_id }}" id="product-line-item-uuid" name="properties[_uuid]">
+  <input type="hidden" form="product-form-{{ section_id }}" id="product-line-item-uuid" name="properties[_uuid]">
 </div>
 
 <div class="tip-app-content product-form__assessment-button">
@@ -54,4 +56,7 @@
       window.location.href = '/pages/consultancy';
     });
   });
+
+  {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
+  console.log(sectionId); {% endcomment %}
 </script>

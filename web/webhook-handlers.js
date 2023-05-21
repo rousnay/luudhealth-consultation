@@ -182,7 +182,8 @@ export default {
       console.log("+++++++++Orders Paid!++++++++++++");
       const ordersPaid = JSON.parse(body);
       OrderSubmit(ordersPaid);
-      console.log(ordersPaid?.customer);
+      console.log("___order info____");
+      console.log(ordersPaid);
       console.log("IDs of all received webhooks:");
       console.log(receivedWebhooks);
     },

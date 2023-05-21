@@ -704,17 +704,18 @@ ready(function () {
         disableSubmit();
 
         // Prepare the data
-        const formData = new FormData(form),
-          formTime = new Date().getTime(),
-          formFields = [];
+        const formData = new FormData(form);
+        const formTime = new Date().getTime();
+        const medicalFormObj = Object.fromEntries(formData);
 
         // Format the data entries
-        for (const [name, value] of formData) {
-          formFields.push({
-            name: name,
-            value: value,
-          });
-        }
+        // formFields = [];
+        // for (const [name, value] of formData) {
+        //   formFields.push({
+        //     name: name,
+        //     value: value,
+        //   });
+        // }
 
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
@@ -736,7 +737,7 @@ ready(function () {
             return {
               line_items_uuid: uuid,
               submitted_at: formTime,
-              medical: formFields,
+              medical: medicalFormObj,
             };
           })
           .then((data) => postData(API, data))

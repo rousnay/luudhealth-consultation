@@ -6,8 +6,7 @@ const OrderSubmit = async (webhookResponse) => {
   const line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
   const product_id = webhookResponse?.line_items[0]?.product_id;
 
-  console.log("product_id", product_id);
-  console.log("line_items_uuid", line_items_uuid);
+  console.log("THE line_items_uuid:", line_items_uuid);
 
   if (product_id) {
     const order_data = DB.collection("order_data");
@@ -46,6 +45,7 @@ const OrderSubmit = async (webhookResponse) => {
         postcode: orderShippingAddress?.zip,
       },
     });
+    console.log("Result into:", result);
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
   } else {
     console.log("There is error in Payload!");
