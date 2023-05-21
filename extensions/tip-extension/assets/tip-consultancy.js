@@ -642,22 +642,26 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    const thankYou = progressForm.querySelector("#progress-form__thank-you");
-
-    // Clear all HTML Nodes that are not the thank you panel
-    while (progressForm.firstElementChild !== thankYou) {
-      progressForm.removeChild(progressForm.firstElementChild);
-    }
-
-    thankYou.removeAttribute("hidden");
-
-    // Logging the response from httpbin for quick verification
+    window.location.href = "/pages/medical-information";
     console.log(response);
+    // const thankYou = progressForm.querySelector("#progress-form__thank-you");
 
-    window.setTimeout(function () {
-      // Move to a new location or you can do something else
-      console.log("#sec passed!");
-    }, 3000);
+    // // Clear all HTML Nodes that are not the thank you panel
+    // while (progressForm.firstElementChild !== thankYou) {
+    //   progressForm.removeChild(progressForm.firstElementChild);
+    // }
+
+    // thankYou.removeAttribute("hidden");
+
+    // // Logging the response from httpbin for quick verification
+    // console.log(response);
+
+    // window.setTimeout(function () {
+
+    //   window.location.href = "/pages/medical-information";
+    //   // Move to a new location or you can do something else
+    //   console.log("#sec passed!");
+    // }, 3000);
   }
 
   /****************************************************************************/

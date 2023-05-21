@@ -297,7 +297,7 @@ li + li {
 
   --label-text-color: hsl(var(--blue-900));
   --label-text-font-family: var(--font-family-sans-serif);
-  --label-text-font-size: 1.4rem;
+  --label-text-font-size: 1em;
   --label-text-font-weight: 600;
   --label-text-letter-spacing: 0.05em;
 
@@ -338,8 +338,10 @@ li + li {
   display: block;
   letter-spacing: var(--label-text-letter-spacing);
   line-height: 1.6;
-  padding-bottom: calc(var(--space-multiplier) * 1rem);
+  /* padding-bottom: calc(var(--space-multiplier) * 1rem); */
   position: relative;
+  padding: 12px 20px;
+  cursor: pointer;
 }
 
 .tip-app-content label > [data-required="true"]::after {
@@ -503,10 +505,11 @@ select[aria-invalid="true"] {
   --button-text-color: hsl(var(--white));
   --button-text-decoration: none;
   --button-text-font-family: var(--font-family-sans-serif);
-  --button-text-font-size: 1.6rem;
+  --button-text-font-size: 1.1rem;
   --button-text-font-weight: 600;
   --button-text-letter-spacing: 0.05em;
   --button-text-shadow: 0 1px hsla(0, 0%, 20%, 0.2);
+  --button-line-height: 2.4em;
 }
 
 @media only screen and (min-width: 640px) {
@@ -531,6 +534,7 @@ select[aria-invalid="true"] {
   font-weight: var(--button-text-font-weight);
   letter-spacing: var(--button-text-letter-spacing);
   line-height: var(--button-height);
+  line-height: var(--button-line-height);
   padding: var(--button-padding);
   text-align: var(--button-text-align);
   -webkit-text-decoration: var(--button-text-decoration);
@@ -859,7 +863,11 @@ select[aria-invalid="true"] {
 }
 
 #start-consultancy {
-  margin-top: 80px;
+  font-size: 1.2em;
+  margin: 20px 0;
+  line-height: 2.4em;
+  letter-spacing: normal;
+  padding: 0 25px;
 }
 
 #progress-form {
@@ -901,8 +909,11 @@ fieldset .form__choice-wrapper {
 
 .radio-buttons label {
   background-color: white;
-  padding: 15px 20px;
+  padding: 12px 15px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
 }
 
 .check-boxes{
@@ -914,13 +925,16 @@ fieldset .form__choice-wrapper {
 
 .check-boxes label {
   background-color: white;
-  padding: 15px 20px;
+  padding: 12px 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
 }
 
 .tip-app-content legend p {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 1.2em;
     color: #4d2c1e;
 }
 
@@ -975,4 +989,55 @@ section#progress-form__thank-you button {
 
 #progress-form__thank-you .successful-submit{
   color: #4d2c1e;
+}
+
+
+
+.consultancy-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.consultancy-loader h3 {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 1.5em;
+  font-size: 1.5em;
+}
+.consultancy-loader .statusBar {
+  width: 100%;
+  height: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.consultancy-loader .statusBar:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -100%;
+  will-change: transform;
+  background: linear-gradient(90deg,  #0083da 0%,  #0083da 25%, #2cccdb 25%, #2cccdb 37.5%, #afdc5c 37.5%, #afdc5c 50%, #0083da 50%, #0083da 75%, #2cccdb 75%, #2cccdb 87.5%, #afdc5c 87.5%, #afdc5c 100%);
+  -webkit-animation: 1.3s progress ease infinite;
+          animation: 1.3s progress ease infinite;
+}
+
+@-webkit-keyframes progress {
+  0% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(50%);
+  }
+}
+
+@keyframes progress {
+  0% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(50%);
+  }
 }

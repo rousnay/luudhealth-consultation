@@ -604,17 +604,20 @@ ready(function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    const thankYou = progressForm.querySelector("#progress-form__thank-you");
-
-    // Clear all HTML Nodes that are not the thank you panel
-    while (progressForm.firstElementChild !== thankYou) {
-      progressForm.removeChild(progressForm.firstElementChild);
-    }
-
-    thankYou.removeAttribute("hidden");
-
-    // Logging the response from httpbin for quick verification
+    window.location.href = "/products/erectile-dysfunction";
     console.log(response);
+
+    // const thankYou = progressForm.querySelector("#progress-form__thank-you");
+
+    // // Clear all HTML Nodes that are not the thank you panel
+    // while (progressForm.firstElementChild !== thankYou) {
+    //   progressForm.removeChild(progressForm.firstElementChild);
+    // }
+
+    // thankYou.removeAttribute("hidden");
+
+    // // Logging the response from httpbin for quick verification
+    // console.log(response);
   }
 
   /****************************************************************************/
