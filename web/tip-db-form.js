@@ -4,13 +4,11 @@ import { DB } from "./db.js";
 //Webhook: User info to DB
 const consultancySubmit = async (formConsultancyResponse) => {
   console.log("Form: Consultancy -> Submit");
-  console.log("Body", formConsultancyResponse);
   // const order_id = webhookResponse?.id;
-
   if (formConsultancyResponse) {
-    const consultancy_data = DB.collection("consultancy_data");
+    const data_consultancy = DB.collection("data_consultancy");
 
-    const result = await consultancy_data.insertOne({
+    const result = await data_consultancy.insertOne({
       consultation: formConsultancyResponse,
     });
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
@@ -21,13 +19,11 @@ const consultancySubmit = async (formConsultancyResponse) => {
 
 const medicalSubmit = async (formMedicalResponse) => {
   console.log("Form: Medical -> Submit");
-  console.log("Body", formMedicalResponse);
   // const order_id = webhookResponse?.id;
-
   if (formMedicalResponse) {
-    const medical_data = DB.collection("medical_data");
+    const data_medical = DB.collection("data_medical");
 
-    const result = await medical_data.insertOne({
+    const result = await data_medical.insertOne({
       medical: formMedicalResponse,
     });
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
