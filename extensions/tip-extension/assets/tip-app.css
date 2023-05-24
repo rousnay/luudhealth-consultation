@@ -285,11 +285,11 @@ li + li {
     var(--field-border-style)
     var(--field-border-color);
   --field-border-radius: 3px;
-  --field-height: 4.2rem;
+  --field-height: 3.46rem;
   --field-padding: 0 calc(var(--space-multiplier) * 2rem);
   --field-text-color: hsl(var(--blue-900));
   --field-text-font-family: var(--font-family-sans-serif);
-  --field-text-font-size: 1.4rem;
+  --label-text-font-size: 1em;
   --field-text-font-weight: 500;
   --field-text-letter-spacing: 0.05em;
 
@@ -305,16 +305,16 @@ li + li {
 
   --error-text-color: hsl(var(--form-error-color));
   --error-text-font-family: var(--font-family-sans-serif);
-  --error-text-font-size: 1.2rem;
+  --error-text-font-size: 1rem;
   --error-text-font-weight: 500;
   --error-text-letter-spacing: 0.05em;
 
 }
 
 @media only screen and (min-width: 640px) {
-  :root {
+  /* :root {
     --field-height: 4.6rem;
-  }
+  } */
 }
 
 /* Fieldset
@@ -485,6 +485,7 @@ select[aria-invalid="true"] {
   letter-spacing: var(--error-text-letter-spacing);
   line-height: 1.6;
   margin-top: calc(var(--space-multiplier) * 1rem);
+  text-align: center;
 }
 /* ==========================================================================
    Buttons
@@ -885,10 +886,12 @@ select[aria-invalid="true"] {
 
 #progress-form legend ul {
   text-align: left;
+  font-weight: 500;
 }
 
 #progress-form ul li {
   list-style: disc;
+  margin-bottom: 10px;
 }
 
 .form__choice-wrapper span {
@@ -941,6 +944,12 @@ fieldset .form__choice-wrapper {
 .tip-app-content label,legend{
   font-weight: normal;
 }
+.tip-app-content-medical label {
+  font-weight: 600;
+  padding: 12px 0;
+  color: #4d2c1e;
+}
+
 .tip-app-content legend p {
   margin-top: 0;
 }
