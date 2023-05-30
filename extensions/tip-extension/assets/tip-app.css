@@ -334,10 +334,10 @@ li + li {
   color: var(--label-text-color);
   font-family: var(--label-text-font-family);
   font-size: var(--label-text-font-size);
-  font-weight: var(--label-text-font-weight);
+  /* font-weight: var(--label-text-font-weight); */
   display: block;
   letter-spacing: var(--label-text-letter-spacing);
-  line-height: 1.6;
+  /* line-height: 1.6; */
   /* padding-bottom: calc(var(--space-multiplier) * 1rem); */
   position: relative;
   padding: 12px 20px;
@@ -520,7 +520,7 @@ select[aria-invalid="true"] {
   }
 }
 
-.tip-app-content button {
+/* .tip-app-content button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -547,9 +547,9 @@ select[aria-invalid="true"] {
     text-shadow 0.2s ease-in-out;
   white-space: nowrap;
   width: 100%;
-}
+} */
 
-.tip-app-content button:active {
+/* .tip-app-content button:active {
   transform: translateY(1px);
 }
 
@@ -565,19 +565,19 @@ select[aria-invalid="true"] {
 
 .tip-app-content button:disabled {
   background-color: hsl(var(--gray-900))!important;;
-}
+} */
 
-@media only screen and (min-width: 640px) {
+/* @media only screen and (min-width: 640px) {
   .tip-app-content button {
     display: inline-block;
     vertical-align: top;
     width: auto;
   }
-}
+} */
 
 /* --- Simple Buttons --- */
 
-.button--simple,
+/* .button--simple,
 .button--simple:active,
 .button--simple:visited {
   background-color: transparent;
@@ -589,7 +589,7 @@ select[aria-invalid="true"] {
 .button--simple:focus {
   background-color: transparent;
   color: hsl(var(--light-blue-900));
-}
+} */
 
 /* ==========================================================================
    Container
@@ -845,7 +845,9 @@ select[aria-invalid="true"] {
   text-align: center;
   max-width: 800px;
   padding: 30px 30px 0;
-
+  margin: auto;
+  align-items: center;
+  line-height: normal;
   color: #4d2c1e;
 }
 
@@ -880,14 +882,7 @@ select[aria-invalid="true"] {
     margin-right: auto;
 }
 
-#progress-form legend {
-    text-align: center;
-}
 
-#progress-form legend ul {
-  text-align: left;
-  font-weight: 500;
-}
 
 #progress-form ul li {
   list-style: disc;
@@ -895,7 +890,9 @@ select[aria-invalid="true"] {
 }
 
 .form__choice-wrapper span {
-  font-weight: bold;
+  font-weight: 600;
+  color: rgb(68, 67, 66);
+  letter-spacing: unset;
 }
 
 fieldset .form__choice-wrapper {
@@ -935,11 +932,7 @@ fieldset .form__choice-wrapper {
   font-size: 1em;
 }
 
-.tip-app-content legend p {
-    font-weight: 700;
-    font-size: 1.2em;
-    color: #4d2c1e;
-}
+
 
 .tip-app-content label,legend{
   font-weight: normal;
@@ -976,7 +969,7 @@ fieldset .form__choice-wrapper {
   margin-top: 25px;
 }
 
-.tip-app-content button {
+/* .tip-app-content button {
   cursor: pointer;
   background-color: #583223;
 }
@@ -998,7 +991,7 @@ section#progress-form__thank-you button {
 
 #progress-form__thank-you .successful-submit{
   color: #4d2c1e;
-}
+} */
 
 
 
@@ -1050,3 +1043,111 @@ section#progress-form__thank-you button {
     transform: translate(50%);
   }
 }
+
+:root{
+  --text-font-family: Montserrat, sans-serif;
+      --base-font-size: 15px;
+  --text-font-weight: 300;
+  --text-font-style: normal;
+   --text-font-bold-weight: 600;
+
+    --heading-color: 77, 44, 30;
+    --text-color: 68, 67, 66;
+    --background: 244, 244, 244;
+    --secondary-background: 153, 133, 120;
+    --border-color: 218, 217, 217;
+    --border-color-darker: 174, 173, 173;
+    --success-color: 198, 180, 173;
+    --success-background: 235, 231, 230;
+    --error-color: 222, 42, 42;
+    --error-background: 242, 230, 230;
+    --primary-button-background: 88, 50, 33;
+    --primary-button-text-color: 241, 241, 241;
+    --secondary-button-background: 178, 160, 147;
+    --secondary-button-text-color: 241, 241, 241;   --primary-button-background: 88, 50, 33;
+    --primary-button-text-color: 241, 241, 241;
+    --secondary-button-background: , ,;
+    --secondary-button-text-color: , ,;
+}
+
+html {
+    font-family: var(--text-font-family);
+    font-weight: var(--text-font-weight);
+    font-style: var(--text-font-style);
+    font-size: calc(var(--base-font-size) - 1px);
+    line-height: 1.7142857143;
+    color: rgb(var(--text-color));
+    background: rgb(var(--background));
+}
+
+.text--strong {
+    font-weight: var(--text-font-bold-weight);
+}
+
+@media screen  and (min-width:1200px){
+  html {
+    font-size: var(--base-font-size);
+    line-height: 1.7333333333;
+  }
+  .h4, .rte h4 {
+      line-height: 1.1333333333;
+      letter-spacing: -.7px;
+  }
+}
+
+@media screen and (min-width: 741){
+  :root{
+  --container-gutter: 40px;
+    --grid-column-count: 20;
+    --vertical-breather: 48px;
+    --vertical-breather-tight: 48px;
+    --heading-xsmall-font-size: 12px;
+    --heading-small-font-size: 13px;
+    --heading-large-font-size: 52px;
+    --heading-h1-font-size: 48px;
+    --heading-h2-font-size: 38px;
+    --heading-h3-font-size: 32px;
+    --heading-h4-font-size: 24px;
+    --heading-h5-font-size: 20px;
+    --heading-h6-font-size: 18px;
+    --form-input-field-height: 52px;
+    --form-submit-margin: 32px;
+    --button-height: 52px;
+    --button-small-height: 44px;
+  }
+
+  .tip-app-content legend p {
+      line-height: 1.1333333333;
+      letter-spacing: -.7px;
+    }
+}
+@media screen and (min-width: 741){
+  .tip-app-content .button {
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: calc(var(--base-font-size) - 2px);
+    letter-spacing: 2px;
+    line-height: var(--button-height);
+    text-align: center;
+    color: rgb(var(--button-text-color));
+}
+}
+
+
+#progress-form legend {
+    text-align: center;
+}
+
+#progress-form legend ul {
+  text-align: left;
+  /* font-weight: 500; */
+}
+
+.tip-app-content legend p {
+  font-size: var(--heading-h4-font-size);
+  font-family: var(--heading-font-family);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  color: rgb(var(--heading-color));
+}
+

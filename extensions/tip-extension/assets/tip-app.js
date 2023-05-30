@@ -291,7 +291,7 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-            <button class="button-next button-progress" type="button" data-action="next">
+            <button class="button button-next button-progress" type="button" data-action="next">
               Continue
             </button>
           </div>`
@@ -300,10 +300,10 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-                <button type="button" class="mt-1 sm:mt-0 button--simple" data-action="prev">
+                <button type="button" class="button mt-1 sm:mt-0 button--simple" data-action="prev">
                   Back
                 </button>
-                <button  class="button-progress" type="submit">
+                <button  class="button button-progress" type="submit">
                   Submit
                 </button>
               </div>`
@@ -312,10 +312,10 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-              <button type="button" class="mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+              <button type="button" class="button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
                 Back
               </button>
-              <button class="button-next button-progress" type="button" data-action="next">
+              <button class="button button-next button-progress" type="button" data-action="next">
               Continue
             </button>
           </div>`
@@ -372,7 +372,7 @@ ready(function () {
                 <button type="button" class="mt-1 sm:mt-0 button--simple" data-action="prev">
                   Back
                 </button>
-                <button class="button-progress" type="submit">
+                <button class="button button-progress" type="submit">
                   Submit
                 </button>
               </div>`
@@ -381,10 +381,10 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-              <button type="button" class="mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+              <button type="button" class="button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
                 Back
               </button>
-              <button class="button-next button-progress" type="button" data-action="next">
+              <button class="button button-next button-progress" type="button" data-action="next">
               Continue
             </button>
           </div>`
@@ -406,7 +406,7 @@ ready(function () {
         `<section id="progress-form__thank-you" hidden>
         <p class="successful-submit">Consultancy data has been submitted successfully!</p>
         <p>Now you are going to tell us more about your personal and medical condition.</p>
-        <button type="button" id="continue-to-next-form">Continue</button>
+        <button type="button" class="button" id="continue-to-next-form">Continue</button>
       </section>`
       );
 
