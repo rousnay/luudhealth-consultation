@@ -600,40 +600,6 @@ select[aria-invalid="true"] {
   width: 100%;
 }
 
-/* ==========================================================================
-   Spacing
-   ========================================================================== */
-
-/**
- * These classes are named in the format
- *    `{breakpoint}:{property}{side?s}-{size}`
- *
- * Where `{breakpoint}` is one of sm, md, or lg
- *
- * Where `{property}` is one of:
- *    m - sets margin
- *    p - sets padding
- *
- * Where `{sides}` is one of:
- *    t - sets top only
- *    b - sets bottom only
- *    l - sets left only
- *    r - sets right only
- *    x - sets both left and right
- *    y - sets both top and bottom
- *    blank - sets all four sides
- *
- * Where `{size}` is one of the following as a multiple of 0.8:
- *    0 - sets spacing to 0 * 0.8 (0)
- *    1 - sets spacing to 1 * 0.8 (0.8rem)
- *    2 - sets spacing to 2 * 0.8 (1.6rem)
- *    3 - sets spacing to 3 * 0.8 (2.4rem)
- *    4 - sets spacing to 4 * 0.8 (3.2rem)
- *    5 - sets spacing to 5 * 0.8 (4.0rem)
- *    6 - sets spacing to 6 * 0.8 (4.8rem)
- *    auto - sets spacing to auto (margin only)
- */
-
 .mt-1 {
   margin-top: calc(var(--space-multiplier) * 1rem);
 }
@@ -865,13 +831,6 @@ select[aria-invalid="true"] {
   margin: 0;
 }
 
-#start-consultancy {
-  font-size: 1.2em;
-  margin: 20px 0;
-  line-height: 2.4em;
-  letter-spacing: normal;
-  padding: 0 25px;
-}
 
 #progress-form {
   box-shadow: none;
@@ -980,6 +939,12 @@ fieldset .form__choice-wrapper {
     background-color: transparent;
     color: #583223;
 }
+#progress-form__thank-you .successful-submit{
+  color: #4d2c1e;
+}
+ */
+
+
 
 #progress-form__thank-you{
   text-align: center;
@@ -988,12 +953,6 @@ fieldset .form__choice-wrapper {
 section#progress-form__thank-you button {
   margin-top: 30px;
 }
-
-#progress-form__thank-you .successful-submit{
-  color: #4d2c1e;
-} */
-
-
 
 .consultancy-loader {
   display: flex;
@@ -1006,6 +965,7 @@ section#progress-form__thank-you button {
   height: 48px;
   padding: 0 1.5em;
   font-size: 1.5em;
+  font-weight: var(--heading-font-weight);
 }
 .consultancy-loader .statusBar {
   width: 100%;
@@ -1045,75 +1005,71 @@ section#progress-form__thank-you button {
 }
 
 :root{
-  --text-font-family: Montserrat, sans-serif;
-      --base-font-size: 15px;
-  --text-font-weight: 300;
-  --text-font-style: normal;
-   --text-font-bold-weight: 600;
-
-    --heading-color: 77, 44, 30;
-    --text-color: 68, 67, 66;
-    --background: 244, 244, 244;
-    --secondary-background: 153, 133, 120;
-    --border-color: 218, 217, 217;
-    --border-color-darker: 174, 173, 173;
-    --success-color: 198, 180, 173;
-    --success-background: 235, 231, 230;
-    --error-color: 222, 42, 42;
-    --error-background: 242, 230, 230;
-    --primary-button-background: 88, 50, 33;
-    --primary-button-text-color: 241, 241, 241;
-    --secondary-button-background: 178, 160, 147;
-    --secondary-button-text-color: 241, 241, 241;   --primary-button-background: 88, 50, 33;
-    --primary-button-text-color: 241, 241, 241;
-    --secondary-button-background: , ,;
-    --secondary-button-text-color: , ,;
-}
+    --tip-button-color: #fffff;
+  }
 
 html {
-    font-family: var(--text-font-family);
+    /* font-family: var(--text-font-family);
     font-weight: var(--text-font-weight);
     font-style: var(--text-font-style);
     font-size: calc(var(--base-font-size) - 1px);
     line-height: 1.7142857143;
     color: rgb(var(--text-color));
-    background: rgb(var(--background));
+    background: rgb(var(--background)); */
 }
 
 .text--strong {
     font-weight: var(--text-font-bold-weight);
 }
 
+
+.tip-app-content .button{
+  background: rgb(var(--primary-button-background));
+  color: rgb(var(--primary-button-text-color));
+  border-radius: var(--button-border-radius);
+  line-height: var(--button-height);
+}
+
+#start-consultancy {
+  margin: 20px 0;
+}
+
+#progress-form legend {
+    text-align: center;
+}
+
+#progress-form legend p strong {
+  font-weight: 400;
+}
+
+#progress-form legend ul {
+  text-align: left;
+  /* font-weight: 500; */
+}
+
+.tip-app-content legend p {
+  font-size: var(--heading-h4-font-size);
+  font-family: var(--heading-font-family);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  color: rgb(var(--heading-color));
+}
+
+
 @media screen  and (min-width:1200px){
-  html {
+  /* html {
     font-size: var(--base-font-size);
     line-height: 1.7333333333;
   }
   .h4, .rte h4 {
       line-height: 1.1333333333;
       letter-spacing: -.7px;
-  }
+  } */
 }
 
 @media screen and (min-width: 741){
   :root{
-  --container-gutter: 40px;
-    --grid-column-count: 20;
-    --vertical-breather: 48px;
-    --vertical-breather-tight: 48px;
-    --heading-xsmall-font-size: 12px;
-    --heading-small-font-size: 13px;
-    --heading-large-font-size: 52px;
-    --heading-h1-font-size: 48px;
-    --heading-h2-font-size: 38px;
-    --heading-h3-font-size: 32px;
-    --heading-h4-font-size: 24px;
-    --heading-h5-font-size: 20px;
-    --heading-h6-font-size: 18px;
-    --form-input-field-height: 52px;
-    --form-submit-margin: 32px;
-    --button-height: 52px;
-    --button-small-height: 44px;
+    --tip-button-color: #fffff;
   }
 
   .tip-app-content legend p {
@@ -1132,22 +1088,3 @@ html {
     color: rgb(var(--button-text-color));
 }
 }
-
-
-#progress-form legend {
-    text-align: center;
-}
-
-#progress-form legend ul {
-  text-align: left;
-  /* font-weight: 500; */
-}
-
-.tip-app-content legend p {
-  font-size: var(--heading-h4-font-size);
-  font-family: var(--heading-font-family);
-  font-weight: var(--heading-font-weight);
-  font-style: var(--heading-font-style);
-  color: rgb(var(--heading-color));
-}
-
