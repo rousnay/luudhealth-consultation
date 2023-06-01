@@ -976,10 +976,11 @@ section#progress-form__thank-you button {
   bottom: 0;
   left: -100%;
   will-change: transform;
-  background: linear-gradient(90deg,  #0083da 0%,  #0083da 25%, #2cccdb 25%, #2cccdb 37.5%, #afdc5c 37.5%, #afdc5c 50%, #0083da 50%, #0083da 75%, #2cccdb 75%, #2cccdb 87.5%, #afdc5c 87.5%, #afdc5c 100%);
+  /* background: linear-gradient(90deg,  #0083da 0%,  #0083da 25%, #2cccdb 25%, #2cccdb 37.5%, #afdc5c 37.5%, #afdc5c 50%, #0083da 50%, #0083da 75%, #2cccdb 75%, #2cccdb 87.5%, #afdc5c 87.5%, #afdc5c 100%); */
+  background: linear-gradient(90deg,  #583222 0%,  #583222 25%, #c8b4a8 25%, #c8b4a8 37.5%, #787a7c 37.5%, #787a7c 50%, #583222 50%, #583222 75%, #c8b4a8 75%, #c8b4a8 87.5%, #787a7c 87.5%, #787a7c 100%);
   -webkit-animation: 1.3s progress ease infinite;
           animation: 1.3s progress ease infinite;
-}
+  }
 
 @-webkit-keyframes progress {
   0% {
