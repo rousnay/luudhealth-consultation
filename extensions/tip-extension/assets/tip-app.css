@@ -492,7 +492,7 @@ select[aria-invalid="true"] {
    ========================================================================== */
 
 :root {
-  --button-background-color: hsl(var(--blue-900));
+  /* --button-background-color: hsl(var(--blue-900));
   --button-border-width: 1px;
   --button-border-style: solid;
   --button-border-color: transparent;
@@ -510,15 +510,10 @@ select[aria-invalid="true"] {
   --button-text-font-weight: 600;
   --button-text-letter-spacing: 0.05em;
   --button-text-shadow: 0 1px hsla(0, 0%, 20%, 0.2);
-  --button-line-height: 2.4em;
+  --button-line-height: 2.4em; */
 }
 
-@media only screen and (min-width: 640px) {
-  :root {
-    --button-height: 4.6rem;
-    --button-padding: 0 calc(var(--space-multiplier) * 3rem);
-  }
-}
+
 
 /* .tip-app-content button {
   -webkit-appearance: none;
@@ -1022,12 +1017,20 @@ html {
     font-weight: var(--text-font-bold-weight);
 }
 
-
 .tip-app-content .button{
   background: rgb(var(--primary-button-background));
   color: rgb(var(--primary-button-text-color));
-  border-radius: var(--button-border-radius);
-  line-height: var(--button-height);
+  padding-left: 48px;
+  padding-right: 48px;
+}
+.tip-app-content .tip-back-button {
+    background: var(--background);
+    color: var(--root-text-color);
+    border: 1px solid rgb(var(--border-color));
+}
+
+.tip-full-width{
+  width: 100%!important;
 }
 
 #start-consultancy {
@@ -1087,4 +1090,11 @@ html {
     text-align: center;
     color: rgb(var(--button-text-color));
 }
+}
+
+@media only screen and (min-width: 640px) {
+  :root {
+    /* --button-height: 4.6rem;
+    --button-padding: 0 calc(var(--space-multiplier) * 3rem); */
+  }
 }

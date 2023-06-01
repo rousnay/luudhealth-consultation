@@ -300,7 +300,7 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-                <button type="button" class="button mt-1 sm:mt-0 button--simple" data-action="prev">
+                <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple" data-action="prev">
                   Back
                 </button>
                 <button  class="button button-progress" type="submit">
@@ -312,7 +312,7 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-              <button type="button" class="button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+              <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
                 Back
               </button>
               <button class="button button-next button-progress" type="button" data-action="next">
@@ -369,7 +369,7 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-                <button type="button" class="mt-1 sm:mt-0 button--simple" data-action="prev">
+                <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple" data-action="prev">
                   Back
                 </button>
                 <button class="button button-progress" type="submit">
@@ -381,7 +381,7 @@ ready(function () {
             section.insertAdjacentHTML(
               "beforeend",
               `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
-              <button type="button" class="button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+              <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
                 Back
               </button>
               <button class="button button-next button-progress" type="button" data-action="next">
