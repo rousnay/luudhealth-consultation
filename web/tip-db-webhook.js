@@ -1,5 +1,6 @@
 //@ts-check
 import { DB } from "./db.js";
+import { dataAggregate } from "./tip-db-aggregator.js";
 
 //Webhook: User info to DB
 const OrderSubmit = async (webhookResponse) => {
@@ -46,6 +47,9 @@ const OrderSubmit = async (webhookResponse) => {
       },
     });
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    if (line_items_uuid != null) {
+      dataAggregate(line_items_uuid);
+    }
   } else {
     console.log("There is error in Payload!");
   }
