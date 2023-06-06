@@ -47,9 +47,9 @@ const OrderSubmit = async (webhookResponse) => {
       },
     });
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
-    // if (line_items_uuid != null) {
-    dataAggregate("4aa12b48-29d7-464c-9499-45d219f008c5");
-    // }
+    if (line_items_uuid != null) {
+      dataAggregate(line_items_uuid);
+    }
   } else {
     console.log("There is error in Payload!");
   }

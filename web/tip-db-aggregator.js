@@ -2,7 +2,17 @@
 import { DB } from "./db.js";
 
 async function findDocumentByUuid(DBCollection, uuid) {
-  const collection = DB.collection("data_order");
+  let collection;
+
+  if (DBCollection == 1) {
+    collection = DB.collection("data_consultancy");
+  } else if (DBCollection == 2) {
+    collection = DB.collection("data_medical");
+  } else if (DBCollection == 3) {
+    collection = DB.collection("data_order");
+  } else {
+    console.log("Not found,but:", DBCollection);
+  }
   const document = await collection.findOne({ line_items_uuid: uuid });
 
   if (document) {
@@ -17,12 +27,9 @@ async function findDocumentByUuid(DBCollection, uuid) {
 const dataAggregate = async (lineItemsUuid) => {
   console.log("DB: data_aggregated");
 
-  const order_data = await findDocumentByUuid("order_data", lineItemsUuid);
-  const data_consultancy = await findDocumentByUuid(
-    "data_consultancy",
-    lineItemsUuid
-  );
-  const data_medical = await findDocumentByUuid("data_medical", lineItemsUuid);
+  const data_consultancy = await findDocumentByUuid(1, lineItemsUuid);
+  const data_medical = await findDocumentByUuid(2, lineItemsUuid);
+  const data_order = await findDocumentByUuid(3, lineItemsUuid);
 
   // if (order_data && data_consultancy && data_medical){
 
@@ -32,7 +39,7 @@ const dataAggregate = async (lineItemsUuid) => {
     const data_aggregated = DB.collection("data_aggregated");
 
     const result = await data_aggregated.insertOne({
-      order_data: order_data,
+      order_data: data_order,
       data_consultancy: data_consultancy,
       data_medical: data_medical,
     });
