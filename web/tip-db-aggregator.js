@@ -2,11 +2,9 @@
 import { DB } from "./db.js";
 
 async function findDocumentByUuid(DBCollection, uuid) {
-  const collection = DB.collection(DBCollection);
-  // Query for documents with a specific property
-  const query = { line_items_uuid: uuid };
-  // Execute the filter
-  const document = await collection.findOne(query);
+  const collection = DB.collection("data_order");
+  const document = await collection.findOne({ line_items_uuid: uuid });
+
   if (document) {
     console.log("Found document:", document);
     return document;
@@ -19,12 +17,12 @@ async function findDocumentByUuid(DBCollection, uuid) {
 const dataAggregate = async (lineItemsUuid) => {
   console.log("DB: data_aggregated");
 
-  const order_data = findDocumentByUuid("order_data", lineItemsUuid);
-  const data_consultancy = findDocumentByUuid(
+  const order_data = await findDocumentByUuid("order_data", lineItemsUuid);
+  const data_consultancy = await findDocumentByUuid(
     "data_consultancy",
     lineItemsUuid
   );
-  const data_medical = findDocumentByUuid("data_medical", lineItemsUuid);
+  const data_medical = await findDocumentByUuid("data_medical", lineItemsUuid);
 
   // if (order_data && data_consultancy && data_medical){
 
