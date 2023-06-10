@@ -53,6 +53,7 @@ function submitConsultancy(data_consultancy, data_medical, data_order) {
       console.log(await fullResponse);
     } else {
       console.log("error with consultancy submission");
+      console.log(await fullResponse);
     }
   };
 
