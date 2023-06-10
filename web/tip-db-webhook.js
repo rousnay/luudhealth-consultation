@@ -22,6 +22,7 @@ const OrderSubmit = async (webhookResponse) => {
       line_items_uuid: line_items_uuid,
       order_id: order_id,
       product_id: product_id,
+      // quantity: orderCustomer?.quantity,
       customer_id: orderCustomer?.id,
       customer: {
         firstname: orderCustomer?.first_name,

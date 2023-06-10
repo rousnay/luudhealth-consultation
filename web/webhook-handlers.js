@@ -182,9 +182,9 @@ export default {
       console.log("+++++++++Orders Paid!++++++++++++");
       const ordersPaid = JSON.parse(body);
       OrderSubmit(ordersPaid);
-    console.log("___order UUID:____");
+      console.log("___order UUID:____");
       const line_items_uuid = ordersPaid?.line_items[0]?.properties[0]?.value;
-      console.log(line_items_uuid);
+      console.log(ordersPaid);
       console.log("IDs of all received webhooks:");
       console.log(receivedWebhooks);
     },

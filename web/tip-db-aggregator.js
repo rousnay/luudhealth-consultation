@@ -1,5 +1,6 @@
 //@ts-check
 import { DB } from "./db.js";
+import { submitConsultancy } from "./tip-consultations.js";
 
 async function findDocumentByUuid(DBCollection, uuid) {
   let collection;
@@ -39,12 +40,16 @@ const dataAggregate = async (lineItemsUuid) => {
     const data_aggregated = DB.collection("data_aggregated");
 
     const result = await data_aggregated.insertOne({
+      created_at: data_order?.created_at,
+      line_items_uuid: lineItemsUuid,
+      quantity: 1,
       order_data: data_order,
       data_consultancy: data_consultancy,
       data_medical: data_medical,
     });
 
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    submitConsultancy(data_consultancy, data_medical, data_order);
   } else {
     console.log("There is error in Payload!");
   }
