@@ -21,6 +21,7 @@ function submitConsultancy(data_consultancy, data_medical, data_order) {
     consultation: data_consultancy?.consultancy,
   };
   console.log(form_data);
+  console.log(JSON.stringify(form_data));
 }
 
 export { submitConsultancy };
