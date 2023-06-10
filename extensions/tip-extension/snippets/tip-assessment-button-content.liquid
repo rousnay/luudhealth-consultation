@@ -1,13 +1,17 @@
 {{ 'stylesheet' | asset_url | stylesheet_tag }}
 <script src="{{ 'javascript' | asset_url }}" defer></script>
-<script>
-  console.log('TIP App: Assessment button loaded 1');
-</script>
 
 {% assign section_id = section.id %}
+{% assign product_id = product.id %}
+{% assign form_id = form.id %}
 
 <div class="product-form__input">
-  <input type="text" form="product-form-{{ section_id }}" id="product-line-item-uuid" name="properties[_uuid]">
+  <input
+    type="hidden"
+    form="product-form-{{ section_id }}-{{ product_id }}"
+    id="product-line-item-uuid"
+    name="properties[_uuid]"
+  >
 </div>
 
 <div class="tip-app-content product-form__assessment-button">
