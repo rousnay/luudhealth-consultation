@@ -49,12 +49,10 @@ function submitConsultancy(data_consultancy, data_medical, data_order) {
     console.log("Body", consultancyPayload);
 
     if (response.status === 200) {
-      const fullResponse = await response.json();
-      console.log(await fullResponse);
+      console.log(response);
     } else {
       console.log("error with consultancy submission");
-      const fullResponse = await response.json();
-      console.log(await fullResponse);
+      console.log(response);
     }
   };
 
