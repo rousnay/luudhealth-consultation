@@ -13,6 +13,7 @@ const OrderSubmit = async (webhookResponse) => {
     const data_order = DB.collection("data_order");
     const createdAt = webhookResponse?.created_at;
     const order_id = webhookResponse?.id;
+    const quantity = webhookResponse?.line_items[0]?.quantity;
     const orderCustomer = webhookResponse?.customer;
     const orderBillingAddress = webhookResponse?.billing_address;
     const orderShippingAddress = webhookResponse?.shipping_address;
@@ -22,7 +23,7 @@ const OrderSubmit = async (webhookResponse) => {
       line_items_uuid: line_items_uuid,
       order_id: order_id,
       product_id: product_id,
-      // quantity: orderCustomer?.quantity,
+      quantity: quantity,
       customer_id: orderCustomer?.id,
       customer: {
         firstname: orderCustomer?.first_name,

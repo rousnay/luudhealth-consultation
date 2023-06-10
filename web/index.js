@@ -127,7 +127,7 @@ app.get("/api/tip", async (req, res) => {
   res.status(200).end();
 });
 
-app.post("/api/tip/consultancy", async (req, res) => {
+app.post("/api/tip/consultations/generate", async (req, res) => {
   const payload = req.body;
   const response = await fetch(
     `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations/generate`,
@@ -146,6 +146,24 @@ app.post("/api/tip/consultancy", async (req, res) => {
   res.status(200).end();
 });
 
+app.post("/api/tip/consultations", async (req, res) => {
+  const payload = req.body;
+  const response = await fetch(
+    `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations`,
+    {
+      method: "post",
+      headers: tip_header,
+      body: JSON.stringify(payload),
+    }
+  ).then((response) => response.json());
+
+  console.log("POST: APP / Consultations");
+  console.log("Body", payload);
+  console.log("Response", response);
+
+  res.json(response);
+  res.status(200).end();
+});
 // Shopify APIs
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
