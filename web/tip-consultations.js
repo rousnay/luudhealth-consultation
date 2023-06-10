@@ -1,23 +1,4 @@
 function submitConsultancy(data_consultancy, data_medical, data_order) {
-  const tipConsultancy = async (consultancyPayload) => {
-    const url = `/api/tip/consultations`;
-    const method = "POST";
-    const response = await fetch(url, {
-      method,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(consultancyPayload),
-    });
-    if (response.status === 200) {
-      const fullResponse = await response.json();
-      console.log(await fullResponse);
-    } else {
-      console.log("error with consultancy submission");
-    }
-  };
-
   const form_data = {
     uuid: "IPS-C" + data_order?.line_items_uuid,
     type: "NEW",
@@ -39,9 +20,31 @@ function submitConsultancy(data_consultancy, data_medical, data_order) {
     },
     consultation: data_consultancy?.consultancy,
   };
-  console.log(form_data);
+
+  const tipConsultancy = async (consultancyPayload) => {
+    const response = await fetch(
+      `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations`,
+      {
+        method: "post",
+        headers: tip_header,
+        body: JSON.stringify(consultancyPayload),
+      }
+    ).then((response) => response.json());
+
+    console.log("POST: APP / Consultations");
+    console.log("Body", consultancyPayload);
+
+    if (response.status === 200) {
+      const fullResponse = await response.json();
+      console.log(await fullResponse);
+    } else {
+      console.log("error with consultancy submission");
+    }
+  };
+
   tipConsultancy(form_data);
-  // console.log(JSON.stringify(form_data));
+
+  // return
 }
 
 export { submitConsultancy };
