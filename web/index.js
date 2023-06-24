@@ -14,6 +14,7 @@ import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 import { connectToDB } from "./db.js";
 import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
+import { submitConsultancy } from "./tip-consultations.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -91,6 +92,34 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
   res.status(200).end();
 });
 
+//TIP Notification Handler
+app.post("/proxy_route/notifications_receiver", async (req, res) => {
+  const payload = req.body;
+  console.log("POST: Notification Receiver");
+  console.log("Notification body:", payload);
+
+  if (payload.type == "USER_ID_PASS") {
+    submitConsultancy(payload?.data?.uuid.substring(5));
+    console.log("USER_ID_PASS");
+  }
+
+  if (payload.type == "USER_ID_FAIL") {
+    submitConsultancy(payload?.data?.uuid.substring(5));
+    console.log("USER_ID_FAIL");
+  }
+
+  if (payload.type == "CONSULTATION_APPROVED") {
+    console.log(payload?.data?.consultation?.uuid.substring(5));
+  }
+
+  if (payload.type == "ORDER_FULFILLED") {
+    console.log(payload?.data?.uuid.substring(5));
+  }
+
+  res.json({ message: "Notification has been received from App" });
+  res.status(200).end();
+});
+
 //Consultations: Create Configuration
 app.post("/proxy_route/consultancy", async (req, res) => {
   const payload = req.body;
@@ -108,15 +137,6 @@ app.post("/proxy_route/consultancy", async (req, res) => {
   console.log("Response", response);
 
   res.json(response);
-  res.status(200).end();
-});
-
-app.post("/proxy_route/check", async (req, res) => {
-  const payload = req.body;
-
-  console.log("POST: Theme / Check (demo)");
-  console.log("Body", payload);
-
   res.status(200).end();
 });
 
