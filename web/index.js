@@ -104,7 +104,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   }
 
   if (payload.type == "USER_ID_FAIL") {
-    submitConsultancy(payload?.data?.uuid.substring(5));
+    // submitConsultancy(payload?.data?.uuid.substring(5));
     console.log("USER_ID_FAIL");
   }
 

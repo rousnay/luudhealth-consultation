@@ -46,7 +46,7 @@ function identityCheck(data_medical, data_order) {
     if (response.status === 200) {
       console.log(response);
     } else {
-      console.log("error with consultancy submission");
+      console.log("error with Identity submission");
       console.log(response);
     }
   };
