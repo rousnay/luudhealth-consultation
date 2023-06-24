@@ -798,13 +798,13 @@ const initProcessForm = function () {
         //building form data for process
         const consultancyFormArray = Object.keys(consultancyFormIntObj).map(
           (key) => ({
-            question: key,
+            question: parseInt(key),
             answer: consultancyFormIntObj[key],
           })
         );
 
         const consultancyData = { consultation: consultancyFormArray };
-        console.log(consultancyData);
+        console.log("Questions data:", consultancyData);
 
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
@@ -820,6 +820,7 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
+
         getUUID()
           .then((uuid) => {
             localStorage.setItem("line_items_uuid", uuid);
