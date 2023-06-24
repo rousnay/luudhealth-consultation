@@ -97,6 +97,7 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
   console.log("POST: Notification Receiver");
+
   console.log("Notification body:", JSON.stringify(payload));
 
   if (payload.type == "USER_ID_PASS") {
