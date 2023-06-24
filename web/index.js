@@ -15,6 +15,7 @@ import proxyRouter from "./routes/app_proxy/index.js";
 import { connectToDB } from "./db.js";
 import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
 import { submitConsultancy } from "./tip-consultations.js";
+import { json } from "body-parser";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -96,7 +97,7 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
   console.log("POST: Notification Receiver");
-  console.log("Notification body:", payload);
+  console.log("Notification body:", JSON.stringify(payload));
 
   if (payload.type == "USER_ID_PASS") {
     submitConsultancy(payload?.data?.uuid.substring(5));
