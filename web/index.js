@@ -15,7 +15,7 @@ import proxyRouter from "./routes/app_proxy/index.js";
 import { connectToDB } from "./db.js";
 import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
 import { submitConsultancy } from "./tip-consultations.js";
-import { json } from "body-parser";
+// import { json } from "body-parser";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
