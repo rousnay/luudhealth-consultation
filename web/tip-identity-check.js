@@ -41,7 +41,7 @@ function identityCheck(data_medical, data_order) {
     ).then((response) => response.json());
 
     console.log("POST: APP / identityCheckPayload");
-    console.log("Body", identityCheckPayload);
+    console.log("identityCheckPayload:", JSON.stringify(identityCheckPayload));
 
     if (response.status === 200) {
       console.log(response);
