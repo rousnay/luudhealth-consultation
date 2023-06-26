@@ -79,7 +79,7 @@ const placeOrder = async (lineItemsUuid) => {
       {
         treatment: 6257,
         quantity: data_order?.quantity,
-        total: 1,
+        total: data_order?.total_price,
         consultation: "IPS-C" + lineItemsUuid,
       },
     ],

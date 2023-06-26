@@ -118,6 +118,15 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
       // orderFulfilled(uuid);
+      // let ORDER_FULFILLED = {
+      //   type: "ORDER_FULFILLED",
+      //   data: {
+      //     uuid: ARB - 324324,
+      //     tracking_no: "12441224",
+      //     tracking_link: "https://www.royalmail.com/track-your-item#/12441224",
+      //     expected_at: "2018-12-29",
+      //   },
+      // };
       break;
 
     case "USER_ID_FAIL":
