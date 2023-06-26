@@ -70,7 +70,8 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
     }
   ).then((response) => response.json());
 
-  console.log("Body", payload);
+  console.log("### APP: consultancy/generate:", JSON.stringify(payload));
+
   res.json(response);
   res.status(200).end();
 });
@@ -79,7 +80,9 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
 app.post("/proxy_route/consultancy/submit", async (req, res) => {
   const payload = req.body;
   consultancySubmit(payload);
-  console.log("payload", payload);
+
+  console.log("### APP: consultancy/submit:", JSON.stringify(payload));
+
   res.json(payload);
   res.status(200).end();
 });
@@ -88,7 +91,9 @@ app.post("/proxy_route/consultancy/submit", async (req, res) => {
 app.post("/proxy_route/medical/submit", async (req, res) => {
   const payload = req.body;
   medicalSubmit(payload);
-  console.log("payload", payload);
+
+  console.log("### APP: medical/submit Body:", JSON.stringify(payload));
+
   res.json(payload);
   res.status(200).end();
 });
@@ -96,26 +101,29 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 //TIP Notification Handler
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
-  console.log("POST: Notification Receiver");
+  console.log("### Notification Received Body:", JSON.stringify(payload));
+  const uuid = payload?.data?.uuid?.substring(5);
 
-  console.log("Notification body:", JSON.stringify(payload));
+  switch (payload?.type) {
+    case "USER_ID_PASS":
+      console.log("### USER_ID_PASS");
+      submitConsultancy(uuid);
+      break;
 
-  if (payload.type == "USER_ID_PASS") {
-    submitConsultancy(payload?.data?.uuid.substring(5));
-    console.log("USER_ID_PASS");
-  }
+    case "CONSULTATION_APPROVED":
+      console.log("### CONSULTATION_APPROVED");
+      // submitOrder(payload?.data?.consultation?.uuid.substring(5));
+      break;
 
-  if (payload.type == "USER_ID_FAIL") {
-    // submitConsultancy(payload?.data?.uuid.substring(5));
-    console.log("USER_ID_FAIL");
-  }
+    case "ORDER_FULFILLED":
+      console.log("### ORDER_FULFILLED");
+      // orderFulfilled(uuid);
+      break;
 
-  if (payload.type == "CONSULTATION_APPROVED") {
-    console.log(payload?.data?.consultation?.uuid.substring(5));
-  }
-
-  if (payload.type == "ORDER_FULFILLED") {
-    console.log(payload?.data?.uuid.substring(5));
+    case "USER_ID_FAIL":
+      console.log("### USER_ID_FAIL");
+      // identityFailed(uuid);
+      break;
   }
 
   res.json({ message: "Notification has been received from App" });
@@ -134,9 +142,8 @@ app.post("/proxy_route/consultancy", async (req, res) => {
     }
   ).then((response) => response.json());
 
-  console.log("POST: Theme / Create");
-  console.log("Body", payload);
-  console.log("Response", response);
+  console.log("### API: partners/consultations Body:", JSON.stringify(payload));
+  console.log("### API: partners/consultations Response:", response);
 
   res.json(response);
   res.status(200).end();
@@ -145,7 +152,7 @@ app.post("/proxy_route/consultancy", async (req, res) => {
 // Start TIP API Backend
 app.get("/api/tip", async (req, res) => {
   res.write("TIP API is live!");
-  console.log("TIP API is live!");
+  console.log("### TIP API is live!");
   res.status(200).end();
 });
 
@@ -160,9 +167,14 @@ app.post("/api/tip/consultations/generate", async (req, res) => {
     }
   ).then((response) => response.json());
 
-  console.log("POST: APP / Generate");
-  console.log("Body", payload);
-  console.log("Response", response);
+  console.log(
+    "### API: partners/consultations/generate Body:",
+    JSON.stringify(payload)
+  );
+  console.log(
+    "### API: partners/consultations/generate Response:",
+    JSON.stringify(response)
+  );
 
   res.json(response);
   res.status(200).end();
@@ -179,9 +191,11 @@ app.post("/api/tip/consultations", async (req, res) => {
     }
   ).then((response) => response.json());
 
-  console.log("POST: APP / Consultations");
-  console.log("Body", payload);
-  console.log("Response", response);
+  console.log("### API: partners/consultations Body:", JSON.stringify(payload));
+  console.log(
+    "### API: partners/consultations Response:",
+    JSON.stringify(response)
+  );
 
   res.json(response);
   res.status(200).end();
@@ -218,8 +232,8 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 connectToDB(() => {
-  console.log("Successfully connect to the database!");
+  console.log("### Successfully connect to the database!");
   app.listen(PORT, () => {
-    console.log("Server is listening to port: " + PORT);
+    console.log("### Server is listening to port: " + PORT);
   });
 });

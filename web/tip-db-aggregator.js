@@ -13,21 +13,21 @@ async function findDocumentByUuid(DBCollection, uuid) {
   } else if (DBCollection == 3) {
     collection = DB.collection("data_order");
   } else {
-    console.log("Not found,but:", DBCollection);
+    console.log("## Not found,but:", DBCollection);
   }
   const document = await collection.findOne({ line_items_uuid: uuid });
 
   if (document) {
-    console.log("Found document:", document);
+    console.log("## Found document for form ID:", DBCollection);
     return document;
   } else {
-    console.log("Document not found");
+    console.log("## Document not found!");
     return null;
   }
 }
 
 const dataAggregate = async (lineItemsUuid) => {
-  console.log("DB: data_aggregated");
+  console.log("## DB: data_aggregated");
 
   const data_consultancy = await findDocumentByUuid(1, lineItemsUuid);
   const data_medical = await findDocumentByUuid(2, lineItemsUuid);
@@ -49,10 +49,12 @@ const dataAggregate = async (lineItemsUuid) => {
       data_medical: data_medical,
     });
 
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    console.log(
+      `## A document was inserted with the _id: ${result.insertedId}`
+    );
     identityCheck(data_medical, data_order);
   } else {
-    console.log("There is error in Payload!");
+    console.log("## There is error in Payload!");
   }
 };
 

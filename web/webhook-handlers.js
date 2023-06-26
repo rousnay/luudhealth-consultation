@@ -114,8 +114,8 @@ export default {
       console.log("+++++++++Orders Create!++++++++++++");
       const ordersCreate = JSON.parse(body);
       // console.log(ordersCreate);
-      console.log("IDs of all received webhooks:");
-      console.log(receivedWebhooks);
+      // console.log("## IDs of all received webhooks:");
+      // console.log(receivedWebhooks);
     },
   },
 
@@ -131,8 +131,8 @@ export default {
       console.log("+++++++++Orders Updated!++++++++++++");
       // const ordersUpdated = JSON.parse(body);
       // console.log(ordersUpdated);
-      console.log("IDs of all received webhooks:");
-      console.log(receivedWebhooks);
+      // console.log("## IDs of all received webhooks:");
+      // console.log(receivedWebhooks);
     },
   },
 
@@ -148,8 +148,8 @@ export default {
       console.log("+++++++++Order Delete!++++++++++++");
       // const ordersDeleted = JSON.parse(body);
       // console.log(ordersDeleted);
-      console.log("IDs of all received webhooks:");
-      console.log(receivedWebhooks);
+      // console.log("## IDs of all received webhooks:");
+      // console.log(receivedWebhooks);
     },
   },
 
@@ -162,11 +162,11 @@ export default {
       // Add to our list of receieved webhooks
       receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      console.log("+++++++++Customers Create!++++++++++++");
+      console.log("## +++++Customers Create!++++++++++++");
       // const customersCreate = JSON.parse(body);
       // console.log(customersCreate);
-      console.log("IDs of all received webhooks:");
-      console.log(receivedWebhooks);
+      // console.log("## IDs of all received webhooks:");
+      // console.log(receivedWebhooks);
     },
   },
 
@@ -179,14 +179,13 @@ export default {
       // Add to our list of receieved webhooks
       receivedWebhooks[webhookId] = true;
       // Add to our queue for processing
-      console.log("+++++++++Orders Paid!++++++++++++");
+      console.log("## +++Orders Paid +++++++++++");
       const ordersPaid = JSON.parse(body);
       OrderSubmit(ordersPaid);
-      console.log("___order UUID:____");
       const line_items_uuid = ordersPaid?.line_items[0]?.properties[0]?.value;
-      console.log(ordersPaid);
-      console.log("IDs of all received webhooks:");
-      console.log(receivedWebhooks);
+      console.log("## WEBHOOK: Paid order UUID:", line_items_uuid);
+      // console.log("## IDs of all received webhooks:");
+      // console.log(receivedWebhooks);
     },
   },
 };

@@ -73,14 +73,13 @@ const submitConsultancy = async (lineItemsUuid) => {
       }
     ).then((response) => response.json());
 
-    console.log("POST: APP / Consultations");
-    console.log("Body", consultancyPayload);
+    console.log("## API: partners/consultations Body:", consultancyPayload);
 
     if (response.status === 200) {
-      console.log(response);
+      console.log("### API: partners/consultations Response:", response);
     } else {
-      console.log("error with consultancy submission");
-      console.log(response);
+      console.log("### Error with consultancy submission");
+      console.log("### API: partners/consultations Response:", response);
     }
   };
 

@@ -7,7 +7,7 @@ const OrderSubmit = async (webhookResponse) => {
   const line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
   const product_id = webhookResponse?.line_items[0]?.product_id;
 
-  console.log("line_items_uuid:", line_items_uuid);
+  console.log("## line_items_uuid:", line_items_uuid);
 
   if (product_id) {
     const data_order = DB.collection("data_order");
@@ -48,12 +48,14 @@ const OrderSubmit = async (webhookResponse) => {
         postcode: orderShippingAddress?.zip,
       },
     });
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    console.log(
+      `## A document was inserted with the _id: ${result.insertedId}`
+    );
     if (line_items_uuid != null) {
       dataAggregate(line_items_uuid);
     }
   } else {
-    console.log("There is error in Payload!");
+    console.log("## There is error in Payload!");
   }
 };
 

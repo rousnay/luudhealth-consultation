@@ -40,15 +40,16 @@ function identityCheck(data_medical, data_order) {
       }
     ).then((response) => response.json());
 
-    console.log("POST: APP / identityCheckPayload");
-    console.log("Full Header:", tip_header);
-    console.log("identityCheckPayload:", JSON.stringify(identityCheckPayload));
+    console.log(
+      "### API: partners/identity-checks payload:",
+      JSON.stringify(identityCheckPayload)
+    );
 
     if (response.status === 200) {
-      console.log(response);
+      console.log("### API: partners/identity-checks Response:", response);
     } else {
-      console.log("error with Identity submission");
-      console.log(response);
+      console.log("### Error with Identity submission");
+      console.log("### API: partners/identity-checks Response:", response);
     }
   };
 
