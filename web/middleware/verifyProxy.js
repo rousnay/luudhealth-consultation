@@ -13,14 +13,10 @@ const verifyProxy = (req, res, next) => {
     .sort()
     .join("");
 
-  // console.log(queryURI);
-
   const calculatedSignature = crypto
     .createHmac("sha256", process.env.SHOPIFY_API_SECRET)
     .update(queryURI, "utf-8")
     .digest("hex");
-
-  // console.log(calculatedSignature);
 
   if (calculatedSignature === signature) {
     next();
