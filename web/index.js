@@ -101,7 +101,6 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 //TIP Notification Handler
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
-  console.log("### Notification Received Body:", JSON.stringify(payload));
   const uuid = payload?.data?.uuid?.substring(5);
 
   switch (payload?.type) {
@@ -125,6 +124,8 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       // identityFailed(uuid);
       break;
   }
+
+  console.log("### Notification Received Body:", JSON.stringify(payload));
 
   res.json({ message: "Notification has been received from App" });
   res.status(200).end();
