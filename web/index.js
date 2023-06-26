@@ -15,6 +15,7 @@ import proxyRouter from "./routes/app_proxy/index.js";
 import { connectToDB } from "./db.js";
 import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
 import { submitConsultancy } from "./tip-consultations.js";
+import { placeOrder } from "./tip-order.js";
 // import { json } from "body-parser";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
@@ -111,7 +112,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
 
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
-      // submitOrder(payload?.data?.consultation?.uuid.substring(5));
+      placeOrder(payload?.data?.consultation?.uuid.substring(5));
       break;
 
     case "ORDER_FULFILLED":

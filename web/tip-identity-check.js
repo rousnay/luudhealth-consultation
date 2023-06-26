@@ -41,15 +41,17 @@ function identityCheck(data_medical, data_order) {
     ).then((response) => response.json());
 
     console.log(
-      "### API: partners/identity-checks payload:",
+      "## API: partners/identity-checks payload:",
       JSON.stringify(identityCheckPayload)
     );
 
     if (response.status === 200) {
-      console.log("### API: partners/identity-checks Response:", response);
+      console.log("## API: partners/identity-checks Response:", response);
+    } else if (response.status === 201) {
+      console.log("#### API: IDENTITY SUBMITTED!", response);
     } else {
-      console.log("### Error with Identity submission");
-      console.log("### API: partners/identity-checks Response:", response);
+      console.log("## Error with Identity submission");
+      console.log("## API: partners/identity-checks Response:", response);
     }
   };
 
