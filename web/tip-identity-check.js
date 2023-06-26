@@ -41,6 +41,9 @@ function identityCheck(data_medical, data_order) {
     ).then((response) => response.json());
 
     console.log("POST: APP / identityCheckPayload");
+    console.log("client id:", TIP_CLIENT_ID);
+    console.log("jwt:", TIP_TOKEN);
+    console.log("full header", tip_header);
     console.log("identityCheckPayload:", JSON.stringify(identityCheckPayload));
 
     if (response.status === 200) {
