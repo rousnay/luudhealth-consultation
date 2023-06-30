@@ -223,6 +223,9 @@ app.post("/proxy_route/fulfillment", async (_req, res) => {
   await fulfillment.save({
     update: true,
   });
+
+  res.json({ message: "Request has been received from App" });
+  res.status(200).end();
 });
 
 
