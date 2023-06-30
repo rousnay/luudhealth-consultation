@@ -127,20 +127,19 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   //     break;
   // }
 
-  fetch("/api/products/test", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      // "X-Shopify-Access-Token": SHOPIFY_API_KEY,
+  const fulfillment = await shopify.api.rest.Fulfillment({session: res.locals.shopify.session});
+  fulfillment.line_items_by_fulfillment_order = [
+    {
+      "fulfillment_order_id": 5377732804916
     }
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Order fulfilled:", data);
-    })
-    .catch((error) => {
-      console.error("Error fulfilling order:", error);
-    });
+  ];
+  fulfillment.tracking_info = {
+    "number": "KN423722033GB",
+    "url": "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB"
+  };
+  await fulfillment.save({
+    update: true,
+  });
 
 
   console.log("### Notification Received Body:", JSON.stringify(payload));
@@ -239,6 +238,9 @@ app.post("/proxy_route/fulfillment", async (_req, res) => {
   await fulfillment.save({
     update: true,
   });
+
+  res.json("response");
+  res.status(200).end();
 });
 
 
