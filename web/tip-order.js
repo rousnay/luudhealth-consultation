@@ -40,6 +40,7 @@ const placeOrder = async (lineItemsUuid) => {
 
   const order_data = {
     uuid: "IPS-O" + lineItemsUuid,
+    brand: "Luud Heath",
 
     delivery: {
       salutation: "Mr",

@@ -208,24 +208,8 @@ app.post("/api/tip/consultations", async (req, res) => {
 // /api/order/fulfillment
 
 app.post("/proxy_route/fulfillment", async (_req, res) => {
-  // Session is built by the OAuth process
-  // const fulfillment = await shopify.api.rest.Fulfillment({session: res.locals.shopify.session});
-  // fulfillment.line_items_by_fulfillment_order = [
-  //   {
-  //     "fulfillment_order_id": 5377732804916
-  //   }
-  // ];
-  // fulfillment.tracking_info = {
-  //   "number": "KN423722033GB",
-  //   "url": "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB"
-  // };
-  // await fulfillment.save({
-  //   update: true,
-  // });
-
-
+  
   orderFulfilled();
-
 
   res.json("response");
   res.status(200).end();
