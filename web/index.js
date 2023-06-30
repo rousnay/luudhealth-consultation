@@ -102,30 +102,46 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 
 //TIP Notification Handler
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
-  const payload = req.body;
-  const uuid = payload?.data?.uuid?.substring(5);
+  // const payload = req.body;
+  // const uuid = payload?.data?.uuid?.substring(5);
 
-  switch (payload?.type) {
-    case "USER_ID_PASS":
-      console.log("### USER_ID_PASS");
-      submitConsultancy(uuid);
-      break;
+  // switch (payload?.type) {
+  //   case "USER_ID_PASS":
+  //     console.log("### USER_ID_PASS");
+  //     submitConsultancy(uuid);
+  //     break;
 
-    case "CONSULTATION_APPROVED":
-      console.log("### CONSULTATION_APPROVED");
-      placeOrder(payload?.data?.consultation?.uuid.substring(5));
-      break;
+  //   case "CONSULTATION_APPROVED":
+  //     console.log("### CONSULTATION_APPROVED");
+  //     placeOrder(payload?.data?.consultation?.uuid.substring(5));
+  //     break;
 
-    case "ORDER_FULFILLED":
-      console.log("### ORDER_FULFILLED");
-      // orderFulfilled(uuid);
-      break;
+  //   case "ORDER_FULFILLED":
+  //     console.log("### ORDER_FULFILLED");
+  //     // orderFulfilled(uuid);
+  //     break;
 
-    case "USER_ID_FAIL":
-      console.log("### USER_ID_FAIL");
-      // identityFailed(uuid);
-      break;
-  }
+  //   case "USER_ID_FAIL":
+  //     console.log("### USER_ID_FAIL");
+  //     // identityFailed(uuid);
+  //     break;
+  // }
+
+  fetch("/api/products/test", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      // "X-Shopify-Access-Token": SHOPIFY_API_KEY,
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Order fulfilled:", data);
+    })
+    .catch((error) => {
+      console.error("Error fulfilling order:", error);
+    });
+
 
   console.log("### Notification Received Body:", JSON.stringify(payload));
 
@@ -223,11 +239,13 @@ app.post("/proxy_route/fulfillment", async (_req, res) => {
   await fulfillment.save({
     update: true,
   });
-
-  res.json({ message: "Request has been received from App" });
-  res.status(200).end();
 });
 
+
+app.get("/api/products/test", async (_req, res) => {
+  const testsData = "This is the test data";
+  res.status(200).send(testsData);
+});
 
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
