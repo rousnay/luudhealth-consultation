@@ -102,45 +102,30 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 
 //TIP Notification Handler
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
-  // const payload = req.body;
-  // const uuid = payload?.data?.uuid?.substring(5);
+  const payload = req.body;
+  const uuid = payload?.data?.uuid?.substring(5);
 
-  // switch (payload?.type) {
-  //   case "USER_ID_PASS":
-  //     console.log("### USER_ID_PASS");
-  //     submitConsultancy(uuid);
-  //     break;
+  switch (payload?.type) {
+    case "USER_ID_PASS":
+      console.log("### USER_ID_PASS");
+      submitConsultancy(uuid);
+      break;
 
-  //   case "CONSULTATION_APPROVED":
-  //     console.log("### CONSULTATION_APPROVED");
-  //     placeOrder(payload?.data?.consultation?.uuid.substring(5));
-  //     break;
+    case "CONSULTATION_APPROVED":
+      console.log("### CONSULTATION_APPROVED");
+      placeOrder(payload?.data?.consultation?.uuid.substring(5));
+      break;
 
-  //   case "ORDER_FULFILLED":
-  //     console.log("### ORDER_FULFILLED");
-  //     // orderFulfilled(uuid);
-  //     break;
+    case "ORDER_FULFILLED":
+      console.log("### ORDER_FULFILLED");
+      // orderFulfilled(uuid);
+      break;
 
-  //   case "USER_ID_FAIL":
-  //     console.log("### USER_ID_FAIL");
-  //     // identityFailed(uuid);
-  //     break;
-  // }
-
-  const fulfillment = await shopify.api.rest.Fulfillment({session: res.locals.shopify.session});
-  fulfillment.line_items_by_fulfillment_order = [
-    {
-      "fulfillment_order_id": 5377732804916
-    }
-  ];
-  fulfillment.tracking_info = {
-    "number": "KN423722033GB",
-    "url": "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB"
-  };
-  await fulfillment.save({
-    update: true,
-  });
-
+    case "USER_ID_FAIL":
+      console.log("### USER_ID_FAIL");
+      // identityFailed(uuid);
+      break;
+  }
 
   console.log("### Notification Received Body:", JSON.stringify(payload));
 
@@ -224,6 +209,27 @@ app.post("/api/tip/consultations", async (req, res) => {
 // /api/order/fulfillment
 
 app.post("/proxy_route/fulfillment", async (_req, res) => {
+  // Session is built by the OAuth process
+  // const fulfillment = await shopify.api.rest.Fulfillment({session: res.locals.shopify.session});
+  // fulfillment.line_items_by_fulfillment_order = [
+  //   {
+  //     "fulfillment_order_id": 5377732804916
+  //   }
+  // ];
+  // fulfillment.tracking_info = {
+  //   "number": "KN423722033GB",
+  //   "url": "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB"
+  // };
+  // await fulfillment.save({
+  //   update: true,
+  // });
+
+  res.json("response");
+  res.status(200).end();
+
+});
+
+app.post("/api/products/fulfillment", async (_req, res) => {
   // Session is built by the OAuth process
   const fulfillment = await shopify.api.rest.Fulfillment({session: res.locals.shopify.session});
   fulfillment.line_items_by_fulfillment_order = [
