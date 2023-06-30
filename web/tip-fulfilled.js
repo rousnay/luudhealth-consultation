@@ -13,7 +13,7 @@ const SHOP = process.env.SHOP;
 const orderId = "5377732804916";
 
 function orderFulfilled(lineItemsUuid, fulfillment_data) {
-  const endpoint = `https://${SHOP}/admin/api/2023-01/fulfillments.json`;
+  const endpoint = `https://iplaysafe-consultancy-app-store.myshopify.com/admin/api/2023-01/fulfillments.json`;
 
   const payload = {
     // fulfillment: {
