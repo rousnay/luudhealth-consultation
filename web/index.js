@@ -224,6 +224,24 @@ app.post("/proxy_route/fulfillment", async (_req, res) => {
   //   update: true,
   // });
 
+
+  fetch("https://consultancy-and-kit-management.herokuapp.com/api/products/fulfillment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": SHOPIFY_API_KEY,
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Order fulfilled:", data);
+    })
+    .catch((error) => {
+      console.error("Error fulfilling order:", error);
+    });
+
+
   res.json("response");
   res.status(200).end();
 

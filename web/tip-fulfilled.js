@@ -10,7 +10,7 @@ const SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
 const SHOPIFY_API_SECRET = process.env.SHOPIFY_API_SECRET;
 const SHOP = process.env.SHOP;
 
-const orderId = "123456789";
+const orderId = "5377732804916";
 
 function orderFulfilled(lineItemsUuid, fulfillment_data) {
   const endpoint = `https://${shop}/admin/api/2021-07/orders/${orderId}/fulfillments.json`;
@@ -24,7 +24,7 @@ function orderFulfilled(lineItemsUuid, fulfillment_data) {
       expected_at: fulfillment_data?.expected_at,
       line_items: [
         {
-          id: 123456789,
+          id: 5377732804916,
         },
       ],
     },

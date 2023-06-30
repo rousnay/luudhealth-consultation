@@ -35,7 +35,7 @@ export default function HomePage() {
   const getTIPquestions = useCallback(() => {
     setConsultancy();
     (async () => {
-      const url = `/api/tip/consultations/generate`;
+      const url = `/api/products/fulfillment`;
       const method = "POST";
       const response = await fetch(url, {
         method,
