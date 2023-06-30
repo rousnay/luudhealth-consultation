@@ -16,8 +16,7 @@ import { connectToDB } from "./db.js";
 import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
 import { submitConsultancy } from "./tip-consultations.js";
 import { placeOrder } from "./tip-order.js";
-// import { orderFulfilled } from "./tip-fulfilled.js";
-// import { json } from "body-parser";
+import { orderFulfilled } from "./tip-fulfilled.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -225,21 +224,7 @@ app.post("/proxy_route/fulfillment", async (_req, res) => {
   // });
 
 
-  fetch("https://consultancy-and-kit-management.herokuapp.com/api/products/fulfillment", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Access-Token": SHOPIFY_API_KEY,
-    },
-    body: JSON.stringify(payload),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Order fulfilled:", data);
-    })
-    .catch((error) => {
-      console.error("Error fulfilling order:", error);
-    });
+  orderFulfilled();
 
 
   res.json("response");

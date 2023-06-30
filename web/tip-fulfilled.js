@@ -13,21 +13,33 @@ const SHOP = process.env.SHOP;
 const orderId = "5377732804916";
 
 function orderFulfilled(lineItemsUuid, fulfillment_data) {
-  const endpoint = `https://${shop}/admin/api/2021-07/orders/${orderId}/fulfillments.json`;
+  const endpoint = `https://${shop}/admin/api/2023-01/fulfillments.json`;
 
   const payload = {
-    fulfillment: {
-      location_id: fulfillment_data?.location_id || null,
-      tracking_number: fulfillment_data?.tracking_no,
-      tracking_company: fulfillment_data?.tracking_company || "Royal Mail",
-      tracking_link: fulfillment_data?.tracking_link,
-      expected_at: fulfillment_data?.expected_at,
-      line_items: [
-        {
-          id: 5377732804916,
-        },
-      ],
-    },
+    // fulfillment: {
+    //   location_id: fulfillment_data?.location_id || null,
+    //   tracking_number: fulfillment_data?.tracking_no,
+    //   tracking_company: fulfillment_data?.tracking_company || "Royal Mail",
+    //   tracking_link: fulfillment_data?.tracking_link,
+    //   expected_at: fulfillment_data?.expected_at,
+    //   line_items: [
+    //     {
+    //       id: 5377732804916,
+    //     },
+    //   ],
+    // },
+      fulfillment: {
+          line_items_by_fulfillment_order: [
+              {
+                  fulfillment_order_id: orderId
+              }
+          ],
+          tracking_info: {
+              number: "KN423722033GB",
+              url: "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB"
+          }
+      }
+
   };
 
   fetch(endpoint, {
