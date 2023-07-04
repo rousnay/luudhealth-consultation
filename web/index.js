@@ -213,14 +213,22 @@ app.post("/proxy_route/fulfillment", async (req, res) => {
 
   console.log("Hit the API");
 
-  await someOfflineProcess();
+  const url = new URL(req.url);
+  const shop = url.searchParams.get("shop");
+  const sanitizedShop = shopify.utils.sanitizeShop(shop, true);
+
+  if (!sanitizedShop) {
+    throw new Error("Invalid shop provided");
+  }
+
+  await someOfflineProcess(sanitizedShop);
 
   res.json("response");
   res.status(200).end();
 });
 
-async function someOfflineProcess() {
-  const sessionId = await shopify.api.session.getOfflineId(SHOP);
+async function someOfflineProcess(shop) {
+  const sessionId = await shopify.api.session.getOfflineId(shop);
   const session = await shopify.config.sessionStorage.loadSession(sessionId);
   const client = new shopify.api.clients.Rest({ session });
 
