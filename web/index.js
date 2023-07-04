@@ -220,7 +220,7 @@ app.post("/proxy_route/fulfillment", async (req, res) => {
 
 async function someOfflineProcess() {
   const sessionId = await shopify.api.session.getOfflineId(
-    "https://guud-self.myshopify.com"
+    "guud-self.myshopify.com"
   );
   const session = await shopify.config.sessionStorage.loadSession(sessionId);
   const client = new shopify.api.clients.Rest({ session });
