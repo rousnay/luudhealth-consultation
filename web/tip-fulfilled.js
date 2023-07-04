@@ -3,21 +3,14 @@ import { DB } from "./db.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const TIP_HOST = process.env.TIP_HOST;
-const TIP_API_VERSION = process.env.TIP_API_VERSION;
-const TIP_CLIENT_ID = process.env.TIP_CLIENT_ID;
-const TIP_TOKEN = process.env.TIP_TOKEN;
-const SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
-const SHOPIFY_API_SECRET = process.env.SHOPIFY_API_SECRET;
-const SHOP = process.env.SHOP;
+// const SHOP = process.env.SHOP;
+const PRD_SHOP = process.env.PRD_SHOP;
 const OFFLINE_AT = process.env.OFFLINE_AT;
 
 const API_HEADER = {
   "Content-Type": "application/json",
   "X-Shopify-Access-Token": OFFLINE_AT,
 };
-
-const orderId = "5377732804916";
 
 async function findDocumentByUuid(uuid) {
   const collection = DB.collection("data_order");
@@ -31,11 +24,11 @@ async function findDocumentByUuid(uuid) {
   }
 }
 
-const orderFulfilled = async (shop, lineItemsUuid, fulfillment_data) => {
+const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
   const data_order = await findDocumentByUuid(lineItemsUuid);
   const order_id = data_order?.order_id;
-  const fulfillment_orders_api = `https://${shop}.myshopify.com/admin/api/2023-01/orders/${order_id}/fulfillment_orders.json`;
-  const fulfillments_api = `https://${shop}.myshopify.com/admin/api/2023-01/fulfillments.json`;
+  const fulfillment_orders_api = `https://${PRD_SHOP}/admin/api/2023-01/orders/${order_id}/fulfillment_orders.json`;
+  const fulfillments_api = `https://${PRD_SHOP}/admin/api/2023-01/fulfillments.json`;
 
   const fulfillment_orders_response = await fetch(fulfillment_orders_api, {
     method: "GET",
