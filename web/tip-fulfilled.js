@@ -39,6 +39,8 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
     headers: API_HEADER,
   }).then((response) => response.json());
 
+  console.log("fulfillment_orders_response:", fulfillment_orders_response);
+
   if (fulfillment_orders_response.status === 200) {
     console.log("Fulfillment Orders:", fulfillment_orders_response);
 
