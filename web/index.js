@@ -30,6 +30,7 @@ const TIP_HOST = process.env.TIP_HOST;
 const TIP_API_VERSION = process.env.TIP_API_VERSION;
 const TIP_CLIENT_ID = process.env.TIP_CLIENT_ID;
 const TIP_TOKEN = process.env.TIP_TOKEN;
+const SHOP = process.env.SHOP;
 const tip_header = {
   Client: TIP_CLIENT_ID,
   Authorization: "Bearer " + TIP_TOKEN,
@@ -219,9 +220,7 @@ app.post("/proxy_route/fulfillment", async (req, res) => {
 });
 
 async function someOfflineProcess() {
-  const sessionId = await shopify.api.session.getOfflineId(
-    "guud-self.myshopify.com"
-  );
+  const sessionId = await shopify.api.session.getOfflineId(SHOP);
   const session = await shopify.config.sessionStorage.loadSession(sessionId);
   const client = new shopify.api.clients.Rest({ session });
 
