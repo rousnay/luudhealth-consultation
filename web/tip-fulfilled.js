@@ -42,7 +42,7 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
     const fulfillment_payload = {
       fulfillment: {
         // location_id: fulfillment_data?.location_id || null,
-        // notify_customer: true,
+        notify_customer: true,
         message: "The package has been shipped",
         line_items_by_fulfillment_order: [
           {
