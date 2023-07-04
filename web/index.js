@@ -211,11 +211,11 @@ app.post("/api/tip/consultations", async (req, res) => {
 app.post("/proxy_route/fulfillment", async (req, res) => {
   // orderFulfilled();
 
-  console.log("Hit the API");
+  console.log("## Hit the API");
 
-  const url = new URL(req.url);
-  const shop = url.searchParams.get("shop");
-  const sanitizedShop = shopify.utils.sanitizeShop(shop, true);
+  // const url = new URL(req.url);
+  // const shop = url.searchParams.get("shop");
+  const sanitizedShop = shopify.utils.sanitizeShop(SHOP, true);
 
   if (!sanitizedShop) {
     throw new Error("Invalid shop provided");
