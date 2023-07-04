@@ -124,11 +124,12 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
       responseMessage = orderFulfilled(uuid, payload?.data);
+      console.log("### ORDER_FULFILLED Messages", responseMessage);
       break;
 
     case "USER_ID_FAIL":
       console.log("### USER_ID_FAIL");
-      // identityFailed(uuid);
+      responseMessage = "Identity Failed";
       break;
   }
 

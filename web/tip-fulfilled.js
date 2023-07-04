@@ -16,7 +16,7 @@ async function findDocumentByUuid(uuid) {
   const collection = DB.collection("data_order");
   const document = await collection.findOne({ line_items_uuid: uuid });
   if (document) {
-    console.log("Found document:", document);
+    console.log("Document has found");
     return document;
   } else {
     console.log("Document not found");
@@ -27,46 +27,27 @@ async function findDocumentByUuid(uuid) {
 const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
   const data_order = await findDocumentByUuid(lineItemsUuid);
   const order_id = data_order?.order_id;
-  console.log("order_id:", order_id);
   const fulfillment_orders_api = `https://${PRD_SHOP}/admin/api/2023-01/orders/${order_id}/fulfillment_orders.json`;
   const fulfillments_api = `https://${PRD_SHOP}/admin/api/2023-01/fulfillments.json`;
-
-  console.log("fulfillment_orders_api:", fulfillment_orders_api);
-  console.log("fulfillments_api:", fulfillments_api);
 
   const fulfillment_orders_response = await fetch(fulfillment_orders_api, {
     method: "GET",
     headers: API_HEADER,
   }).then((response) => response.json());
 
-  console.log("fulfillment_orders_response:", fulfillment_orders_response);
-
   const fulfillment_order_id =
     fulfillment_orders_response?.fulfillment_orders[0]?.id;
 
-  console.log("fulfillment_order_id:", fulfillment_order_id);
-
   if (fulfillment_order_id) {
     const fulfillment_payload = {
-      // fulfillment: {
-      //   location_id: fulfillment_data?.location_id || null,
-      //   tracking_number: fulfillment_data?.tracking_no,
-      //   tracking_company: fulfillment_data?.tracking_company || "Royal Mail",
-      //   tracking_link: fulfillment_data?.tracking_link,
-      //   expected_at: fulfillment_data?.expected_at,
-      //   line_items: [
-      //     {
-      //       id: 5377732804916,
-      //     },
-      //   ],
-      // },
       fulfillment: {
-        message: "Package Shipped",
-        notify_customer: false,
+        // location_id: fulfillment_data?.location_id || null,
+        // notify_customer: true,
+        message: "The package has been shipped",
         line_items_by_fulfillment_order: [
           {
             fulfillment_order_id: fulfillment_order_id,
-            fulfillment_order_line_items: [],
+            // fulfillment_order_line_items: [],
           },
         ],
         tracking_info: {
@@ -78,28 +59,21 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
       },
     };
 
-    console.log("fulfillment_payload:", fulfillment_payload);
-
     const fulfillments_response = await fetch(fulfillments_api, {
       method: "POST",
       headers: API_HEADER,
       body: JSON.stringify(fulfillment_payload),
     }).then((response) => response.json());
 
-    const fulfillments_response_data = fulfillments_response;
-
-    console.log("fulfillments_response:", fulfillments_response_data);
-
-    if (fulfillments_response_data) {
-      console.log("Order Fulfilled:", fulfillments_response);
-      return "Order Fulfilled";
-    } else {
-      console.log("Order Not Fulfilled:", fulfillments_response);
-      return "Order Not Fulfilled";
-    }
+    const orderStatus =
+      fulfillments_response?.fulfillment?.status === "success"
+        ? "Order has been fulfilled successfully!"
+        : "Order has not fulfilled!";
+    console.log(orderStatus);
+    return orderStatus;
   } else {
-    console.log("Fulfillment Order Not Found:", fulfillment_orders_response);
-    return "Fulfillment Order Not Found";
+    console.log("Fulfillment order has not found!");
+    return "Fulfillment order has not Found!";
   }
 };
 export { orderFulfilled };
