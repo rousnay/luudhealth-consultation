@@ -123,7 +123,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
 
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
-      responseMessage = orderFulfilled(uuid, payload?.data);
+      responseMessage = orderFulfilled("luudhealth.com", uuid, payload?.data);
       break;
 
     case "USER_ID_FAIL":
