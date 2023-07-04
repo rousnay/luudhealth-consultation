@@ -28,7 +28,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
   const document = await collection.findOne({ line_items_uuid: uuid });
 
   if (document) {
-    console.log("Found document:", document);
+    console.log("Document has found");
     return document;
   } else {
     console.log("Document not found");
@@ -73,21 +73,22 @@ const submitConsultancy = async (lineItemsUuid) => {
       }
     ).then((response) => response.json());
 
-    console.log("## API: partners/consultations Body:", consultancyPayload);
+    // console.log("## API: partners/consultations Body:", consultancyPayload);
 
     if (response.status === 200) {
       console.log("## API: partners/consultations Response:", response);
+      return "OK";
     } else if (response.status === 201) {
-      console.log("#### API: CONSULTANCY CREATED!", response);
+      console.log("## consultation has been submitted!");
+      return "consultation has been submitted!";
     } else {
       console.log("## Error with consultancy submission");
-      console.log("## API: partners/consultations Response:", response);
+      return "Error with consultancy submission";
     }
   };
 
-  tipConsultancy(consultancy_data);
-
-  // return
+  const consultancyStatus = await tipConsultancy(consultancy_data);
+  return consultancyStatus;
 };
 
 export { submitConsultancy };

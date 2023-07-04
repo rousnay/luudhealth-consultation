@@ -21,12 +21,12 @@ async function findDocumentByUuid(DBCollection, uuid) {
   } else if (DBCollection == 3) {
     collection = DB.collection("data_order");
   } else {
-    console.log("Not found,but:", DBCollection);
+    console.log("Not found, but:", DBCollection);
   }
   const document = await collection.findOne({ line_items_uuid: uuid });
 
   if (document) {
-    console.log("Found document:", document);
+    console.log("Document has found");
     return document;
   } else {
     console.log("Document not found");
@@ -96,21 +96,22 @@ const placeOrder = async (lineItemsUuid) => {
       }
     ).then((response) => response.json());
 
-    console.log("## API: partners/orders Body:", orderPayload);
+    // console.log("## API: partners/orders Body:", orderPayload);
 
     if (response.status === 200) {
       console.log("## API: partners/orders Response:", response);
+      return "OK";
     } else if (response.status === 201) {
-      console.log("#### API: ORDER CREATED!", response);
+      console.log("## Order has been created!");
+      return "Order has been created!";
     } else {
-      console.log("## Error with order place");
-      console.log("## API: partners/orders Response:", response);
+      console.log("## Error with order creation");
+      return "Error with order creation";
     }
   };
 
-  tipOrder(order_data);
-
-  // return
+  const orderStatus = await tipOrder(order_data);
+  return orderStatus;
 };
 
 export { placeOrder };

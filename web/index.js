@@ -111,20 +111,19 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   switch (payload?.type) {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
-      submitConsultancy(uuid);
-      responseMessage = "Identity Passed";
+      responseMessage = await submitConsultancy(uuid);
       break;
 
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
-      placeOrder(payload?.data?.consultation?.uuid.substring(5));
-      responseMessage = "Order Placed";
+      responseMessage = await placeOrder(
+        payload?.data?.consultation?.uuid.substring(5)
+      );
       break;
 
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
       responseMessage = await orderFulfilled(uuid, payload?.data);
-      console.log("### ORDER_FULFILLED Messages:", responseMessage);
       break;
 
     case "USER_ID_FAIL":
@@ -132,9 +131,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       responseMessage = "Identity Failed";
       break;
   }
-
-  console.log("### Notification Received Body:", JSON.stringify(payload));
-
+  // console.log("### Notification Received Body:", JSON.stringify(payload));
   res.json({ message: responseMessage });
   res.status(200).end();
 });

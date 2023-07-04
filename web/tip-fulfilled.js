@@ -65,12 +65,12 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
       body: JSON.stringify(fulfillment_payload),
     }).then((response) => response.json());
 
-    const orderStatus =
+    const fulfillmentStatus =
       fulfillments_response?.fulfillment?.status === "success"
         ? "Order has been fulfilled successfully!"
         : "Order has not fulfilled!";
-    console.log(orderStatus);
-    return orderStatus;
+    console.log(fulfillmentStatus);
+    return fulfillmentStatus;
   } else {
     console.log("Fulfillment order has not found!");
     return "Fulfillment order has not Found!";
