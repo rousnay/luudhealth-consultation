@@ -27,8 +27,12 @@ async function findDocumentByUuid(uuid) {
 const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
   const data_order = await findDocumentByUuid(lineItemsUuid);
   const order_id = data_order?.order_id;
+  console.log("order_id:", order_id);
   const fulfillment_orders_api = `https://${PRD_SHOP}/admin/api/2023-01/orders/${order_id}/fulfillment_orders.json`;
   const fulfillments_api = `https://${PRD_SHOP}/admin/api/2023-01/fulfillments.json`;
+
+  console.log("fulfillment_orders_api:", fulfillment_orders_api);
+  console.log("fulfillments_api:", fulfillments_api);
 
   const fulfillment_orders_response = await fetch(fulfillment_orders_api, {
     method: "GET",
@@ -37,6 +41,9 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
 
   if (fulfillment_orders_response.status === 200) {
     console.log("Fulfillment Orders:", fulfillment_orders_response);
+
+    const fulfillment_order_id =
+      fulfillment_orders_response?.fulfillment_orders[0]?.id;
 
     const fulfillment_payload = {
       // fulfillment: {
@@ -56,8 +63,7 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
         notify_customer: false,
         line_items_by_fulfillment_order: [
           {
-            fulfillment_order_id:
-              fulfillment_orders_response?.fulfillment_orders[0]?.id,
+            fulfillment_order_id: fulfillment_order_id,
             fulfillment_order_line_items: [],
           },
         ],
@@ -79,7 +85,13 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
     if (fulfillments_response.status === 200) {
       console.log("Order Fulfilled:", fulfillments_response);
       return "Order Fulfilled";
+    } else {
+      console.log("Order Not Fulfilled:", fulfillments_response);
+      return "Order Not Fulfilled";
     }
+  } else {
+    console.log("Fulfillment Order Not Found:", fulfillment_orders_response);
+    return "Fulfillment Order Not Found";
   }
 };
 export { orderFulfilled };
