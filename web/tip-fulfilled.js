@@ -39,14 +39,12 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
     headers: API_HEADER,
   }).then((response) => response.json());
 
+  const fulfillment_order_id =
+    fulfillment_orders_response?.fulfillment_orders[0]?.id;
+
   console.log("fulfillment_orders_response:", fulfillment_orders_response);
 
-  if (fulfillment_orders_response.status === 200) {
-    console.log("Fulfillment Orders:", fulfillment_orders_response);
-
-    const fulfillment_order_id =
-      fulfillment_orders_response?.fulfillment_orders[0]?.id;
-
+  if (fulfillment_order_id) {
     const fulfillment_payload = {
       // fulfillment: {
       //   location_id: fulfillment_data?.location_id || null,
@@ -84,7 +82,11 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
       body: JSON.stringify(fulfillment_payload),
     }).then((response) => response.json());
 
-    if (fulfillments_response.status === 200) {
+    const fulfillments_response_data = fulfillments_response;
+
+    console.log("fulfillments_response:", fulfillments_response_data);
+
+    if (fulfillments_response_data) {
       console.log("Order Fulfilled:", fulfillments_response);
       return "Order Fulfilled";
     } else {
