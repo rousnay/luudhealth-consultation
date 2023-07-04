@@ -39,10 +39,12 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
     headers: API_HEADER,
   }).then((response) => response.json());
 
+  console.log("fulfillment_orders_response:", fulfillment_orders_response);
+
   const fulfillment_order_id =
     fulfillment_orders_response?.fulfillment_orders[0]?.id;
 
-  console.log("fulfillment_orders_response:", fulfillment_orders_response);
+  console.log("fulfillment_order_id:", fulfillment_order_id);
 
   if (fulfillment_order_id) {
     const fulfillment_payload = {
@@ -75,6 +77,8 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
         },
       },
     };
+
+    console.log("fulfillment_payload:", fulfillment_payload);
 
     const fulfillments_response = await fetch(fulfillments_api, {
       method: "POST",
