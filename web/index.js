@@ -31,6 +31,8 @@ const TIP_API_VERSION = process.env.TIP_API_VERSION;
 const TIP_CLIENT_ID = process.env.TIP_CLIENT_ID;
 const TIP_TOKEN = process.env.TIP_TOKEN;
 const SHOP = process.env.SHOP;
+const OFFLINE_AT = process.env.OFFLINE_AT;
+
 const tip_header = {
   Client: TIP_CLIENT_ID,
   Authorization: "Bearer " + TIP_TOKEN,
@@ -104,21 +106,24 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
   const uuid = payload?.data?.uuid?.substring(5);
+  let responseMessage = "Notification has been received from App";
 
   switch (payload?.type) {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
       submitConsultancy(uuid);
+      responseMessage = "Identity Passed";
       break;
 
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
       placeOrder(payload?.data?.consultation?.uuid.substring(5));
+      responseMessage = "Order Placed";
       break;
 
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
-      // orderFulfilled(uuid);
+      responseMessage = orderFulfilled(uuid, payload?.data);
       break;
 
     case "USER_ID_FAIL":
@@ -129,7 +134,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
 
   console.log("### Notification Received Body:", JSON.stringify(payload));
 
-  res.json({ message: "Notification has been received from App" });
+  res.json({ message: responseMessage });
   res.status(200).end();
 });
 
@@ -213,15 +218,20 @@ app.post("/proxy_route/fulfillment", async (req, res) => {
 
   console.log("## Hit the API");
 
+  // if (!req.query.shop) {
+  //   res.status(500);
+  //   return res.send("No shop provided");
+  // }
+
   // const url = new URL(req.url);
   // const shop = url.searchParams.get("shop");
-  const sanitizedShop = shopify.utils.sanitizeShop(SHOP, true);
+  // const sanitizedShop = shopify.utils.sanitizeShop(SHOP, true);
 
-  if (!sanitizedShop) {
-    throw new Error("Invalid shop provided");
-  }
+  // if (!sanitizedShop) {
+  //   throw new Error("Invalid shop provided");
+  // }
 
-  await someOfflineProcess(sanitizedShop);
+  await someOfflineProcess(SHOP);
 
   res.json("response");
   res.status(200).end();
@@ -243,19 +253,18 @@ async function someOfflineProcess(shop) {
   // });
 }
 
-app.post("/api/products/fulfillment", async (_req, res) => {
-  // Session is built by the OAuth process
+app.post("/api/fulfillment", async (_req, res) => {
   const fulfillment = await shopify.api.rest.Fulfillment({
     session: res.locals.shopify.session,
   });
   fulfillment.line_items_by_fulfillment_order = [
     {
-      fulfillment_order_id: 5377732804916,
+      fulfillment_order_id: _req?.data?.f_order?.id,
     },
   ];
   fulfillment.tracking_info = {
-    number: "KN423722033GB",
-    url: "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB",
+    number: _req?.data?.f_order?.t_number,
+    url: _req?.data?.f_order?.t_url,
   };
   await fulfillment.save({
     update: true,
