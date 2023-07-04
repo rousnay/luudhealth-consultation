@@ -207,8 +207,10 @@ app.post("/api/tip/consultations", async (req, res) => {
 // /proxy_route/fulfillment
 // /api/order/fulfillment
 
-app.post("/proxy_route/fulfillment", async (_req, res) => {
+app.post("/proxy_route/fulfillment", async (req, res) => {
   // orderFulfilled();
+
+  console.log("Hit the API");
 
   await someOfflineProcess();
 
