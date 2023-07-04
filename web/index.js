@@ -208,25 +208,43 @@ app.post("/api/tip/consultations", async (req, res) => {
 // /api/order/fulfillment
 
 app.post("/proxy_route/fulfillment", async (_req, res) => {
-  
-  orderFulfilled();
+  // orderFulfilled();
+
+  await someOfflineProcess();
 
   res.json("response");
   res.status(200).end();
-
 });
+
+async function someOfflineProcess() {
+  const sessionId = await shopify.api.session.getOfflineId(shop);
+  const session = await shopify.config.sessionStorage.loadSession(sessionId);
+  const client = new shopify.api.clients.Rest({ session });
+
+  console.log(sessionId);
+  console.log(session);
+  console.log(client);
+
+  // Use the client, e.g. update a product:
+  // const products = await client.put({
+  //   path: `products/${product.id}.json`,
+  //   data,
+  // });
+}
 
 app.post("/api/products/fulfillment", async (_req, res) => {
   // Session is built by the OAuth process
-  const fulfillment = await shopify.api.rest.Fulfillment({session: res.locals.shopify.session});
+  const fulfillment = await shopify.api.rest.Fulfillment({
+    session: res.locals.shopify.session,
+  });
   fulfillment.line_items_by_fulfillment_order = [
     {
-      "fulfillment_order_id": 5377732804916
-    }
+      fulfillment_order_id: 5377732804916,
+    },
   ];
   fulfillment.tracking_info = {
-    "number": "KN423722033GB",
-    "url": "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB"
+    number: "KN423722033GB",
+    url: "https://www.royalmail.com/track-your-item?trackNumber=KN423722033GB",
   };
   await fulfillment.save({
     update: true,
@@ -235,7 +253,6 @@ app.post("/api/products/fulfillment", async (_req, res) => {
   res.json("response");
   res.status(200).end();
 });
-
 
 app.get("/api/products/test", async (_req, res) => {
   const testsData = "This is the test data";
