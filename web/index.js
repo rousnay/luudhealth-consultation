@@ -114,6 +114,11 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       responseMessage = await submitConsultancy(uuid);
       break;
 
+    case "USER_ID_FAIL":
+      console.log("### USER_ID_FAIL");
+      responseMessage = "Identity Failed";
+      break;
+
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
       responseMessage = await placeOrder(
@@ -121,15 +126,29 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       );
       break;
 
+    case "CONSULTATION_DECLINED":
+      console.log("### CONSULTATION_DECLINED");
+      responseMessage = "Consultation Declined";
+      // responseMessage = await placeOrder(
+      //   payload?.data?.consultation?.uuid.substring(5)
+      // );
+      break;
+
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
       responseMessage = await orderFulfilled(uuid, payload?.data);
       break;
 
-    case "USER_ID_FAIL":
-      console.log("### USER_ID_FAIL");
-      responseMessage = "Identity Failed";
+    case "ORDER_CANCELLED":
+      console.log("### ORDER_CANCELLED");
+      responseMessage = "Order Cancelled";
+      // responseMessage = await orderFulfilled(uuid, payload?.data);
       break;
+
+    default: {
+      console.log("Empty action received.");
+      responseMessage = "Notification has been received from App";
+    }
   }
   // console.log("### Notification Received Body:", JSON.stringify(payload));
   res.json({ message: responseMessage });
