@@ -771,7 +771,7 @@ const initProcessForm = function () {
         const consultancyFormDataAsArray = Array.from(formData.entries());
         const questionIds = consultancyFormDataAsArray.map((arr) => arr[0]);
 
-        //Handle single and multiple (duplicate) checkbox's answers
+        //Handle single and multiple (duplicate) checkbox's answers..
         const uniqueQuestions = questionIds
           .map((id) => {
             return {
