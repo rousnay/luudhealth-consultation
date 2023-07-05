@@ -1,7 +1,7 @@
 //@ts-check
 import { DB } from "./db.js";
 
-import { identityCheck } from "./tip-identity-check.js";
+import { identityCheck } from "./tip-submit-identity.js";
 
 async function findDocumentByUuid(DBCollection, uuid) {
   let collection;

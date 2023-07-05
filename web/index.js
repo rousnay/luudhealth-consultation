@@ -12,11 +12,16 @@ import productCreator from "./product-creator.js";
 import webhookHandlers from "./webhook-handlers.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
+
 import { connectToDB } from "./db.js";
-import { consultancySubmit, medicalSubmit } from "./tip-db-form.js";
-import { submitConsultancy } from "./tip-consultations.js";
-import { placeOrder } from "./tip-order.js";
-import { orderFulfilled } from "./tip-fulfilled.js";
+import { consultancySubmit, medicalSubmit } from "./tip-db-forms.js";
+import { submitConsultancy } from "./tip-submit-consultation.js";
+import { placeOrder } from "./tip-submit-order.js";
+import { orderFulfilled } from "./tip-process-fulfillment.js";
+import {
+  identityNotification,
+  orderNotification,
+} from "./tip-db-notifications.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -112,11 +117,13 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
       responseMessage = await submitConsultancy(uuid);
+      await identityNotification(payload);
       break;
 
     case "USER_ID_FAIL":
       console.log("### USER_ID_FAIL");
       responseMessage = "Identity Failed";
+      await identityNotification(payload);
       break;
 
     case "CONSULTATION_APPROVED":
@@ -124,25 +131,25 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       responseMessage = await placeOrder(
         payload?.data?.consultation?.uuid.substring(5)
       );
+      await consultationNotification(payload);
       break;
 
     case "CONSULTATION_DECLINED":
       console.log("### CONSULTATION_DECLINED");
       responseMessage = "Consultation Declined";
-      // responseMessage = await placeOrder(
-      //   payload?.data?.consultation?.uuid.substring(5)
-      // );
+      await consultationNotification(payload);
       break;
 
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
       responseMessage = await orderFulfilled(uuid, payload?.data);
+      await orderNotification(payload);
       break;
 
     case "ORDER_CANCELLED":
       console.log("### ORDER_CANCELLED");
       responseMessage = "Order Cancelled";
-      // responseMessage = await orderFulfilled(uuid, payload?.data);
+      await orderNotification(payload);
       break;
 
     default: {

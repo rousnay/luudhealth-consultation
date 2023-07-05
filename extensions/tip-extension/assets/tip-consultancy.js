@@ -753,7 +753,7 @@ const initProcessForm = function () {
 
         // Prepare the data
         const formData = new FormData(form);
-        formTime = new Date().getTime();
+        formTime = new Date().toJSON();
 
         //convert object properties string to integer
         const consultancyFormObj = Object.fromEntries(formData);

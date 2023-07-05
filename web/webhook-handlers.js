@@ -1,6 +1,6 @@
 //@ts-check
 import { DeliveryMethod } from "@shopify/shopify-api";
-import { OrderSubmit } from "./tip-db-webhook.js";
+import { OrderSubmit } from "./tip-db-checkout.js";
 
 const receivedWebhooks = {};
 export default {

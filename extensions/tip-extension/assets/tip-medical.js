@@ -708,7 +708,7 @@ ready(function () {
 
         // Prepare the data
         const formData = new FormData(form);
-        const formTime = new Date().getTime();
+        const formTime = new Date().toJSON();
         const medicalFormObj = Object.fromEntries(formData);
 
         // Format the data entries
