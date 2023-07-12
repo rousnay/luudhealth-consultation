@@ -87,7 +87,7 @@ const placeOrder = async (lineItemsUuid) => {
     ],
   };
 
-  console.log(JSON.stringify(order_data));
+  // console.log(JSON.stringify(order_data));
 
   const tipOrder = async (orderPayload) => {
     const response = await fetch(
@@ -109,7 +109,7 @@ const placeOrder = async (lineItemsUuid) => {
       return "Order has been created!";
     } else {
       console.log("## Error with order creation", response);
-      return "Error with order creation";
+      return response;
     }
   };
 
