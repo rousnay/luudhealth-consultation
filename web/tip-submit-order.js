@@ -87,6 +87,8 @@ const placeOrder = async (lineItemsUuid) => {
     ],
   };
 
+  console.log(JSON.stringify(order_data));
+
   const tipOrder = async (orderPayload) => {
     const response = await fetch(
       `${TIP_HOST}/${TIP_API_VERSION}/partners/orders`,
