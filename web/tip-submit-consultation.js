@@ -79,11 +79,11 @@ const submitConsultancy = async (lineItemsUuid) => {
       console.log("## API: partners/consultations Response:", response);
       return "OK";
     } else if (response.status === 201) {
-      console.log("## consultation has been submitted!");
+      console.log("## consultation has been submitted!", response);
       return "consultation has been submitted!";
     } else {
-      console.log("## Error with consultancy submission");
-      return "Error with consultancy submission";
+      console.log("## Error with consultancy submission", response);
+      return response;
     }
   };
 
