@@ -20,6 +20,7 @@ import { placeOrder } from "./tip-submit-order.js";
 import { orderFulfilled } from "./tip-process-fulfillment.js";
 import {
   identityNotification,
+  consultationNotification,
   orderNotification,
 } from "./tip-db-notifications.js";
 
