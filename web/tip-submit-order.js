@@ -109,7 +109,7 @@ const placeOrder = async (lineItemsUuid) => {
       return "Order has been created!";
     } else {
       console.log("## Error with order creation", response);
-      return "Error with order creation";
+      return response;
     }
   };
 
