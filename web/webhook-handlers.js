@@ -184,7 +184,10 @@ export default {
       OrderSubmit(ordersPaid);
       const line_items_uuid = ordersPaid?.line_items[0]?.properties[0]?.value;
       console.log("## WEBHOOK: Paid order UUID:", line_items_uuid);
-      // console.log("## WEBHOOK: Paid order UUID:", JSON.stringify(ordersPaid));
+      console.log(
+        "## WEBHOOK: Paid order Payload:",
+        JSON.stringify(ordersPaid)
+      );
       // console.log("## IDs of all received webhooks:");
       // console.log(receivedWebhooks);
     },
