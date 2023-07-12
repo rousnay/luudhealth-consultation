@@ -105,10 +105,10 @@ const placeOrder = async (lineItemsUuid) => {
       console.log("## API: partners/orders Response:", response);
       return "OK";
     } else if (response.status === 201) {
-      console.log("## Order has been created!");
+      console.log("## Order has been created!", response);
       return "Order has been created!";
     } else {
-      console.log("## Error with order creation");
+      console.log("## Error with order creation", response);
       return "Error with order creation";
     }
   };
