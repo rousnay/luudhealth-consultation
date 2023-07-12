@@ -37,13 +37,14 @@ async function findDocumentByUuid(DBCollection, uuid) {
 const placeOrder = async (lineItemsUuid) => {
   const data_medical = await findDocumentByUuid(2, lineItemsUuid);
   const data_order = await findDocumentByUuid(3, lineItemsUuid);
+  const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
 
   const order_data = {
     uuid: "IPS-O" + lineItemsUuid,
     brand: "Luud Heath",
-
+    partner_references: [data_order?.order_number],
     delivery: {
-      salutation: "Mr",
+      salutation: salutation,
       firstname: data_order?.customer?.firstname,
       middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
@@ -56,7 +57,7 @@ const placeOrder = async (lineItemsUuid) => {
     },
 
     billing: {
-      salutation: "Mr",
+      salutation: salutation,
       firstname: data_order?.customer?.firstname,
       middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
@@ -65,7 +66,7 @@ const placeOrder = async (lineItemsUuid) => {
 
     patient: {
       uuid: "IPS-P" + lineItemsUuid,
-      salutation: "Mr",
+      salutation: salutation,
       firstname: data_order?.customer?.firstname,
       middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,

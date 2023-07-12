@@ -12,6 +12,7 @@ const OrderSubmit = async (webhookResponse) => {
   if (product_id) {
     const data_order = DB.collection("data_order");
     const createdAt = webhookResponse?.created_at;
+    const order_number = webhookResponse?.order_number;
     const order_id = webhookResponse?.id;
     const total_price = webhookResponse?.current_total_price;
     const quantity = webhookResponse?.line_items[0]?.quantity;
@@ -22,11 +23,13 @@ const OrderSubmit = async (webhookResponse) => {
     const result = await data_order.insertOne({
       created_at: createdAt,
       line_items_uuid: line_items_uuid,
+      order_number: order_number,
+      customer_name: orderCustomer?.first_name + " " + orderCustomer?.last_name,
+      customer_id: orderCustomer?.id,
       order_id: order_id,
       product_id: product_id,
       quantity: quantity,
       total_price: parseInt(total_price),
-      customer_id: orderCustomer?.id,
       customer: {
         firstname: orderCustomer?.first_name,
         middlename: orderCustomer?.middle_name || "",
