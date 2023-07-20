@@ -1,6 +1,7 @@
 //@ts-check
 import { DeliveryMethod } from "@shopify/shopify-api";
 import { OrderSubmit } from "./tip-db-checkout.js";
+import { OrderNonPresSubmit } from "./tip-db-checkout-nonpres.js";
 
 const receivedWebhooks = {};
 export default {
@@ -181,13 +182,18 @@ export default {
       // Add to our queue for processing
       console.log("## +++Orders Paid +++++++++++");
       const ordersPaid = JSON.parse(body);
-      OrderSubmit(ordersPaid);
       const line_items_uuid = ordersPaid?.line_items[0]?.properties[0]?.value;
+      OrderSubmit(ordersPaid);
+      // if (line_items_uuid) {
+      //   OrderSubmit(ordersPaid);
+      // } else {
+      //   OrderNonPresSubmit(ordersPaid);
+      // }
       console.log("## WEBHOOK: Paid order UUID:", line_items_uuid);
-      // console.log(
-      //   "## WEBHOOK: Paid order Payload:",
-      //   JSON.stringify(ordersPaid)
-      // );
+      console.log(
+        "## WEBHOOK: Paid order Payload:",
+        JSON.stringify(ordersPaid)
+      );
       // console.log("## IDs of all received webhooks:");
       // console.log(receivedWebhooks);
     },
