@@ -1,15 +1,30 @@
 //@ts-check
 import { DB } from "./db.js";
 import { dataAggregate } from "./tip-db-aggregator.js";
+import { placeOrderNonPres } from "./tip-submit-order-nonpres.js";
+
+const generated_uuid = self.crypto.randomUUID();
 
 //Webhook: User info to DB
 const OrderSubmit = async (webhookResponse) => {
-  const line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
+  let line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
+  let order_type = "Non-TIP";
   const product_id = webhookResponse?.line_items[0]?.product_id;
+
+  if (line_items_uuid === null && product_id != 8040651292980) {
+    console.log("Product Type: Non-TIP");
+  } else if (product_id === 8040651292980) {
+    console.log("Product Type: Non-prescribed");
+    order_type = "Non-prescribed";
+    line_items_uuid = line_items_uuid ?? generated_uuid;
+  } else {
+    console.log("Product Type: Prescribed");
+    order_type = "Prescribed";
+  }
 
   console.log("## line_items_uuid:", line_items_uuid);
 
-  if (product_id) {
+  if (line_items_uuid != null) {
     const data_order = DB.collection("data_order");
     const createdAt = webhookResponse?.created_at;
     const order_number = webhookResponse?.order_number;
@@ -22,6 +37,7 @@ const OrderSubmit = async (webhookResponse) => {
 
     const result = await data_order.insertOne({
       created_at: createdAt,
+      order_type: order_type,
       line_items_uuid: line_items_uuid,
       order_number: order_number,
       customer_name: orderCustomer?.first_name + " " + orderCustomer?.last_name,
@@ -57,7 +73,9 @@ const OrderSubmit = async (webhookResponse) => {
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    if (line_items_uuid != null) {
+    if (product_id === 8040651292980) {
+      placeOrderNonPres(line_items_uuid);
+    } else {
       dataAggregate(line_items_uuid);
     }
   } else {

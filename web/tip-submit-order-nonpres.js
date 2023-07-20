@@ -13,18 +13,9 @@ const tip_header = {
   "Content-Type": "application/json",
 };
 
-async function findDocumentByUuid(DBCollection, uuid) {
-  let collection;
-
-  if (DBCollection == 2) {
-    collection = DB.collection("data_medical");
-  } else if (DBCollection == 3) {
-    collection = DB.collection("data_order");
-  } else {
-    console.log("Not found, but:", DBCollection);
-  }
+async function findDocumentByUuid(uuid) {
+  const collection = DB.collection("data_order");
   const document = await collection.findOne({ line_items_uuid: uuid });
-
   if (document) {
     console.log("Document has found");
     return document;
@@ -33,11 +24,12 @@ async function findDocumentByUuid(DBCollection, uuid) {
     return null;
   }
 }
+
 // data_consultancy, data_medical, data_order
-const placeOrder = async (lineItemsUuid) => {
-  const data_medical = await findDocumentByUuid(2, lineItemsUuid);
-  const data_order = await findDocumentByUuid(3, lineItemsUuid);
-  const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
+const placeOrderNonPres = async (lineItemsUuid) => {
+  const data_order = await findDocumentByUuid(lineItemsUuid);
+  // const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
+  const salutation = "Mr";
 
   const order_data = {
     uuid: "IPS-O" + lineItemsUuid,
@@ -48,7 +40,7 @@ const placeOrder = async (lineItemsUuid) => {
       firstname: data_order?.customer?.firstname,
       middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
-      phone: data_medical?.medical?.phone,
+      // phone: data_medical?.medical?.phone,
       email: data_order?.customer?.email,
       notes: "Example of a note must be max 24 character",
       address: data_order?.shipping_address,
@@ -70,24 +62,24 @@ const placeOrder = async (lineItemsUuid) => {
       firstname: data_order?.customer?.firstname,
       middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
-      phone: data_medical?.medical?.phone,
       email: data_order?.customer?.email,
-      dob: data_medical?.medical?.dob,
+      phone: "6721",
+      dob: "2001-01-01",
       address: data_order?.billing_address,
-      special_dispensing_instructions: "Example",
+      special_dispensing_instructions: "Non-prescription",
     },
 
     items: [
       {
-        treatment: 6257,
+        treatment: 6721,
         quantity: data_order?.quantity,
         total: data_order?.total_price,
-        consultation: "IPS-C" + lineItemsUuid,
+        // consultation: "IPS-C" + lineItemsUuid,
       },
     ],
   };
 
-  // console.log(JSON.stringify(order_data));
+  console.log(JSON.stringify(order_data));
 
   const tipOrder = async (orderPayload) => {
     const response = await fetch(
@@ -117,4 +109,4 @@ const placeOrder = async (lineItemsUuid) => {
   return orderStatus;
 };
 
-export { placeOrder };
+export { placeOrderNonPres };
