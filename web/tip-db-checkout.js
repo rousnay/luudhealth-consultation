@@ -3,7 +3,7 @@ import { DB } from "./db.js";
 import { dataAggregate } from "./tip-db-aggregator.js";
 import { placeOrderNonPres } from "./tip-submit-order-nonpres.js";
 
-const generated_uuid = self.crypto.randomUUID();
+const generated_uuid = crypto.randomUUID();
 
 //Webhook: User info to DB
 const OrderSubmit = async (webhookResponse) => {
