@@ -35,6 +35,20 @@ const OrderSubmit = async (webhookResponse) => {
     const orderCustomer = webhookResponse?.customer;
     const orderBillingAddress = webhookResponse?.billing_address;
     const orderShippingAddress = webhookResponse?.shipping_address;
+    const line_items = webhookResponse?.line_items;
+
+    const items = line_items.map((item) => {
+      return {
+        treatment: "treatmentID",
+        id: item.id,
+        total: parseFloat(item.price),
+        quantity: item.quantity,
+      };
+    });
+
+    // ********* NEED TO UPDATE *********
+    // add treatmentID and consultation ID in line_items array via forms
+    // ********* NEED TO UPDATE *********
 
     const result = await data_order.insertOne({
       created_at: createdAt,
@@ -70,6 +84,7 @@ const OrderSubmit = async (webhookResponse) => {
         county: orderShippingAddress?.country,
         postcode: orderShippingAddress?.zip,
       },
+      line_items: items,
     });
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
