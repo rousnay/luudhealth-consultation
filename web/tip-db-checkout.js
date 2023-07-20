@@ -1,4 +1,5 @@
 //@ts-check
+import crypto from "crypto";
 import { DB } from "./db.js";
 import { dataAggregate } from "./tip-db-aggregator.js";
 import { placeOrderNonPres } from "./tip-submit-order-nonpres.js";
