@@ -183,17 +183,17 @@ export default {
       console.log("## +++Orders Paid +++++++++++");
       const ordersPaid = JSON.parse(body);
       const line_items_uuid = ordersPaid?.line_items[0]?.properties[0]?.value;
+      console.log("## WEBHOOK: Paid order UUID:", line_items_uuid);
+      console.log(
+        "## WEBHOOK: Paid order Payload:",
+        JSON.stringify(ordersPaid)
+      );
       OrderSubmit(ordersPaid);
       // if (line_items_uuid) {
       //   OrderSubmit(ordersPaid);
       // } else {
       //   OrderNonPresSubmit(ordersPaid);
       // }
-      console.log("## WEBHOOK: Paid order UUID:", line_items_uuid);
-      console.log(
-        "## WEBHOOK: Paid order Payload:",
-        JSON.stringify(ordersPaid)
-      );
       // console.log("## IDs of all received webhooks:");
       // console.log(receivedWebhooks);
     },

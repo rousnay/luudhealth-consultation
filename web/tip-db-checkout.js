@@ -23,7 +23,7 @@ const OrderSubmit = async (webhookResponse) => {
     order_type = "Prescribed";
   }
 
-  console.log("## line_items_uuid:", line_items_uuid);
+  // console.log("## line_items_uuid:", line_items_uuid);
 
   if (line_items_uuid != null) {
     const data_order = DB.collection("data_order");
