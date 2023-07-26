@@ -100,6 +100,7 @@
             name="dob"
             required
           >
+          <div class="error-18"></div>
         </div>
 
         <div class="mt-3 sm:mt-0 form__field">
@@ -176,7 +177,7 @@
 
       <div class="d-flex align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
         {% comment %} <button type="button" data-action="next">Continue</button> {% endcomment %}
-        <button class="button tip-full-width" type="submit">Submit</button>
+        <button class="button tip-full-width submit-medical" type="submit">Submit</button>
       </div>
     </section>
     <!-- / End Step 1 -->
@@ -313,4 +314,52 @@
   continueToNextForm.addEventListener('click', (e) => {
     window.location.href = '/products/erectile-dysfunction';
   });
+
+  const FormSubmitBtn = document.querySelector('.tip-app-content-medical button[type=submit]');
+
+  (function () {
+    var dateField = document.getElementById('dob');
+    dateField.addEventListener('focusout', function () {
+      var match = dateField.value.split('-');
+      var c_dobyear = match[0];
+      var c_dobmonth = match[1];
+      var c_dobdate = match[2];
+      var age = 18;
+
+      var mydate = new Date();
+      mydate.setFullYear(c_dobyear, c_dobmonth - 1, c_dobdate);
+
+      var currdate = new Date();
+      var setDate = new Date();
+      setDate.setFullYear(mydate.getFullYear() + age, c_dobmonth - 1, c_dobdate);
+
+      var validationErr = false;
+      var d = new Date(c_dobyear, c_dobmonth - 1, c_dobdate);
+
+      if (c_dobdate != '' && c_dobmonth != '' && c_dobyear != '') {
+        if (currdate <= setDate) {
+          document.querySelector('.error-18').innerHTML = 'You must be 18 years old.';
+          dateField.setAttribute('style', 'border: 1px solid red !important');
+          FormSubmitBtn.setAttribute('style', 'opacity: 0.5 !important');
+          FormSubmitBtn.disabled = true;
+          validationErr = true;
+        } else {
+          document.querySelector('.error-18').innerHTML = '';
+          dateField.setAttribute('style', 'border: 1px solid #777 !important');
+          FormSubmitBtn.setAttribute('style', 'opacity: 1 !important');
+          FormSubmitBtn.disabled = false;
+          validationErr == false;
+        }
+      } else {
+        document.querySelector('.error-18').innerHTML = 'Please input a valid date of birth';
+        dateField.setAttribute('style', 'border: 1px solid red !important');
+        document.querySelector('.product-form button[type=submit]').prop('disabled', true);
+        validationErr = true;
+      }
+
+      if (validationErr == true) {
+        return false;
+      }
+    });
+  })();
 </script>
