@@ -342,7 +342,7 @@ ready(function () {
             //setting attributes to the elements
             span.innerHTML = `${option}`;
             label.classList.add("form__choice-wrapper");
-            input.setAttribute("data-input-type", "multiple-selection");
+            input.setAttribute("data-input-type", "multiple-selection3");
             input.setAttribute("type", "checkbox");
             input.setAttribute("name", `${question?.question_id}[]`);
             input.setAttribute("value", `${option}`);
