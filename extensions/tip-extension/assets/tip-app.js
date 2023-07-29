@@ -332,6 +332,7 @@ ready(function () {
           divCheckboxes.classList.add("check-boxes");
           let legend = document.createElement("legend");
           legend.innerHTML = `${question?.question_text}`;
+
           question?.options?.map((option) => {
             //create element
             let label = document.createElement("label");
@@ -343,12 +344,13 @@ ready(function () {
             label.classList.add("form__choice-wrapper");
             input.setAttribute("data-input-type", "multiple-selection");
             input.setAttribute("type", "checkbox");
-            input.setAttribute("name", `${question?.question_id}`);
+            input.setAttribute("name", `${question?.question_id}[]`);
             input.setAttribute("value", `${option}`);
             //append child elements to the parents
             label.appendChild(input);
             label.appendChild(span);
             divCheckboxes.appendChild(label);
+
             fieldset.appendChild(legend);
             fieldset.appendChild(divCheckboxes);
             // fieldset.appendChild(label);
