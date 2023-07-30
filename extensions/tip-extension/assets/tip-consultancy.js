@@ -1,10 +1,7 @@
 const initProcessForm = function () {
-  console.log("Called");
   // Global Constants
-
-  const progressForm = document.getElementById("progress-form");
-
-  const tabItems = progressForm.querySelectorAll('[role="tab"]'),
+  const progressForm = document.getElementById("progress-form"),
+    tabItems = progressForm.querySelectorAll('[role="tab"]'),
     tabPanels = progressForm.querySelectorAll('[role="tabpanel"]');
 
   let currentStep = 0;
@@ -642,7 +639,7 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    window.location.href = "/pages/medical-information";
+    // window.location.href = "/pages/medical-information";
     console.log(response);
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");
 
@@ -679,8 +676,8 @@ const initProcessForm = function () {
       // Display an error message for the user
       errorText.classList.add("m-0", "form__error-text");
       errorText.textContent = `Sorry, your submission could not be processed.
-          Please try again. If the issue persists, please contact our support
-          team. Error message: ${error}`;
+        Please try again. If the issue persists, please contact our support
+        team. Error message: ${error}`;
 
       submitButton.parentElement.prepend(errorText);
     }
@@ -755,8 +752,34 @@ const initProcessForm = function () {
         const formData = new FormData(form);
         formTime = new Date().toJSON();
 
-        //convert object properties string to integer
-        const consultancyFormObj = Object.fromEntries(formData);
+        //Handle single and multiple check-box's answers..
+        const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+        const checkedQuestionNames = [];
+
+        checkboxes.forEach((checkbox) => {
+          if (checkbox.checked) {
+            const name = checkbox.name;
+            if (!checkedQuestionNames.includes(name)) {
+              checkedQuestionNames.push(name);
+            }
+          }
+        });
+
+        const updatedData = {};
+
+        for (const [name, value] of formData.entries()) {
+          if (checkedQuestionNames.includes(name)) {
+            if (!updatedData[name]) {
+              data[name] = [];
+            }
+            updatedData[name].push(value);
+          } else {
+            updatedData[name] = value;
+          }
+        }
+
+        //convert object properties to integer (except the array and string with alphabetic values)
         function convertIntObj(obj) {
           const res = {};
           for (const key in obj) {
@@ -765,45 +788,8 @@ const initProcessForm = function () {
           }
           return res;
         }
-        const consultancyFormIntObj = convertIntObj(consultancyFormObj);
+        const consultancyFormData = convertIntObj(updatedData);
 
-        // Format the data entries
-        const consultancyFormDataAsArray = Array.from(formData.entries());
-        const questionIds = consultancyFormDataAsArray.map((arr) => arr[0]);
-
-        //Handle single and multiple (duplicate) checkbox's answers..
-        const uniqueQuestions = questionIds
-          .map((id) => {
-            return {
-              count: 1,
-              qId: id,
-            };
-          })
-          .reduce((result, b) => {
-            result[b.qId] = (result[b.qId] || 0) + b.count;
-
-            return result;
-          }, {});
-
-        const duplicateQuestions = Object.keys(uniqueQuestions).filter(
-          (a) => uniqueQuestions[a] > 1
-        );
-
-        duplicateQuestions.map((ids) => {
-          consultancyFormIntObj[ids] = formData.getAll(ids);
-        });
-
-        console.log(consultancyFormIntObj);
-
-        //building form data for process
-        const consultancyFormArray = Object.keys(consultancyFormIntObj).map(
-          (key) => ({
-            question: parseInt(key),
-            answer: consultancyFormIntObj[key],
-          })
-        );
-
-        const consultancyData = { consultation: consultancyFormArray };
         console.log("Questions data:", consultancyData);
 
         // Get the user's IP address (for fun)
@@ -827,7 +813,7 @@ const initProcessForm = function () {
             return {
               line_items_uuid: uuid,
               submitted_at: formTime,
-              consultancy: consultancyFormArray,
+              consultancy: consultancyFormData,
             };
           })
           .then((data) => postData(API, data))
