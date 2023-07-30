@@ -23,7 +23,6 @@ const OrderSubmit = async (webhookResponse) => {
     order_type = "Prescribed";
   }
 
-
   // console.log("## line_items_uuid:", line_items_uuid);
 
   if (line_items_uuid != null) {
@@ -38,7 +37,7 @@ const OrderSubmit = async (webhookResponse) => {
     const orderShippingAddress = webhookResponse?.shipping_address;
     const line_items = webhookResponse?.line_items;
 
-    const items = old_items.map((item) => {
+    const items = line_items.map((item) => {
       const newItem = {
         id: item.id,
         total: parseFloat(item.price),

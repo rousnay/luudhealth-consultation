@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
 console.clear();
 const API = `/apps/tip/consultancy/generate`;
 const method = "POST";
-const current_treatment_id = localStorage.getItem("treatment_id");
-const treatmentId = parseInt(current_treatment_id) || 6257;
+const local_treatment_id = localStorage.getItem("treatment_id");
+const treatmentId = parseInt(local_treatment_id) || 6257;
 // const treatmentId = 6257;
 
-console.log("current_treatment_id:", treatmentId);
+console.log("local_treatment_id:", local_treatment_id);
 
 const getConsultancyBody = {
   treatmentId: treatmentId,
