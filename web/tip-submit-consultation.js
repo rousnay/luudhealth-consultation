@@ -44,7 +44,7 @@ const submitConsultancy = async (lineItemsUuid) => {
   const consultancy_data = {
     uuid: "IPS-C" + data_order?.line_items_uuid,
     type: "NEW",
-    treatment: 6257,
+    treatment: data_medical?.treatment_id,
     quantity: data_order?.quantity,
     patient: {
       uuid: "IPS-P" + data_order?.line_items_uuid,

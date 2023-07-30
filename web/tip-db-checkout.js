@@ -23,6 +23,15 @@ const OrderSubmit = async (webhookResponse) => {
     order_type = "Prescribed";
   }
 
+  function getValueByName(propArr, name) {
+    for (const property of propArr) {
+      if (property.name === name) {
+        return property.value;
+      }
+    }
+    return null; // If the name doesn't match any item in the array
+  }
+
   // console.log("## line_items_uuid:", line_items_uuid);
 
   if (line_items_uuid != null) {
@@ -39,7 +48,8 @@ const OrderSubmit = async (webhookResponse) => {
 
     const items = line_items.map((item) => {
       return {
-        treatment: "treatmentID",
+        treatment: getValueByName(item, "_treatmentId"),
+        item_uuid: getValueByName(item, "_uuid"),
         id: item.id,
         total: parseFloat(item.price),
         quantity: item.quantity,

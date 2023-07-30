@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("TIP Theme Ext Back-end loaded: v12");
 });
 console.clear();
-
 const API = `/apps/tip/consultancy/generate`;
 const method = "POST";
+const current_treatment_id = localStorage.getItem("treatment_id");
 const treatmentId = parseInt(current_treatment_id) || 6257;
 // const treatmentId = 6257;
 

@@ -652,6 +652,13 @@ ready(function () {
   }
 
   /*****************************************************************************
+   * Get Treatment ID
+   */
+  const treatment_id = localStorage.getItem("treatment_id");
+  console.log("From Cookie:", treatment_id);
+
+  /*****************************************************************************
+   *
    * Returns the user's IP address.
    */
 
@@ -739,6 +746,7 @@ ready(function () {
           .then((uuid) => {
             return {
               line_items_uuid: uuid,
+              treatment_id: treatment_id,
               submitted_at: formTime,
               medical: medicalFormObj,
             };

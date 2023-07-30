@@ -639,7 +639,7 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    window.location.href = "/pages/medical-information";
+    window.location.href = `/pages/medical-information/?treatmentId=${treatmentId}`;
     console.log(response);
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");
 
@@ -710,6 +710,11 @@ const initProcessForm = function () {
     const uuid = self.crypto.randomUUID();
     return uuid;
   }
+
+  /*****************************************************************************
+   * Get Treatment ID
+   */
+  const treatment_id = localStorage.getItem("treatment_id");
 
   /*****************************************************************************
    * POSTs to the specified endpoint.
@@ -812,6 +817,7 @@ const initProcessForm = function () {
             localStorage.setItem("line_items_uuid", uuid);
             return {
               line_items_uuid: uuid,
+              treatment_id: parseInt(treatment_id),
               submitted_at: formTime,
               consultancy: consultancyFormData,
             };

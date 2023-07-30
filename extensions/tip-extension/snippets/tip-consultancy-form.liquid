@@ -31,11 +31,12 @@
 
   const fullURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
-  const urlWithoutParams = fullURL.split("?")[0];
+  const urlWithoutParams = fullURL.split('?')[0];
 
-  const getQueryParam = (param) => urlParams.has(param) ? urlParams.get(param) : '';
+  const getQueryParam = (param) => (urlParams.has(param) ? urlParams.get(param) : '');
 
-  const current_treatment_id = getQueryParam("treatmentId");
+  const current_treatment_id = getQueryParam('treatmentId');
 
+  console.log('current_treatment_id, get from param', current_treatment_id);
 </script>
 <script src="{{ 'tip-app.js' | asset_url }}" defer></script>
