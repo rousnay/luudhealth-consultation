@@ -639,7 +639,7 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    // window.location.href = "/pages/medical-information";
+    window.location.href = "/pages/medical-information";
     console.log(response);
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");
 
@@ -771,7 +771,7 @@ const initProcessForm = function () {
         for (const [name, value] of formData.entries()) {
           if (checkedQuestionNames.includes(name)) {
             if (!updatedData[name]) {
-              data[name] = [];
+              updatedData[name] = [];
             }
             updatedData[name].push(value);
           } else {
@@ -790,7 +790,7 @@ const initProcessForm = function () {
         }
         const consultancyFormData = convertIntObj(updatedData);
 
-        console.log("Questions data:", consultancyData);
+        console.log("Questions data:", consultancyFormData);
 
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP

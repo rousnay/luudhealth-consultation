@@ -2,9 +2,11 @@
   <span style="color: {{ block.settings.color }}">
   Online ED treatments, discreetly delivered
   </span>
+
 -->
 
 {% render 'tip-assessment-button-content' %}
+
 {% schema %}
 {
   "name": "Assessment Button",
@@ -15,10 +17,16 @@
   "stylesheet": "tip-app.css",
   "settings": [
     {
-      "label": "Color",
-      "id": "color",
+      "label": "Treatment ID",
+      "id" : "treatment_id",
+      "type": "number",
+      "placeholder": "Enter a treatment ID here"
+    },
+    {
+      "label": "Theme Color",
+      "id": "theme_color",
       "type": "color",
-      "default": "#000000"
+      "default": "#583222"
     }
   ]
 }

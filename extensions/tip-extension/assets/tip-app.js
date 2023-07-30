@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v5");
+  console.log("TIP Theme Ext Back-end loaded: v12");
 });
 console.clear();
 
 const API = `/apps/tip/consultancy/generate`;
 const method = "POST";
-const treatmentId = 6257;
+const treatmentId = parseInt(current_treatment_id) || 6257;
+// const treatmentId = 6257;
+
+console.log("current_treatment_id:", treatmentId);
 
 const getConsultancyBody = {
   treatmentId: treatmentId,
@@ -277,7 +280,7 @@ ready(function () {
 
       continueToNextForm.addEventListener("click", (e) => {
         console.log("hit hit hit...");
-        // window.location.href = "/pages/medical-information";
+        window.location.href = "/pages/medical-information";
       });
 
       initProcessForm();
