@@ -815,6 +815,7 @@ const initProcessForm = function () {
         getUUID()
           .then((uuid) => {
             localStorage.setItem("line_items_uuid", uuid);
+            localStorage.setItem("tip_unique_form_number", treatment_id+uuid);
             return {
               line_items_uuid: uuid,
               treatment_id: parseInt(treatment_id),
