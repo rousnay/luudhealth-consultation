@@ -52,6 +52,7 @@ const submitConsultancy = async (lineItemsUuid) => {
       firstname: data_order?.customer?.firstname,
       // "middlename": "",
       lastname: data_order?.customer?.lastname,
+      gender: data_medical?.medical?.gender,
       phone: data_medical?.medical?.phone,
       // "email": "example@example.com",
       dob: data_medical?.medical?.dob,
