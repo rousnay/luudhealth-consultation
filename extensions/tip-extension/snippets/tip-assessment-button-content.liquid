@@ -29,6 +29,8 @@
 <script type="text/javascript">
   
 
+
+
 var product_treatment_id;
 
 function hideElement(items) {
@@ -51,6 +53,7 @@ function handleAddToCart() {
 }
 
 function redirectToConsultancyPage(current_treatment_id) {
+  localStorage.setItem('targeted_treatment_url', window.location.href);
   const startConsultancy = document.getElementById('start-consultancy');
   startConsultancy.addEventListener('click', () => {
     window.location.href = `/pages/consultancy/?treatmentId=${current_treatment_id}`;
@@ -69,7 +72,7 @@ getReady(function () {
   const gen_tip_unique_form_number = product_treatment_id + the_line_items_uuid;
   const is_same_product = stored_tip_unique_form_number === gen_tip_unique_form_number;
 
-  console.log('Assessment button loaded: V8');
+  console.log('Assessment button loaded: V9');
   console.log('Treatment ID:', product_treatment_id);
   console.log('Product main UUID:', the_line_items_uuid);
   console.log('stored_tip_unique_form_number:', stored_tip_unique_form_number);
@@ -109,6 +112,8 @@ getReady(function () {
 
   {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
+
+
 
 
 </script>

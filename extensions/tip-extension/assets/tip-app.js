@@ -265,23 +265,22 @@ ready(function () {
         }
       });
 
-      tipForm.insertAdjacentHTML(
-        "beforeend",
-        `<section id="progress-form__thank-you" hidden>
-        <p class="successful-submit">Consultancy data has been submitted successfully!</p>
-        <p>Now you are going to tell us more about your personal and medical condition.</p>
-        <button type="button" class="button" id="continue-to-next-form">Continue</button>
-      </section>`
-      );
+      // tipForm.insertAdjacentHTML(
+      //   "beforeend",
+      //   `<section id="progress-form__thank-you" hidden>
+      //   <p class="successful-submit">Consultancy data has been submitted successfully!</p>
+      //   <p>Now you are going to tell us more about your personal and medical condition.</p>
+      //   <button type="button" class="button" id="continue-to-next-form">Continue</button>
+      // </section>`
+      // );
 
-      const continueToNextForm = document.getElementById(
-        "continue-to-next-form"
-      );
-
-      continueToNextForm.addEventListener("click", (e) => {
-        console.log("hit hit hit...");
-        window.location.href = "/pages/medical-information";
-      });
+      // const continueToNextForm = document.getElementById(
+      //   "continue-to-next-form"
+      // );
+      // continueToNextForm.addEventListener("click", (e) => {
+      //   console.log("HIT via continue button");
+      //   window.location.href = "/pages/medical-information";
+      // });
 
       initProcessForm();
     }

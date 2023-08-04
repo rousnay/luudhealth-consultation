@@ -602,9 +602,10 @@ ready(function () {
   }
 
   /****************************************************************************/
-
   function handleSuccess(response) {
-    window.location.href = "/products/erectile-dysfunction";
+    const targetedTreatmentUrl = localStorage.getItem("targeted_treatment_url");
+    window.location.href = targetedTreatmentUrl;
+    console.log("HIT via Medical HandleSuccess");
     console.log(response);
 
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");

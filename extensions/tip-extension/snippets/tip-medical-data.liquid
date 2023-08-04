@@ -136,11 +136,13 @@
     <!-- / End Step 1 -->
 
     <!-- Thank You -->
-    <section id="progress-form__thank-you" hidden>
-      <p>Thank you for your submission!</p>
-      <p>You are almost done, please select the product in next screen</p>
-      <button class="button" type="button" id="continue-to-next-form">Continue</button>
-    </section>
+    {% comment %}
+      <section id="progress-form__thank-you" hidden>
+        <p>Thank you for your submission!</p>
+        <p>You are almost done, please select the product in next screen</p>
+        <button class="button" type="button" id="continue-to-next-form">Continue</button>
+      </section>
+    {% endcomment %}
     <!-- / End Thank You -->
   </form>
   <!-- / End Progress Form -->
@@ -149,10 +151,12 @@
 
 <script type="text/javascript">
   console.log('Medical form loaded!');
-  const continueToNextForm = document.getElementById('continue-to-next-form');
+  {% comment %} const continueToNextForm = document.getElementById('continue-to-next-form');
+  const targetedTreatmentUrl = localStorage.getItem('targeted_treatment_url');
   continueToNextForm.addEventListener('click', (e) => {
-    window.location.href = '/products/erectile-dysfunction';
-  });
+    console.log('HIT via continue button');
+    window.location.href = targetedTreatmentUrl;
+  }); {% endcomment %}
 
   const FormSubmitBtn = document.querySelector('.tip-app-content-medical button[type=submit]');
 

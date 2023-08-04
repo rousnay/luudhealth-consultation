@@ -27,16 +27,14 @@
 </div>
 <!-- partial -->
 <script>
-  console.log('TIP Theme Ext Front-end loaded: v2');
-
+  console.log('TIP Theme Ext Front-end loaded: v3');
   const fullURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const urlWithoutParams = fullURL.split('?')[0];
-
   const getQueryParam = (param) => (urlParams.has(param) ? urlParams.get(param) : '');
-
   const current_treatment_id = getQueryParam('treatmentId');
-  localStorage.setItem('treatment_id', current_treatment_id);
   console.log('current_treatment_id get from param', current_treatment_id);
+
+  localStorage.setItem('treatment_id', current_treatment_id);
 </script>
 <script src="{{ 'tip-app.js' | asset_url }}" defer></script>

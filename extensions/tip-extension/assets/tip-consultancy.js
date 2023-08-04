@@ -640,6 +640,7 @@ const initProcessForm = function () {
 
   function handleSuccess(response) {
     window.location.href = `/pages/medical-information/?treatmentId=${treatmentId}`;
+    console.log("HIT via Consultancy HandleSuccess");
     console.log(response);
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");
 
@@ -815,7 +816,7 @@ const initProcessForm = function () {
         getUUID()
           .then((uuid) => {
             localStorage.setItem("line_items_uuid", uuid);
-            localStorage.setItem("tip_unique_form_number", treatment_id+uuid);
+            localStorage.setItem("tip_unique_form_number", treatment_id + uuid);
             return {
               line_items_uuid: uuid,
               treatment_id: parseInt(treatment_id),
