@@ -1060,6 +1060,22 @@ html {
 }
 
 
+.tip-app-content {
+    margin: 0;
+    padding: 0;
+}
+
+#progress-form {
+    padding: 0;
+}
+
+#progress-form legend {
+    padding: 0;
+}
+#progress-form legend ul {
+    padding-left: 1rem;
+}
+
 @media screen  and (min-width:1200px){
   /* html {
     font-size: var(--base-font-size);

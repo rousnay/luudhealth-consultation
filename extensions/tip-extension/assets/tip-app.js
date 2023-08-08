@@ -84,7 +84,7 @@ ready(function () {
         section.setAttribute("id", `progress-form__panel-${i + 1}`);
         section.setAttribute("role", "tabpanel");
         section.setAttribute("aria-labelledby", `progress-form__tab-${i + 1}`);
-        section.setAttribute("tabindex", 0);
+        section.setAttribute("tabindex", i + 1);
 
         if (i !== 0) {
           section.hidden = true;
