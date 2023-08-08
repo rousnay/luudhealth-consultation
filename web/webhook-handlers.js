@@ -183,7 +183,9 @@ export default {
       console.log("## +++Orders Paid +++++++++++");
       const ordersPaid = JSON.parse(body);
       const line_items_uuid = ordersPaid?.line_items[0]?.properties[0]?.value;
+      const product_id = ordersPaid?.line_items[0]?.product_id;
       console.log("## WEBHOOK: Paid order UUID:", line_items_uuid);
+      console.log("## WEBHOOK: Paid order Product ID:", product_id);
       console.log(
         "## WEBHOOK: Paid order Payload:",
         JSON.stringify(ordersPaid)
