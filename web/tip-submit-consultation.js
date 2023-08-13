@@ -25,7 +25,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
   } else {
     console.log("Not found,but:", DBCollection);
   }
-  const document = await collection.findOne({ line_items_uuid: uuid });
+  const document = await collection.findOne({ submission_uuid: uuid });
 
   if (document) {
     console.log("Document has found");
@@ -36,18 +36,18 @@ async function findDocumentByUuid(DBCollection, uuid) {
   }
 }
 // data_consultancy, data_medical, data_order
-const submitConsultancy = async (lineItemsUuid) => {
-  const data_consultancy = await findDocumentByUuid(1, lineItemsUuid);
-  const data_medical = await findDocumentByUuid(2, lineItemsUuid);
-  const data_order = await findDocumentByUuid(3, lineItemsUuid);
+const submitConsultancy = async (submissionUuid) => {
+  const data_consultancy = await findDocumentByUuid(1, submissionUuid);
+  const data_medical = await findDocumentByUuid(2, submissionUuid);
+  const data_order = await findDocumentByUuid(3, submissionUuid);
 
   const consultancy_data = {
-    uuid: "IPS-C" + data_order?.line_items_uuid,
+    uuid: "IPS-C" + data_order?.submission_uuid,
     type: "NEW",
     treatment: data_medical?.treatment_id,
     quantity: data_order?.quantity,
     patient: {
-      uuid: "IPS-P" + data_order?.line_items_uuid,
+      uuid: "IPS-P" + data_order?.submission_uuid,
       salutation: "Mr",
       firstname: data_order?.customer?.firstname,
       // "middlename": "",

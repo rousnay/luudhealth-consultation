@@ -648,7 +648,7 @@ ready(function () {
    */
 
   async function getUUID() {
-    const uuid = localStorage.getItem("line_items_uuid");
+    const uuid = localStorage.getItem("submission_uuid");
     return uuid;
   }
 
@@ -746,7 +746,7 @@ ready(function () {
         getUUID()
           .then((uuid) => {
             return {
-              line_items_uuid: uuid,
+              submission_uuid: uuid,
               treatment_id: treatment_id,
               submitted_at: formTime,
               medical: medicalFormObj,

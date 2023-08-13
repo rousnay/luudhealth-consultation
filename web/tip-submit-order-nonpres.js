@@ -26,13 +26,13 @@ async function findDocumentByUuid(uuid) {
 }
 
 // data_consultancy, data_medical, data_order
-const placeOrderNonPres = async (lineItemsUuid) => {
-  const data_order = await findDocumentByUuid(lineItemsUuid);
+const placeOrderNonPres = async (submissionUuid) => {
+  const data_order = await findDocumentByUuid(submissionUuid);
   // const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
   const salutation = "Mr";
 
   const order_data = {
-    uuid: "IPS-O" + lineItemsUuid,
+    uuid: "IPS-O" + submissionUuid,
     brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {

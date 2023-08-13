@@ -2,7 +2,6 @@
   <span style="color: {{ block.settings.color }}">
   Online ED treatments, discreetly delivered
   </span>
-
 -->
 
 {% render 'tip-assessment-button-content' %}
@@ -18,9 +17,25 @@
   "settings": [
     {
       "label": "Treatment ID",
-      "id" : "treatment_id",
+      "id": "treatment_id",
       "type": "number",
       "placeholder": "Enter a treatment ID here"
+    },
+    {
+      "type": "radio",
+      "label": "Treatment Type",
+      "id": "treatment_type",
+      "options": [
+        {
+          "label": "Pharmacy",
+          "value": "pharmacy"
+        },
+        {
+          "label": "Non Pharmacy",
+          "value": "non_pharmacy"
+        }
+      ],
+      "default": "pharmacy"
     },
     {
       "label": "Theme Color",

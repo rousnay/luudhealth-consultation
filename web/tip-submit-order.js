@@ -34,13 +34,13 @@ async function findDocumentByUuid(DBCollection, uuid) {
   }
 }
 // data_consultancy, data_medical, data_order
-const placeOrder = async (lineItemsUuid) => {
-  const data_medical = await findDocumentByUuid(2, lineItemsUuid);
-  const data_order = await findDocumentByUuid(3, lineItemsUuid);
+const placeOrder = async (submissionUuid) => {
+  const data_medical = await findDocumentByUuid(2, submissionUuid);
+  const data_order = await findDocumentByUuid(3, submissionUuid);
   const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
 
   const order_data = {
-    uuid: "IPS-O" + lineItemsUuid,
+    uuid: "IPS-O" + submissionUuid,
     brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
@@ -66,7 +66,7 @@ const placeOrder = async (lineItemsUuid) => {
     },
 
     patient: {
-      uuid: "IPS-P" + lineItemsUuid,
+      uuid: "IPS-P" + submissionUuid,
       salutation: salutation,
       firstname: data_order?.customer?.firstname,
       // middlename: data_order?.customer?.firstname,
@@ -83,7 +83,7 @@ const placeOrder = async (lineItemsUuid) => {
         treatment: data_medical?.treatment_id,
         quantity: data_order?.quantity,
         total: data_order?.total_price,
-        consultation: "IPS-C" + lineItemsUuid,
+        consultation: "IPS-C" + submissionUuid,
       },
     ],
   };

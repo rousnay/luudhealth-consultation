@@ -10,7 +10,7 @@ const consultancySubmit = async (formConsultancyResponse) => {
 
     const result = await data_consultancy.insertOne({
       submitted_at: formConsultancyResponse?.submitted_at,
-      line_items_uuid: formConsultancyResponse?.line_items_uuid,
+      submission_uuid: formConsultancyResponse?.submission_uuid,
       treatment_id: formConsultancyResponse?.treatment_id,
       consultancy: formConsultancyResponse?.consultancy,
     });
@@ -30,7 +30,7 @@ const medicalSubmit = async (formMedicalResponse) => {
     const data_medical = DB.collection("data_medical");
     const result = await data_medical.insertOne({
       submitted_at: formMedicalResponse?.submitted_at,
-      line_items_uuid: formMedicalResponse?.line_items_uuid,
+      submission_uuid: formMedicalResponse?.submission_uuid,
       treatment_id: formMedicalResponse?.treatment_id,
       medical: formMedicalResponse?.medical,
     });

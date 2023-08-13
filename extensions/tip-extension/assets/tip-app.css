@@ -452,7 +452,7 @@ li + li {
 }
 
 .tip-app-content [type="checkbox"] {
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .tip-app-content [type="checkbox"]:checked {
@@ -1085,11 +1085,11 @@ html {
 }
 
 label.form__choice-wrapper {
-    -webkit-appearance: none;
+    /* -webkit-appearance: none;
     appearance: none;
     border: 1px solid rgb(var(--border-color));
-    border-radius: var(--button-border-radius);
-    background: transparent;
+    border-radius: var(--button-border-radius); */
+    /* background: transparent; */
 }
 
 input#phone, input#dob, select#gender {

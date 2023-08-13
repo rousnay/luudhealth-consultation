@@ -14,7 +14,7 @@ const API_HEADER = {
 
 async function findDocumentByUuid(uuid) {
   const collection = DB.collection("data_order");
-  const document = await collection.findOne({ line_items_uuid: uuid });
+  const document = await collection.findOne({ submission_uuid: uuid });
   if (document) {
     console.log("Document has found");
     return document;

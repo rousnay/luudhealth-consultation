@@ -15,7 +15,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
   } else {
     console.log("## Not found,but:", DBCollection);
   }
-  const document = await collection.findOne({ line_items_uuid: uuid });
+  const document = await collection.findOne({ submissionUuid: uuid });
 
   if (document) {
     console.log("## Found document for form ID:", DBCollection);
@@ -26,24 +26,24 @@ async function findDocumentByUuid(DBCollection, uuid) {
   }
 }
 
-const dataAggregate = async (lineItemsUuid) => {
+const dataAggregate = async (submissionUuid) => {
   console.log("## DB: data_aggregated");
 
-  const data_consultancy = await findDocumentByUuid(1, lineItemsUuid);
-  const data_medical = await findDocumentByUuid(2, lineItemsUuid);
-  const data_order = await findDocumentByUuid(3, lineItemsUuid);
+  const data_consultancy = await findDocumentByUuid(1, submissionUuid);
+  const data_medical = await findDocumentByUuid(2, submissionUuid);
+  const data_order = await findDocumentByUuid(3, submissionUuid);
 
   // if (order_data && data_consultancy && data_medical){
 
   // }
 
-  if (lineItemsUuid) {
+  if (submissionUuid) {
     const data_aggregated = DB.collection("data_aggregated");
 
     const result = await data_aggregated.insertOne({
       created_at: data_order?.created_at,
       order_type: data_order?.order_type,
-      line_items_uuid: lineItemsUuid,
+      submission_uuid: submissionUuid,
       order_number: data_order?.order_number,
       customer_name: data_order?.customer_name,
       quantity: data_order?.quantity,

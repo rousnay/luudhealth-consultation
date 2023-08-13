@@ -8,30 +8,29 @@ const generated_uuid = crypto.randomUUID();
 
 //Webhook: User info to DB
 const OrderSubmit = async (webhookResponse) => {
-  let line_items_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
-  let order_type = "Non-TIP";
+  let submission_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
   const product_id = webhookResponse?.line_items[0]?.product_id;
 
-  if (line_items_uuid === null && product_id != 8040651292980) {
-    console.log("Product Type: Non-TIP");
-  } else if (product_id === 8040651292980) {
-    console.log("Product Type: Non-prescribed");
-    order_type = "Non-prescribed";
-    line_items_uuid = line_items_uuid ?? generated_uuid;
-  } else {
-    console.log("Product Type: Prescribed");
-    order_type = "Prescribed";
-  }
+  // let order_type = "Non-TIP";
+  // if (line_items_uuid === null && product_id != 8040651292980) {
+  //   console.log("Product Type: Non-TIP");
+  // } else if (product_id === 8040651292980) {
+  //   console.log("Product Type: Non-prescribed");
+  //   order_type = "Non-prescribed";
+  //   line_items_uuid = line_items_uuid ?? generated_uuid;
+  // } else {
+  //   console.log("Product Type: Prescribed");
+  //   order_type = "Prescribed";
+  // }
 
   // console.log("## line_items_uuid:", line_items_uuid);
 
-  if (line_items_uuid != null) {
+  if (submission_uuid != null) {
     const data_order = DB.collection("data_order");
     const createdAt = webhookResponse?.created_at;
     const order_number = webhookResponse?.order_number;
     const order_id = webhookResponse?.id;
     const total_price = webhookResponse?.current_total_price;
-    const quantity = webhookResponse?.line_items[0]?.quantity;
     const orderCustomer = webhookResponse?.customer;
     const orderBillingAddress = webhookResponse?.billing_address;
     const orderShippingAddress = webhookResponse?.shipping_address;
@@ -39,9 +38,12 @@ const OrderSubmit = async (webhookResponse) => {
 
     const items = line_items.map((item) => {
       const newItem = {
-        id: item.id,
-        total: parseFloat(item.price),
-        quantity: item.quantity,
+        id: item?.id,
+        sku: item?.sku,
+        title: item?.title,
+        product_id: item?.product_id,
+        total: parseFloat(item?.price),
+        quantity: item?.quantity,
       };
 
       item.properties.forEach((property) => {
@@ -57,14 +59,12 @@ const OrderSubmit = async (webhookResponse) => {
 
     const result = await data_order.insertOne({
       created_at: createdAt,
-      order_type: order_type,
-      line_items_uuid: line_items_uuid,
+      submission_uuid: submission_uuid,
       order_number: order_number,
       customer_name: orderCustomer?.first_name + " " + orderCustomer?.last_name,
       customer_id: orderCustomer?.id,
       order_id: order_id,
       product_id: product_id,
-      quantity: quantity,
       total_price: parseInt(total_price),
       customer: {
         firstname: orderCustomer?.first_name,
@@ -95,9 +95,9 @@ const OrderSubmit = async (webhookResponse) => {
       `## A document was inserted with the _id: ${result.insertedId}`
     );
     if (product_id === 8040651292980) {
-      placeOrderNonPres(line_items_uuid);
+      placeOrderNonPres(submission_uuid);
     } else {
-      dataAggregate(line_items_uuid);
+      dataAggregate(submission_uuid);
     }
   } else {
     console.log("## There is error in Payload!");
