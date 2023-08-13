@@ -15,7 +15,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
   } else {
     console.log("## Not found,but:", DBCollection);
   }
-  const document = await collection.findOne({ submissionUuid: uuid });
+  const document = await collection.findOne({ submission_uuid: uuid });
 
   if (document) {
     console.log("## Found document for form ID:", DBCollection);
