@@ -15,7 +15,7 @@ const tip_header = {
 
 async function findDocumentByUuid(uuid) {
   const collection = DB.collection("data_order");
-  const document = await collection.findOne({ line_items_uuid: uuid });
+  const document = await collection.findOne({ submission_uuid: uuid });
   if (document) {
     console.log("Document has found");
     return document;
@@ -58,7 +58,7 @@ const placeOrderNonPres = async (submissionUuid) => {
     },
 
     patient: {
-      uuid: "IPS-P" + lineItemsUuid,
+      uuid: "IPS-P" + submissionUuid,
       salutation: salutation,
       firstname: data_order?.customer?.firstname,
       // middlename: data_order?.customer?.firstname,
@@ -73,7 +73,7 @@ const placeOrderNonPres = async (submissionUuid) => {
     items: [
       {
         treatment: 6721,
-        quantity: data_order?.quantity,
+        quantity: data_order?.line_items[0]?.quantity,
         total: data_order?.total_price,
         // consultation: "IPS-C" + lineItemsUuid,
       },

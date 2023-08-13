@@ -64,7 +64,6 @@ const OrderSubmit = async (webhookResponse) => {
       customer_name: orderCustomer?.first_name + " " + orderCustomer?.last_name,
       customer_id: orderCustomer?.id,
       order_id: order_id,
-      product_id: product_id,
       total_price: parseInt(total_price),
       customer: {
         firstname: orderCustomer?.first_name,

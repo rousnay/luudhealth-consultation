@@ -45,7 +45,7 @@ const submitConsultancy = async (submissionUuid) => {
     uuid: "IPS-C" + data_order?.submission_uuid,
     type: "NEW",
     treatment: data_medical?.treatment_id,
-    quantity: data_order?.quantity,
+    quantity: data_order?.line_items[0]?.quantity,
     patient: {
       uuid: "IPS-P" + data_order?.submission_uuid,
       salutation: "Mr",
