@@ -187,7 +187,6 @@ export default {
       const product_id = ordersPaid?.line_items[0]?.product_id;
       console.log("## WEBHOOK: Has _uuid?", has_line_items_uuid);
       console.log("## WEBHOOK: Paid order Product ID:", product_id);
-      OrderSubmit(ordersPaid);
       if (has_line_items_uuid || product_id == 8040651292980) {
         OrderSubmit(ordersPaid);
       } else {
