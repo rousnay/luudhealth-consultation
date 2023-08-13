@@ -38,7 +38,6 @@
   
 
 
-
 var product_treatment_id;
 
 function hideElement(items) {
@@ -99,9 +98,16 @@ getReady(function () {
     nextSibling = nextSibling.nextElementSibling; // Move to the next sibling
   }
 
-  if (is_same_product || product_treatment_type == 'non_pharmacy') {
+  if (is_same_product) {
     console.log(the_submission_uuid);
     product_submission_uuid.value = the_submission_uuid;
+    hideElement([product_assessment_button]); //intentionally treated as an array
+    handleAddToCart();
+
+  } else if (product_treatment_type == 'non_pharmacy') {
+    const generated_uuid = self.crypto.randomUUID();
+    console.log("generated_uuid:", generated_uuid);
+    product_submission_uuid.value = generated_uuid;
     hideElement([product_assessment_button]); //intentionally treated as an array
     handleAddToCart();
   } else {
@@ -124,6 +130,12 @@ getReady(function () {
 
   {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
+
+
+
+
+
+
 
 
 
