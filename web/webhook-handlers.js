@@ -182,10 +182,10 @@ export default {
       // Add to our queue for processing
       console.log("## +++Orders Paid +++++++++++");
       const ordersPaid = JSON.parse(body);
-      const has_treatment_id =
-        ordersPaid?.line_items[0]?.properties[0]?.name == "_treatment_id";
-      console.log("## WEBHOOK: Has _uuid?", has_treatment_id);
-      if (has_treatment_id) {
+      const has_submission_uuid =
+        ordersPaid?.line_items[0]?.properties[0]?.name == "_submission_uuid";
+      console.log("## WEBHOOK: Has submission_uuid? :", has_submission_uuid);
+      if (has_submission_uuid) {
         OrderSubmit(ordersPaid);
       } else {
         console.log("## NON-TIP Products");
