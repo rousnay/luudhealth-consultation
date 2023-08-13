@@ -182,20 +182,17 @@
       if (c_dobdate != '' && c_dobmonth != '' && c_dobyear != '') {
         if (currdate <= setDate) {
           document.querySelector('.error-18').innerHTML = 'You must be 18 years old.';
-          dateField.setAttribute('style', 'border: 1px solid red !important');
           FormSubmitBtn.setAttribute('style', 'opacity: 0.5 !important');
           FormSubmitBtn.disabled = true;
           validationErr = true;
         } else {
           document.querySelector('.error-18').innerHTML = '';
-          dateField.setAttribute('style', 'border: 1px solid #777 !important');
           FormSubmitBtn.setAttribute('style', 'opacity: 1 !important');
           FormSubmitBtn.disabled = false;
           validationErr == false;
         }
       } else {
         document.querySelector('.error-18').innerHTML = 'Please input a valid date of birth';
-        dateField.setAttribute('style', 'border: 1px solid red !important');
         document.querySelector('.product-form button[type=submit]').prop('disabled', true);
         validationErr = true;
       }
