@@ -32,6 +32,9 @@ ready(function () {
   const startConsultancy = document.getElementById("start-consultancy");
   const tipForm = document.getElementById("progress-form");
   const tipFormTab = document.getElementById("progress-form-tabs");
+  const formProgressStatusContainer = document.getElementById(
+    "progress-form-status-container"
+  );
   const field = document.createDocumentFragment();
 
   const errorMessage =
@@ -77,6 +80,7 @@ ready(function () {
 
     function handleConsultancy(questions) {
       consultancyHeader.style.display = "none";
+      formProgressStatusContainer.style.display = "block";
       console.log(questions);
       questions.map(function (question, i) {
         let section = document.createElement("section");

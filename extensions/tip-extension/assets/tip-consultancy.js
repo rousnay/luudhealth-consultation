@@ -2,7 +2,8 @@ const initProcessForm = function () {
   // Global Constants
   const progressForm = document.getElementById("progress-form"),
     tabItems = progressForm.querySelectorAll('[role="tab"]'),
-    tabPanels = progressForm.querySelectorAll('[role="tabpanel"]');
+    tabPanels = progressForm.querySelectorAll('[role="tabpanel"]'),
+    formProgressBar = document.getElementById("progress-form-status-bar");
 
   let currentStep = 0;
 
@@ -564,7 +565,7 @@ const initProcessForm = function () {
           const isLastTab = currentStep === tabItems.length - 1;
           if (!isLastTab && !isMultipleSelection) {
             activateTab(currentStep + 1);
-            scrollToTop();
+            handleFromSteps(currentStep);
           }
         })
         .catch((invalidFields) => {
@@ -585,7 +586,7 @@ const initProcessForm = function () {
       if (target.matches('[data-action="prev"]')) {
         // Revisit the previous step
         activateTab(currentStep - 1);
-        scrollToTop();
+        handleFromSteps(currentStep);
       }
     })
   );
@@ -603,7 +604,7 @@ const initProcessForm = function () {
 
           // Progress to the next step
           activateTab(currentStep + 1);
-          scrollToTop();
+          handleFromSteps(currentStep);
         })
         .catch((invalidFields) => {
           // Update the progress bar (step incomplete)
@@ -622,22 +623,27 @@ const initProcessForm = function () {
     if (target.matches('[data-action="prev"]')) {
       // Revisit the previous step
       activateTab(currentStep - 1);
-      scrollToTop();
+      handleFromSteps(currentStep);
     }
   });
 
   /****************************************************************************/
-  function scrollToTop() {
-    // document.body.scrollTop = 0;
-    // document.documentElement.scrollTop = 0;
-
+  function handleFromSteps(activeStep) {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
 
-    console.log("scrollToTop smoothly");
+    const currentPercentage = Math.ceil((activeStep / tabPanels.length) * 100);
+    handleProgressBar(currentPercentage);
+  }
+
+  /****************************************************************************/
+  function handleProgressBar(progressPercentage) {
+    console.log("currentPercentage:", progressPercentage);
+    formProgressBar.style.width = progressPercentage + "%";
+    formProgressBar.innerHTML = progressPercentage + "%";
   }
 
   // Form Submission
@@ -652,6 +658,7 @@ const initProcessForm = function () {
       submitButton.setAttribute("disabled", "");
       submitButton.textContent = "Submitting...";
     }
+    handleProgressBar(100);
   }
 
   /****************************************************************************/

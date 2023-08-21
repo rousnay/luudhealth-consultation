@@ -595,7 +595,6 @@ select[aria-invalid="true"] {
    ========================================================================== */
 
 .container.tip-app-content {
-  max-width: 80rem; /* 800px */
   width: 100%;
 }
 
@@ -1092,6 +1091,27 @@ label.form__choice-wrapper {
     /* background: transparent; */
 }
 
+#progress-form-status-container {
+  display: none;
+  height: 20px;
+  width: 100%;
+  max-width: 650px;
+  margin: 30px auto;
+  border-radius: 20px;
+  background-color: #ddd;
+}
+
+#progress-form-status-bar {
+  width: 0%;
+  height: 20px;
+  background-color: #583221;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: white;
+  transition: width 0.5s;
+}
+
 input#phone, input#dob, select#gender {
     -webkit-appearance: none;
     appearance: none;
@@ -1100,8 +1120,6 @@ input#phone, input#dob, select#gender {
     background: transparent;
     cursor: pointer;
 }
-
-
 
 @media screen  and (min-width:1200px){
   /* html {
