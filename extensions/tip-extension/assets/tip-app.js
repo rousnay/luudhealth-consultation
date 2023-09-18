@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v12");
+  console.log("TIP Theme Ext Back-end loaded: v14");
 });
 console.clear();
 const API = `/apps/tip/consultancy/generate`;
@@ -11,8 +11,10 @@ const treatmentId = parseInt(local_treatment_id) || 6257;
 console.log("local_treatment_id:", local_treatment_id);
 
 const getConsultancyBody = {
-  treatmentId: treatmentId,
-  type: "NEW",
+  // treatmentId: treatmentId,
+  // type: "NEW",
+  conditionId: 1,
+  type: "CONDITION",
 };
 
 function ready(fn) {
