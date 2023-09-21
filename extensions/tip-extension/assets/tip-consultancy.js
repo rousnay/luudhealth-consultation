@@ -555,6 +555,7 @@ const initProcessForm = function () {
       const isMultipleSelection = target.matches(
         '[data-input-type="multiple-selection"]'
       );
+      const isRadioSelection = target.matches('[data-input-type="radio"]');
 
       validateStep(currentStep)
         .then(() => {

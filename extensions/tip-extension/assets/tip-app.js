@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v14");
+  console.log("TIP Theme Ext Back-end loaded: v16");
 });
 console.clear();
 const API = `/apps/tip/consultancy/generate`;
@@ -262,12 +262,94 @@ ready(function () {
           }
 
           tipForm.appendChild(section);
+        } else if (question?.question_type === "radio") {
+          let divRadioButtons = document.createElement("div");
+          let fieldset = document.createElement("fieldset");
+          fieldset.classList.add("mt-3", "form__field", "field_wrapper");
+          fieldset.setAttribute("data-question-type", "radio");
+
+          fieldset.setAttribute(
+            "data-helper-text",
+            question?.helper_text || helperText
+          );
+
+          fieldset.setAttribute(
+            "data-error-message",
+            question?.error_message || errorMessage
+          );
+
+          divRadioButtons.classList.add("radio-buttons");
+          let legend = document.createElement("legend");
+          legend.innerHTML = `${question?.question_text}`;
+
+          question?.options?.map((option) => {
+            //create element
+            let label = document.createElement("label");
+            let span = document.createElement("span");
+            let input = document.createElement("input");
+
+            //setting attributes to the elements
+            span.innerHTML = `${option}`;
+            label.classList.add("form__choice-wrapper");
+
+            input.setAttribute("data-input-type", "radio");
+            input.setAttribute("type", "radio");
+            input.setAttribute("name", `${question?.question_id}`);
+            input.setAttribute("value", "1");
+
+            //append child elements to the parents
+            label.appendChild(input);
+            label.appendChild(span);
+            divRadioButtons.appendChild(label);
+            fieldset.appendChild(legend);
+            fieldset.appendChild(divRadioButtons);
+            // fieldset.appendChild(label);
+          });
+
+          section.appendChild(fieldset);
+
+          if (i === 0) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+            <button class="button button-next button-progress" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          } else if (i === questions.length - 1) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+                <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple" data-action="prev">
+                  Back
+                </button>
+                <button  class="button button-progress" type="submit">
+                  Submit
+                </button>
+              </div>`
+            );
+          } else {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+              <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+                Back
+              </button>
+              <button class="button button-next button-progress" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          }
+
+          tipForm.appendChild(section);
         } else if (question?.question_type === "text") {
           console.log("API has Text field");
         } else if (question?.question_type === "textarea") {
           console.log("API has Textarea field");
         } else {
-          console.log("No field matches");
+          console.log("Unknown field exist!");
         }
       });
 
