@@ -36,9 +36,10 @@
   const urlParams = new URLSearchParams(window.location.search);
   const urlWithoutParams = fullURL.split('?')[0];
   const getQueryParam = (param) => (urlParams.has(param) ? urlParams.get(param) : '');
+  const current_condition_id = getQueryParam('conditionId');
   const current_treatment_id = getQueryParam('treatmentId');
   console.log('current_treatment_id get from param', current_treatment_id);
-
+  localStorage.setItem('condition_id', current_condition_id);
   localStorage.setItem('treatment_id', current_treatment_id);
 </script>
 <script src="{{ 'tip-app.js' | asset_url }}" defer></script>

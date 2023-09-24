@@ -14,7 +14,11 @@ import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 
 import { connectToDB } from "./db.js";
-import { consultancySubmit, medicalSubmit } from "./tip-db-forms.js";
+import {
+  conditionSubmit,
+  consultancySubmit,
+  medicalSubmit,
+} from "./tip-db-forms.js";
 import { submitConsultancy } from "./tip-submit-consultation.js";
 import { placeOrder } from "./tip-submit-order.js";
 import { orderFulfilled } from "./tip-process-fulfillment.js";
@@ -89,7 +93,11 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
 //Form: Consultations data into DB
 app.post("/proxy_route/consultancy/submit", async (req, res) => {
   const payload = req.body;
-  consultancySubmit(payload);
+  if (payload?.treatment_type === "od_medicine") {
+    conditionSubmit(payload);
+  } else {
+    consultancySubmit(payload);
+  }
 
   console.log("### APP: consultancy/submit:", JSON.stringify(payload));
 
