@@ -16,32 +16,40 @@
   "stylesheet": "tip-app.css",
   "settings": [
     {
-      "label": "Treatment ID",
-      "id": "treatment_id",
-      "type": "number",
-      "placeholder": "Enter a treatment ID here"
-    },
-    {
       "type": "radio",
       "label": "Treatment Type",
       "id": "treatment_type",
       "options": [
         {
-          "label": "Pharmacy",
-          "value": "pharmacy"
+          "label": "OD Medicine (Generic)",
+          "value": "od_medicine"
         },
         {
-          "label": "Non Pharmacy",
+          "label": "OD Medicine (Treatment specific)",
+          "value": "od_medicine_with_treatment"
+        },
+        {
+          "label": "OTC Medicine (No condition ID)",
+          "value": "otc_medicine"
+        },
+        {
+          "label": "Non-Pharmacy",
           "value": "non_pharmacy"
         }
       ],
-      "default": "pharmacy"
+      "default": "od_medicine"
     },
     {
-      "label": "Theme Color",
-      "id": "theme_color",
-      "type": "color",
-      "default": "#583222"
+      "label": "Condition ID",
+      "id": "condition_id",
+      "type": "number",
+      "placeholder": "Enter a condition ID here"
+    },
+    {
+      "label": "Treatment ID for treatment specific consultation",
+      "id": "treatment_id",
+      "type": "number",
+      "placeholder": "Enter the treatment ID here"
     }
   ]
 }

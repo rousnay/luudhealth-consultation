@@ -655,6 +655,7 @@ ready(function () {
   /*****************************************************************************
    * Get Treatment ID
    */
+  const condition_id = localStorage.getItem("condition_id");
   const treatment_id = localStorage.getItem("treatment_id");
   console.log("From Cookie:", treatment_id);
 
@@ -747,7 +748,8 @@ ready(function () {
           .then((uuid) => {
             return {
               submission_uuid: uuid,
-              treatment_id: treatment_id,
+              condition_id: parseInt(condition_id),
+              treatment_id: parseInt(treatment_id),
               submitted_at: formTime,
               medical: medicalFormObj,
             };

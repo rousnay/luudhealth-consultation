@@ -1,11 +1,14 @@
 {{ 'stylesheet' | asset_url | stylesheet_tag }}
 <script src="{{ 'javascript' | asset_url }}" defer></script>
 
-{% assign section_id = section.id %}
-{% assign product_id = product.id %}
-{% assign form_id = form.id %}
-{% assign treatment_id = block.settings.treatment_id %}
-{% assign treatment_type = block.settings.treatment_type %}
+{%- liquid
+  assign section_id = section.id
+  assign product_id = product.id
+  assign form_id = form.id
+  assign condition_id = block.settings.condition_id
+  assign treatment_id = block.settings.treatment_id
+  assign treatment_type = block.settings.treatment_type
+-%}
 
 <div class="product-form__input">
   <input
@@ -14,19 +17,29 @@
     id="product-submission-uuid"
     name="properties[_submission_uuid]"
   >
-  <input
-    type="hidden"
-    form="product-form-{{ section_id }}-{{ product_id }}"
-    id="product-treatment-id"
-    name="properties[_treatment_id]"
-    value="{{ treatment_id }}"
-  >
+
   <input
     type="hidden"
     form="product-form-{{ section_id }}-{{ product_id }}"
     id="product-treatment-type"
     name="properties[_treatment_type]"
     value="{{ treatment_type }}"
+  >
+
+  <input
+    type="hidden"
+    form="product-form-{{ section_id }}-{{ product_id }}"
+    id="product-condition-id"
+    name="properties[_condition_id]"
+    value="{{ condition_id }}"
+  >
+
+  <input
+    type="hidden"
+    form="product-form-{{ section_id }}-{{ product_id }}"
+    id="product-treatment-id"
+    name="properties[_treatment_id]"
+    value="{{ treatment_id }}"
   >
 </div>
 
@@ -38,7 +51,17 @@
   
 
 
+
+
+
+
+
+
+
+
+
 var product_treatment_id;
+var product_condition_id;
 
 function hideElement(items) {
   for (const item of items) {
@@ -59,32 +82,37 @@ function handleAddToCart() {
   });
 }
 
-function redirectToConsultancyPage(current_treatment_id) {
+function redirectToConsultancyPage(current_treatment_type, current_condition_id, current_treatment_id) {
   localStorage.setItem('targeted_treatment_url', window.location.href);
   const startConsultancy = document.getElementById('start-consultancy');
   startConsultancy.addEventListener('click', () => {
-    window.location.href = `/pages/consultancy/?treatmentId=${current_treatment_id}`;
+      window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
   });
 }
 
 getReady(function () {
-  product_treatment_id = document.getElementById('product-treatment-id').value;
-  localStorage.setItem('treatment_id', product_treatment_id);
 
   product_treatment_type = document.getElementById('product-treatment-type').value;
   localStorage.setItem('treatment_type', product_treatment_type);
+
+  product_condition_id = document.getElementById('product-condition-id').value;
+  localStorage.setItem('condition_id', product_condition_id);
+
+  product_treatment_id = document.getElementById('product-treatment-id').value;
+  localStorage.setItem('treatment_id', product_treatment_id);
 
   const tip_app_block = document.querySelector('.product-form .shopify-app-block'); // Get the first item
   const product_assessment_button = document.querySelector('.product-form__assessment-button');
   const product_submission_uuid = document.getElementById('product-submission-uuid');
   const the_submission_uuid = localStorage.getItem('submission_uuid');
   const stored_tip_unique_form_number = localStorage.getItem('tip_unique_form_number');
-  const gen_tip_unique_form_number = product_treatment_id + the_submission_uuid;
+  const gen_tip_unique_form_number = product_condition_id + the_submission_uuid;
   const is_same_product = stored_tip_unique_form_number === gen_tip_unique_form_number;
 
   console.log('Assessment button loaded: V9');
-  console.log('Treatment ID:', product_treatment_id);
   console.log('Treatment Type:', product_treatment_type);
+  console.log('Condition ID:', product_condition_id);
+  console.log('Treatment ID:', product_treatment_id);
   console.log('Product main UUID:', the_submission_uuid);
   console.log('stored_tip_unique_form_number:', stored_tip_unique_form_number);
   console.log('gen_tip_unique_form_number:', gen_tip_unique_form_number);
@@ -115,7 +143,7 @@ getReady(function () {
     showElement([product_assessment_button]); //intentionally treated as an array
   }
 
-  redirectToConsultancyPage(product_treatment_id);
+  redirectToConsultancyPage(product_treatment_type, product_condition_id, product_treatment_id);
 });
 
 
@@ -130,6 +158,15 @@ getReady(function () {
 
   {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
+
+
+
+
+
+
+
+
+
 
 
 

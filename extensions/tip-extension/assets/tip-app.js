@@ -4,18 +4,32 @@ document.addEventListener("DOMContentLoaded", function () {
 console.clear();
 const API = `/apps/tip/consultancy/generate`;
 const method = "POST";
+
+const treatmentType = localStorage.getItem("treatment_type");
+console.log("local_treatment_type:", treatmentType);
+
+const local_condition_id = localStorage.getItem("condition_id");
+const conditionId = parseInt(local_condition_id);
+console.log("local_condition_id:", conditionId);
+
 const local_treatment_id = localStorage.getItem("treatment_id");
-const treatmentId = parseInt(local_treatment_id) || 6257;
-// const treatmentId = 6257;
+const treatmentId = parseInt(local_treatment_id);
+console.log("local_treatment_id:", treatmentId);
 
-console.log("local_treatment_id:", local_treatment_id);
+const getConsultancyBody = {};
 
-const getConsultancyBody = {
-  // treatmentId: treatmentId,
-  // type: "NEW",
-  conditionId: 1,
-  type: "CONDITION",
-};
+if (treatmentType === "od_medicine") {
+  getConsultancyBody.conditionId = conditionId;
+  getConsultancyBody.type = "CONDITION";
+} else if (
+  treatmentType === "od_medicine_with_treatment" ||
+  treatmentType === "otc_medicine"
+) {
+  getConsultancyBody.treatmentId = treatmentId;
+  getConsultancyBody.type = "NEW";
+} else {
+  console.log("Unsupported treatment type!");
+}
 
 function ready(fn) {
   if (
@@ -295,7 +309,7 @@ ready(function () {
             input.setAttribute("data-input-type", "radio");
             input.setAttribute("type", "radio");
             input.setAttribute("name", `${question?.question_id}`);
-            input.setAttribute("value", "1");
+            input.setAttribute("value", `${option}`);
 
             //append child elements to the parents
             label.appendChild(input);

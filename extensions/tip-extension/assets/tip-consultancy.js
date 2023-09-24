@@ -97,7 +97,11 @@ const initProcessForm = function () {
 
     for (const choice of choices) {
       // console.log(choice.type === "checkbox");
-      if (choice.required || choice.type === "checkbox") {
+      if (
+        choice.required ||
+        choice.type === "checkbox" ||
+        choice.type === "radio"
+      ) {
         isRequired = true;
       }
 
@@ -741,6 +745,7 @@ const initProcessForm = function () {
   /*****************************************************************************
    * Get Treatment ID
    */
+  const condition_id = localStorage.getItem("condition_id");
   const treatment_id = localStorage.getItem("treatment_id");
 
   /*****************************************************************************
@@ -842,9 +847,10 @@ const initProcessForm = function () {
         getUUID()
           .then((uuid) => {
             localStorage.setItem("submission_uuid", uuid);
-            localStorage.setItem("tip_unique_form_number", treatment_id + uuid);
+            localStorage.setItem("tip_unique_form_number", condition_id + uuid);
             return {
               submission_uuid: uuid,
+              condition_id: parseInt(condition_id),
               treatment_id: parseInt(treatment_id),
               submitted_at: formTime,
               consultancy: consultancyFormData,
