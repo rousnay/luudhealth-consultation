@@ -40,7 +40,7 @@ const placeOrder = async (submissionUuid) => {
   const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
 
   const order_data = {
-    uuid: "IPS-O" + submissionUuid,
+    uuid: "O" + submissionUuid,
     brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
@@ -66,7 +66,7 @@ const placeOrder = async (submissionUuid) => {
     },
 
     patient: {
-      uuid: "IPS-P" + submissionUuid,
+      uuid: "P" + submissionUuid,
       salutation: salutation,
       firstname: data_order?.customer?.firstname,
       // middlename: data_order?.customer?.firstname,
@@ -83,7 +83,7 @@ const placeOrder = async (submissionUuid) => {
         treatment: data_medical?.treatment_id,
         quantity: data_order?.line_items[0]?.quantity,
         total: data_order?.total_price,
-        consultation: "IPS-C" + submissionUuid,
+        consultation: "C" + submissionUuid,
       },
     ],
   };
