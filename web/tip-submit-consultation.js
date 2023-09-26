@@ -17,10 +17,12 @@ async function findDocumentByUuid(DBCollection, uuid) {
   let collection;
 
   if (DBCollection == 1) {
-    collection = DB.collection("data_consultancy");
+    collection = DB.collection("data_condition");
   } else if (DBCollection == 2) {
-    collection = DB.collection("data_medical");
+    collection = DB.collection("data_consultancy");
   } else if (DBCollection == 3) {
+    collection = DB.collection("data_medical");
+  } else if (DBCollection == 4) {
     collection = DB.collection("data_order");
   } else {
     console.log("Not found,but:", DBCollection);
@@ -37,17 +39,18 @@ async function findDocumentByUuid(DBCollection, uuid) {
 }
 // data_consultancy, data_medical, data_order
 const submitConsultancy = async (submissionUuid) => {
-  const data_consultancy = await findDocumentByUuid(1, submissionUuid);
-  const data_medical = await findDocumentByUuid(2, submissionUuid);
-  const data_order = await findDocumentByUuid(3, submissionUuid);
+  const data_condition = await findDocumentByUuid(1, submissionUuid);
+  const data_consultancy = await findDocumentByUuid(2, submissionUuid);
+  const data_medical = await findDocumentByUuid(3, submissionUuid);
+  const data_order = await findDocumentByUuid(4, submissionUuid);
 
   const consultancy_data = {
-    uuid: "IPS-C" + data_order?.submission_uuid,
+    uuid: "C" + data_order?.submission_uuid,
     type: "NEW",
     treatment: data_medical?.treatment_id,
     quantity: data_order?.line_items[0]?.quantity,
     patient: {
-      uuid: "IPS-P" + data_order?.submission_uuid,
+      uuid: "P" + data_order?.submission_uuid,
       salutation: "Mr",
       firstname: data_order?.customer?.firstname,
       // "middlename": "",
@@ -62,6 +65,7 @@ const submitConsultancy = async (submissionUuid) => {
       gender: data_medical?.medical?.gender,
     },
     consultation: data_consultancy?.consultancy,
+    condition: data_condition?.condition
   };
 
   const tipConsultancy = async (consultancyPayload) => {
