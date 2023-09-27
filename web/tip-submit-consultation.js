@@ -47,7 +47,6 @@ const submitConsultancy = async (submissionUuid) => {
   const consultancy_data = {
     uuid: "C" + data_order?.submission_uuid,
     type: "NEW",
-    conditionId: data_condition?.condition_id,
     treatment: data_order?.line_items[0]?.sku,
     quantity: data_order?.line_items[0]?.quantity,
     patient: {
@@ -66,8 +65,16 @@ const submitConsultancy = async (submissionUuid) => {
       gender: data_medical?.medical?.gender,
     },
     consultation: data_consultancy?.consultancy,
-    condition: data_condition?.condition
   };
+
+  const treatment_type = data_medical?.treatment_type;
+  if (
+    (treatment_type =
+      "od_medicine_generic" || treatment_type == "od_medicine_treatment")
+  ) {
+    consultancy_data.conditionId = data_condition?.condition_id;
+    consultancy_data.condition = data_condition?.condition;
+  }
 
   const tipConsultancy = async (consultancyPayload) => {
     const response = await fetch(
