@@ -1,0 +1,80 @@
+// [shopify-app/INFO] Webhook processed, returned status code 200
+
+// ## A document was inserted with the _id: 6512cf975e4bd7f82fb1a6a5
+// ## DB: data_aggregated
+// ## Found document for form ID: 1
+// ## Document not found!
+// ## Found document for form ID: 3
+// ## Found document for form ID: 4
+// ## A document was inserted with the _id: 6512cf975e4bd7f82fb1a6a6
+
+
+// ======================================================================
+// ## API: partners/identity-checks payload:
+{
+  "check_type": "GENERIC",
+  "patient": {
+    "uuid": "P8040504b-09cd-4191-95bc-d09e5bbe40f5",
+    "firstname": "Ross",
+    "lastname": "Aldred",
+    "dob": "1982-09-08",
+    "gender": "male",
+    "address": {
+      "businessName": "",
+      "address1": "161 Felsham Road",
+      "address2": "",
+      "city": "London",
+      "county": "United Kingdom",
+      "postcode": "SW15 1BB"
+    }
+  }
+}
+
+// ## API: partners/identity-checks Response: { message: 'Payload accepted', status: 200 }
+
+// =========================================================================
+// ### USER_ID_PASS
+// Document not found
+// Document not found
+// Document not found
+// Document not found
+
+// =========================================================================
+// ## Error with consultancy submission:
+{
+  "errors": {
+    "quantity": [
+      "The quantity field is required."
+    ],
+    "patient.dateofbirth": [
+      "Please provide a date of birth"
+    ],
+    "patient.firstname": [
+      "Please provide a firstname"
+    ],
+    "patient.lastname": [
+      "Please provide a lastname"
+    ],
+    "patient.address.address1": [
+      "Please provide the first line of the patient address"
+    ],
+    "patient.address.city": [
+      "Please provide the address city"
+    ],
+    "patient.address.postcode": [
+      "Please provide the address postcode"
+    ],
+    "patient.phone": [
+      "The patient.phone field is required."
+    ],
+    "treatment": [
+      "The treatment field is required."
+    ],
+    "conditionId": [
+      "The condition id field is required when treatment is not present."
+    ]
+  },
+  "message": "The given data was invalid",
+  "status": 422
+}
+// ## identityNotification was inserted with the _id: 6512cf9b5e4bd7f82fb1a6a7

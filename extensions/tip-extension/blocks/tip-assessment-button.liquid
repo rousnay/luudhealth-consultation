@@ -21,23 +21,23 @@
       "id": "treatment_type",
       "options": [
         {
-          "label": "OD Medicine (Generic)",
-          "value": "od_medicine"
+          "label": "OD Medicine (Generic, only condition ID required)",
+          "value": "od_medicine_generic"
         },
         {
-          "label": "OD Medicine (Treatment specific)",
-          "value": "od_medicine_with_treatment"
+          "label": "OD Medicine (Treatment specific, condition ID and treatment ID required)",
+          "value": "od_medicine_treatment"
         },
         {
-          "label": "OTC Medicine (No condition ID)",
+          "label": "OTC Medicine (Only treatment ID required)",
           "value": "otc_medicine"
         },
         {
-          "label": "Non-Pharmacy",
+          "label": "Non-Pharmacy (No condition ID Nor treatment ID required)",
           "value": "non_pharmacy"
         }
       ],
-      "default": "od_medicine"
+      "default": "od_medicine_generic"
     },
     {
       "label": "Condition ID",
@@ -46,7 +46,7 @@
       "placeholder": "Enter a condition ID here"
     },
     {
-      "label": "Treatment ID for treatment specific consultation",
+      "label": "Treatment ID",
       "id": "treatment_id",
       "type": "number",
       "placeholder": "Enter the treatment ID here"

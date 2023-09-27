@@ -18,11 +18,11 @@ console.log("local_treatment_id:", treatmentId);
 
 const getConsultancyBody = {};
 
-if (treatmentType === "od_medicine") {
+if (treatmentType === "od_medicine_generic") {
   getConsultancyBody.conditionId = conditionId;
   getConsultancyBody.type = "CONDITION";
 } else if (
-  treatmentType === "od_medicine_with_treatment" ||
+  treatmentType === "od_medicine_treatment" ||
   treatmentType === "otc_medicine"
 ) {
   getConsultancyBody.treatmentId = treatmentId;

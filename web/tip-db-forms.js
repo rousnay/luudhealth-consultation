@@ -12,6 +12,7 @@ const conditionSubmit = async (formConditionResponse) => {
     const result = await data_condition.insertOne({
       submitted_at: formConditionResponse?.submitted_at,
       submission_uuid: formConditionResponse?.submission_uuid,
+      treatment_type: formConditionResponse?.treatment_type,
       condition_id: formConditionResponse?.condition_id,
       treatment_id: formConditionResponse?.treatment_id,
       condition: formConditionResponse?.consultancy,
@@ -34,6 +35,7 @@ const consultancySubmit = async (formConsultancyResponse) => {
     const result = await data_consultancy.insertOne({
       submitted_at: formConsultancyResponse?.submitted_at,
       submission_uuid: formConsultancyResponse?.submission_uuid,
+      treatment_type: formConsultancyResponse?.treatment_type,
       condition_id: formConsultancyResponse?.condition_id,
       treatment_id: formConsultancyResponse?.treatment_id,
       consultancy: formConsultancyResponse?.consultancy,
@@ -55,6 +57,7 @@ const medicalSubmit = async (formMedicalResponse) => {
     const result = await data_medical.insertOne({
       submitted_at: formMedicalResponse?.submitted_at,
       submission_uuid: formMedicalResponse?.submission_uuid,
+      treatment_type: formMedicalResponse?.treatment_type,
       condition_id: formMedicalResponse?.condition_id,
       treatment_id: formMedicalResponse?.treatment_id,
       medical: formMedicalResponse?.medical,

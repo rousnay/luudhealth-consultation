@@ -1,0 +1,28 @@
+// APP: consultancy/submit:
+{
+  "submission_uuid": "8040504b-09cd-4191-95bc-d09e5bbe40f5",
+  "treatment_type": "od_medicine",
+  "condition_id": 20,
+  "treatment_id": 9007,
+  "submitted_at": "2023-09-26T12:32:40.947Z",
+  "consultancy": {
+    "58": "Diagnosis by Doctor or Sexual Health Clinic",
+    "59": 0,
+    "60": 1,
+    "117": 1
+  }
+}
+
+// APP: medical/submit Body:
+{
+  "submission_uuid": "8040504b-09cd-4191-95bc-d09e5bbe40f5",
+  "treatment_type": "od_medicine",
+  "condition_id": 20,
+  "treatment_id": 9007,
+  "submitted_at": "2023-09-26T12:32:51.505Z",
+  "medical": {
+    "phone": "07709106610",
+    "dob": "1982-09-08",
+    "gender": "male"
+  }
+}

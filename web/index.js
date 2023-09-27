@@ -93,7 +93,7 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
 //Form: Consultations data into DB
 app.post("/proxy_route/consultancy/submit", async (req, res) => {
   const payload = req.body;
-  if (payload?.treatment_type === "od_medicine") {
+  if (payload?.treatment_type === "od_medicine_generic") {
     conditionSubmit(payload);
   } else {
     consultancySubmit(payload);
@@ -119,7 +119,7 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 //TIP Notification Handler
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
-  const uuid = payload?.data?.uuid?.substring(5);
+  const uuid = payload?.data?.uuid?.substring(6);
   let responseMessage = "Notification has been received from App";
 
   switch (payload?.type) {
@@ -138,7 +138,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
       responseMessage = await placeOrder(
-        payload?.data?.consultation?.uuid.substring(5)
+        payload?.data?.consultation?.uuid.substring(6)
       );
       await consultationNotification(payload);
       break;
