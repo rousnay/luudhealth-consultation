@@ -39,7 +39,7 @@ const OrderSubmit = async (webhookResponse) => {
     const items = line_items.map((item) => {
       const newItem = {
         id: item?.id,
-        sku: item?.sku,
+        sku: parseInt(item?.sku),
         title: item?.title,
         product_id: item?.product_id,
         total: parseFloat(item?.price),
