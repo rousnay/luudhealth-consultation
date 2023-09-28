@@ -76,6 +76,28 @@ const submitConsultancy = async (submissionUuid) => {
     consultancy_data.condition = data_condition?.condition;
   }
 
+  const storeConsultancyDataToDB = async (
+    consultancyPayload_data,
+    response_data
+  ) => {
+    console.log("## Form: Medical -> Submit");
+    // const order_id = webhookResponse?.id;
+    if (consultancyPayload_data) {
+      const submitted_consultation = DB.collection("submitted_consultation");
+      const result = await submitted_consultation.insertOne({
+        // submitted_at: submitted_at,
+        consultancy_uuid: consultancyPayload_data?.uuid,
+        consultancy_data: consultancyPayload_data,
+        response_data: response_data,
+      });
+      console.log(
+        `## A document was inserted with the _id: ${result.insertedId}`
+      );
+    } else {
+      console.log("## There is error in Payload!");
+    }
+  };
+
   const tipConsultancy = async (consultancyPayload) => {
     const response = await fetch(
       `${TIP_HOST}/${TIP_API_VERSION}/partners/consultations`,
@@ -86,7 +108,12 @@ const submitConsultancy = async (submissionUuid) => {
       }
     ).then((response) => response.json());
 
-    // console.log("## API: partners/consultations Body:", consultancyPayload);
+    console.log(
+      "## API: partners/consultations Body:",
+      JSON.stringify(consultancyPayload)
+    );
+
+    storeConsultancyDataToDB(consultancyPayload, response);
 
     if (response.status === 200) {
       console.log("## API: partners/consultations Response:", response);

@@ -89,6 +89,24 @@ const placeOrder = async (submissionUuid) => {
   };
 
   // console.log(JSON.stringify(order_data));
+  const storeOrderDataToDB = async (orderPayload_data, response_data) => {
+    console.log("## Form: Medical -> Submit");
+    // const order_id = webhookResponse?.id;
+    if (orderPayload_data) {
+      const submitted_order = DB.collection("submitted_order");
+      const result = await submitted_order.insertOne({
+        // submitted_at: submitted_at,
+        order_uuid: orderPayload_data?.uuid,
+        order_data: orderPayload_data,
+        response_data: response_data,
+      });
+      console.log(
+        `## A document was inserted with the _id: ${result.insertedId}`
+      );
+    } else {
+      console.log("## There is error in Payload!");
+    }
+  };
 
   const tipOrder = async (orderPayload) => {
     const response = await fetch(
@@ -100,7 +118,9 @@ const placeOrder = async (submissionUuid) => {
       }
     ).then((response) => response.json());
 
-    // console.log("## API: partners/orders Body:", orderPayload);
+    console.log("## API: partners/orders Body:", JSON.stringify(orderPayload));
+
+    storeOrderDataToDB(orderPayload, response);
 
     if (response.status === 200) {
       console.log("## API: partners/orders Response:", response);

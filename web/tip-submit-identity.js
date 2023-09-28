@@ -26,6 +26,27 @@ function identityCheck(data_medical, data_order) {
       address: data_order?.billing_address,
     },
   };
+  const storeIdentityDataToDB = async (
+    identityCheckPayload_data,
+    response_data
+  ) => {
+    console.log("## Form: Medical -> Submit");
+    // const order_id = webhookResponse?.id;
+    if (identityCheckPayload_data) {
+      const submitted_identity = DB.collection("submitted_identity");
+      const result = await submitted_identity.insertOne({
+        // submitted_at: submitted_at,
+        patient_uuid: identityCheckPayload_data?.patient?.uuid,
+        identity_data: identityCheckPayload_data,
+        response_data: response_data,
+      });
+      console.log(
+        `## A document was inserted with the _id: ${result.insertedId}`
+      );
+    } else {
+      console.log("## There is error in Payload!");
+    }
+  };
 
   const identityCheckSubmit = async (identityCheckPayload) => {
     const response = await fetch(
@@ -41,6 +62,8 @@ function identityCheck(data_medical, data_order) {
       "## API: partners/identity-checks payload:",
       JSON.stringify(identityCheckPayload)
     );
+
+    storeIdentityDataToDB(identityCheckPayload, response);
 
     if (response.status === 200) {
       console.log("## API: partners/identity-checks Response:", response);
