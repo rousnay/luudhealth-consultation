@@ -616,8 +616,8 @@ ready(function () {
       "tip_unique_form_number",
       "Done-" +
         current_submission_uuid +
-        product_condition_id +
-        product_treatment_id
+        current_condition_id +
+        current_treatment_id
     );
     const targetedTreatmentUrl = localStorage.getItem("targeted_treatment_url");
     window.location.href = targetedTreatmentUrl;
