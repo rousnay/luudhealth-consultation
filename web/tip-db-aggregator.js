@@ -2,6 +2,7 @@
 import { DB } from "./db.js";
 
 import { identityCheck } from "./tip-submit-identity.js";
+import { submitConsultancy } from "./tip-submit-consultation.js";
 
 async function findDocumentByUuid(DBCollection, uuid) {
   let collection;
@@ -57,7 +58,8 @@ const dataAggregate = async (submissionUuid) => {
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    identityCheck(data_medical, data_order);
+    // identityCheck(data_medical, data_order);
+    submitConsultancy(submissionUuid);
   } else {
     console.log("## There is error in Payload!");
   }

@@ -21,11 +21,13 @@ export default function Routes({ pages }) {
   ));
 
   const NotFound = routes.find(({ path }) => path === "/notFound").component;
+  // const TIPOrder = routes.find(({ path }) => path === "/TIPOrder").component;
 
   return (
     <ReactRouterRoutes>
       {routeComponents}
       <Route path="*" element={<NotFound />} />
+      {/* <Route path="/tip-orders" element={<TIPOrder />} /> */}
     </ReactRouterRoutes>
   );
 }

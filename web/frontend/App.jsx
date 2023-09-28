@@ -21,8 +21,8 @@ export default function App() {
             <NavigationMenu
               navigationLinks={[
                 {
-                  label: "Page name",
-                  destination: "/pagename",
+                  label: "Order Status",
+                  destination: "/tip-orders",
                 },
               ]}
             />
