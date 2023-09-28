@@ -7,6 +7,13 @@ const initProcessForm = function () {
 
   let currentStep = 0;
 
+  /*****************************************************************************
+   * Get Treatment information
+   */
+  const current_treatment_type = localStorage.getItem("treatment_type");
+  const current_condition_id = localStorage.getItem("condition_id");
+  const current_treatment_id = localStorage.getItem("treatment_id");
+
   // Form Validation
 
   /*****************************************************************************
@@ -669,7 +676,7 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    // window.location.href = `/pages/medical-information/?treatmentId=${treatmentId}`;
+    window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
     console.log("HIT via Consultancy HandleSuccess");
     console.log(response);
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");
@@ -741,13 +748,6 @@ const initProcessForm = function () {
     const uuid = self.crypto.randomUUID();
     return uuid;
   }
-
-  /*****************************************************************************
-   * Get Treatment ID
-   */
-  const treatment_type = localStorage.getItem("treatment_type");
-  const condition_id = localStorage.getItem("condition_id");
-  const treatment_id = localStorage.getItem("treatment_id");
 
   /*****************************************************************************
    * POSTs to the specified endpoint.
@@ -878,12 +878,11 @@ const initProcessForm = function () {
         getUUID()
           .then((uuid) => {
             localStorage.setItem("submission_uuid", uuid);
-            localStorage.setItem("tip_unique_form_number", condition_id + uuid);
             return {
               submission_uuid: uuid,
-              treatment_type: treatment_type,
-              condition_id: parseInt(condition_id),
-              treatment_id: parseInt(treatment_id),
+              treatment_type: current_treatment_type,
+              condition_id: parseInt(current_condition_id),
+              treatment_id: parseInt(current_treatment_id),
               submitted_at: formTime,
               consultancy: consultancyFormData,
             };

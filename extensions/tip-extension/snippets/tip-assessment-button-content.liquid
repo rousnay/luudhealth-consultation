@@ -60,6 +60,9 @@
 
 
 
+
+
+
 var product_treatment_id;
 var product_condition_id;
 
@@ -106,7 +109,7 @@ getReady(function () {
   const product_submission_uuid = document.getElementById('product-submission-uuid');
   const the_submission_uuid = localStorage.getItem('submission_uuid');
   const stored_tip_unique_form_number = localStorage.getItem('tip_unique_form_number');
-  const gen_tip_unique_form_number = product_condition_id + the_submission_uuid;
+  const gen_tip_unique_form_number = "Done-" + the_submission_uuid + product_condition_id + product_treatment_id;
   const is_same_product = stored_tip_unique_form_number === gen_tip_unique_form_number;
 
   console.log('Assessment button loaded: V9');
@@ -158,6 +161,9 @@ getReady(function () {
 
   {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
+
+
+
 
 
 

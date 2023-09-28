@@ -22,6 +22,15 @@ ready(function () {
 
   let currentStep = 0;
 
+  /*****************************************************************************
+   * Get Treatment information
+   */
+  const current_treatment_type = localStorage.getItem("treatment_type");
+  const current_condition_id = localStorage.getItem("condition_id");
+  const current_treatment_id = localStorage.getItem("treatment_id");
+
+  const current_submission_uuid = localStorage.getItem("submission_uuid");
+
   // Form Validation
 
   /*****************************************************************************
@@ -603,6 +612,13 @@ ready(function () {
 
   /****************************************************************************/
   function handleSuccess(response) {
+    localStorage.setItem(
+      "tip_unique_form_number",
+      "Done-" +
+        current_submission_uuid +
+        product_condition_id +
+        product_treatment_id
+    );
     const targetedTreatmentUrl = localStorage.getItem("targeted_treatment_url");
     window.location.href = targetedTreatmentUrl;
     console.log("HIT via Medical HandleSuccess");
@@ -648,17 +664,8 @@ ready(function () {
    */
 
   async function getUUID() {
-    const uuid = localStorage.getItem("submission_uuid");
-    return uuid;
+    return current_submission_uuid;
   }
-
-  /*****************************************************************************
-   * Get Treatment ID
-   */
-  const treatment_type = localStorage.getItem("treatment_type");
-  const condition_id = localStorage.getItem("condition_id");
-  const treatment_id = localStorage.getItem("treatment_id");
-  console.log("From Cookie:", treatment_id);
 
   /*****************************************************************************
    *
@@ -749,9 +756,9 @@ ready(function () {
           .then((uuid) => {
             return {
               submission_uuid: uuid,
-              treatment_type: treatment_type,
-              condition_id: parseInt(condition_id),
-              treatment_id: parseInt(treatment_id),
+              treatment_type: current_treatment_type,
+              condition_id: parseInt(current_condition_id),
+              treatment_id: parseInt(current_treatment_id),
               submitted_at: formTime,
               medical: medicalFormObj,
             };
