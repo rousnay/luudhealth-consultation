@@ -826,16 +826,20 @@ const initProcessForm = function () {
             if (obj.hasOwnProperty(key)) {
               var value = obj[key];
               var integerValue = parseInt(value, 10);
-              if (!isNaN(integerValue)) {
-                res[key] = integerValue;
+              // Check if the value contains non-integer characters or spaces, or the value can be parsed as an integer
+              if (/[^0-9\s]/.test(value) || isNaN(integerValue)) {
+                // If it does, store it as an array with the original value
+                result[key] = [value];
               } else {
-                res[key] = [value];
+                // If not,  store it as an integer
+                result[key] = integerValue;
               }
             }
           }
           return result;
         }
         const consultancyDataIntObj = convertIntObj(updatedData);
+        console.log("Questions data:", consultancyDataIntObj);
 
         //convert to match TIP accepted datatype, e.g. {"90": 1, "91": 0,} into  [{"question": 90,"answer": 1},{"question": 91,"answer": 1},
         function convertIntoTipPayload(obj) {
