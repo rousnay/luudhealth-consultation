@@ -69,8 +69,8 @@ const submitConsultancy = async (submissionUuid) => {
 
   const treatment_type = data_medical?.treatment_type;
   if (
-    (treatment_type =
-      "od_medicine_generic" || treatment_type == "od_medicine_treatment")
+    treatment_type === "od_medicine_generic" ||
+    treatment_type === "od_medicine_treatment"
   ) {
     consultancy_data.conditionId = data_condition?.condition_id;
     consultancy_data.condition = data_condition?.condition;
