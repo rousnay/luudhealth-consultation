@@ -669,7 +669,7 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
-    window.location.href = `/pages/medical-information/?treatmentId=${treatmentId}`;
+    // window.location.href = `/pages/medical-information/?treatmentId=${treatmentId}`;
     console.log("HIT via Consultancy HandleSuccess");
     console.log(response);
     // const thankYou = progressForm.querySelector("#progress-form__thank-you");
@@ -790,6 +790,8 @@ const initProcessForm = function () {
         const formData = new FormData(form);
         formTime = new Date().toJSON();
 
+        const updatedData = {};
+
         //Handle single and multiple check-box's answers..
         const checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
@@ -804,8 +806,6 @@ const initProcessForm = function () {
           }
         });
 
-        const updatedData = {};
-
         for (const [name, value] of formData.entries()) {
           if (checkedQuestionNames.includes(name)) {
             if (!updatedData[name]) {
@@ -817,17 +817,43 @@ const initProcessForm = function () {
           }
         }
 
+        console.log(updatedData);
+
         //convert object properties to integer (except the array and string with alphabetic values)
         function convertIntObj(obj) {
-          const res = {};
-          for (const key in obj) {
-            const parsed = parseInt(obj[key], 10);
-            res[key] = isNaN(parsed) ? obj[key] : parsed;
+          const result = {};
+          for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              var value = obj[key];
+              var integerValue = parseInt(value, 10);
+              if (!isNaN(integerValue)) {
+                res[key] = integerValue;
+              } else {
+                res[key] = [value];
+              }
+            }
           }
-          return res;
+          return result;
         }
-        const consultancyFormData = convertIntObj(updatedData);
+        const consultancyDataIntObj = convertIntObj(updatedData);
 
+        //convert to match TIP accepted datatype, e.g. {"90": 1, "91": 0,} into  [{"question": 90,"answer": 1},{"question": 91,"answer": 1},
+        function convertIntoTipPayload(obj) {
+          var result = [];
+
+          for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              var question = parseInt(key, 10);
+              var answer = obj[key];
+              result.push({ question: question, answer: answer });
+            }
+          }
+          return result;
+        }
+
+        const consultancyFormData = convertIntoTipPayload(
+          consultancyDataIntObj
+        );
         console.log("Questions data:", consultancyFormData);
 
         // Get the user's IP address (for fun)

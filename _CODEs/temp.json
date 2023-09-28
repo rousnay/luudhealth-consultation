@@ -1,0 +1,37 @@
+{
+  "_id": {
+    "$oid": "64c699b40153b6374513a2ca"
+  },
+  "submitted_at": "2023-07-30T17:11:55.266Z",
+  "line_items_uuid": "08ed3780-1daa-41ae-93d3-c82b12675ccf",
+  "consultancy": [
+    {
+      "question": 1821,
+      "answer": 0
+    },
+    {
+      "question": 1823,
+      "answer": 0
+    },
+    {
+      "question": 1824,
+      "answer": 0
+    },
+    {
+      "question": 1825,
+      "answer": 0
+    },
+    {
+      "question": 1826,
+      "answer": 1
+    },
+    {
+      "question": 1827,
+      "answer": 1
+    },
+    {
+      "question": 1822,
+      "answer": "Levitra (vardenafil)"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+    "uuid": "C257a346f-0645-4a6b-921d-6b969837934fd90yyu",
+    "type": "NEW",
+    "treatment": 9004,
+    "conditionId": 1,
+    "quantity": 1,
+    "patient": {
+        "uuid": "P257a346f-0645-4a6b-921d-6b969837934dh",
+        "salutation": "Mr",
+        "firstname": "Mozahidur",
+        "lastname": "Rahman",
+        "phone": "01710509274",
+        "dob": "2023-06-10",
+        "address": {
+            "businessName": "NotFound",
+            "address1": "House 25, Road 10, Sector 10, Uttara Model Town",
+            "address2": "NotFound",
+            "city": "Bedfordshire",
+            "county": "United Kingdom",
+            "postcode": "AL3 8QE"
+        }
+    },
+    "medical": {
+        "gender": "female"
+    },
+    "consultation": null,
+    //   "condition": [
+    //     {
+    //       "question": 58,
+    //       "answer": ["Positive chlamydia test"]
+    //     },
+    //     {
+    //       "question": 59,
+    //       "answer": 0
+    //     },
+    //     {
+    //       "question": 60,
+    //       "answer": 1
+    //     },
+    //     {
+    //       "question": 117,
+    //       "answer": 1
+    //     }
+    //   ]
+    "condition": [
+        {
+            "question": 90,
+            "answer": 1
+        },
+        {
+            "question": 91,
+            "answer": 1
+        },
+        {
+            "question": 92,
+            "answer": 1
+        },
+        {
+            "question": 93,
+            "answer": 0
+        },
+        {
+            "question": 94,
+            "answer": 0
+        },
+        {
+            "question": 95,
+            "answer": 0
+        },
+        {
+            "question": 96,
+            "answer": [
+                "It has occurred suddenly"
+            ]
+        }
+    ]
+}
