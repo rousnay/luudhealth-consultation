@@ -14,7 +14,6 @@ const conditionSubmit = async (formConditionResponse) => {
       submission_uuid: formConditionResponse?.submission_uuid,
       treatment_type: formConditionResponse?.treatment_type,
       condition_id: formConditionResponse?.condition_id,
-      treatment_id: formConditionResponse?.treatment_id,
       condition: formConditionResponse?.consultancy,
     });
 
@@ -58,8 +57,6 @@ const medicalSubmit = async (formMedicalResponse) => {
       submitted_at: formMedicalResponse?.submitted_at,
       submission_uuid: formMedicalResponse?.submission_uuid,
       treatment_type: formMedicalResponse?.treatment_type,
-      condition_id: formMedicalResponse?.condition_id,
-      treatment_id: formMedicalResponse?.treatment_id,
       medical: formMedicalResponse?.medical,
     });
     console.log(
