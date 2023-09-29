@@ -23,7 +23,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
   } else {
     console.log("Not found, but:", DBCollection);
   }
-  const document = await collection.findOne({ line_items_uuid: uuid });
+  const document = await collection.findOne({ submission_uuid: uuid });
 
   if (document) {
     console.log("Document has found");
