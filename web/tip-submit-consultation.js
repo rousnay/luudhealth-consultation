@@ -116,13 +116,22 @@ const submitConsultancy = async (submissionUuid) => {
     storeConsultancyDataToDB(consultancyPayload, response);
 
     if (response.status === 200) {
-      console.log("## API: partners/consultations Response:", response);
+      console.log(
+        "## API: partners/consultations Response:",
+        JSON.stringify(response)
+      );
       return "OK";
     } else if (response.status === 201) {
-      console.log("## consultation has been submitted!", response);
+      console.log(
+        "## consultation has been submitted!",
+        JSON.stringify(response)
+      );
       return "consultation has been submitted!";
     } else {
-      console.log("## Error with consultancy submission", response);
+      console.log(
+        "## Error with consultancy submission",
+        JSON.stringify(response)
+      );
       return response;
     }
   };

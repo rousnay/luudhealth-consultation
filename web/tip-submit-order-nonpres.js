@@ -95,13 +95,16 @@ const placeOrderNonPres = async (submissionUuid) => {
     // console.log("## API: partners/orders Body:", orderPayload);
 
     if (response.status === 200) {
-      console.log("## API: partners/orders Response:", response);
+      console.log(
+        "## API: partners/orders Response:",
+        JSON.stringify(response)
+      );
       return "OK";
     } else if (response.status === 201) {
-      console.log("## Order has been created!", response);
+      console.log("## Order has been created!", JSON.stringify(response));
       return "Order has been created!";
     } else {
-      console.log("## Error with order creation", response);
+      console.log("## Error with order creation", JSON.stringify(response));
       return response;
     }
   };

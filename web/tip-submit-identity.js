@@ -67,12 +67,18 @@ function identityCheck(data_medical, data_order) {
     storeIdentityDataToDB(identityCheckPayload, response);
 
     if (response.status === 200) {
-      console.log("## API: partners/identity-checks Response:", response);
+      console.log(
+        "## API: partners/identity-checks Response:",
+        JSON.stringify(response)
+      );
     } else if (response.status === 201) {
-      console.log("#### API: IDENTITY SUBMITTED!", response);
+      console.log("#### API: IDENTITY SUBMITTED!", JSON.stringify(response));
     } else {
       console.log("## Error with Identity submission");
-      console.log("## API: partners/identity-checks Response:", response);
+      console.log(
+        "## API: partners/identity-checks Response:",
+        JSON.stringify(response)
+      );
     }
   };
 
