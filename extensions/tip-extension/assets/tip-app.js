@@ -1,6 +1,6 @@
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v30");
+  console.log("TIP Theme Ext Back-end loaded: v31");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -34,8 +34,7 @@ console.log("hasTreatmentId:", hasTreatmentId);
 const getConsultancyBody = {};
 console.log("getConsultancyBody:", getConsultancyBody);
 
-const targetedQuestionsSet = currentTreatmentFormIndex || 0;
-console.log("current targetedQuestionsSet:", targetedQuestionsSet);
+var targetedQuestionsSet = 0;
 
 if (currentAssessmentFormType === "condition") {
   getConsultancyBody.conditionId = conditionId;
@@ -43,7 +42,11 @@ if (currentAssessmentFormType === "condition") {
 } else {
   getConsultancyBody.treatmentId = treatmentId;
   getConsultancyBody.type = "NEW";
+
+  targetedQuestionsSet = currentTreatmentFormIndex || 0;
 }
+
+console.log("current targetedQuestionsSet:", targetedQuestionsSet);
 
 // if (treatmentType === "od_medicine_generic") {
 //   getConsultancyBody.conditionId = conditionId;
@@ -110,23 +113,27 @@ ready(function () {
         setTimeout(() => {
           handleConsultancy(response?.data[targetedQuestionsSet].questions);
 
-          const totalQuestionsSet = response?.data.length;
-          console.log("totalQuestionsSet:", totalQuestionsSet);
-
-          if (
-            totalQuestionsSet === 1 ||
-            totalQuestionsSet === targetedQuestionsSet + 1
-          ) {
-            localStorage.setItem("has_another_treatment_form", "no");
-
+          if (currentAssessmentFormType === "treatment") {
+            const totalQuestionsSet = response?.data.length;
             console.log("totalQuestionsSet:", totalQuestionsSet);
-          } else {
-            localStorage.setItem("has_another_treatment_form", "yes");
+
+            if (
+              totalQuestionsSet === 1 ||
+              totalQuestionsSet === targetedQuestionsSet + 1
+            ) {
+              localStorage.setItem("has_another_treatment_form", "no");
+              console.log("totalQuestionsSet:", totalQuestionsSet);
+            } else {
+              localStorage.setItem("has_another_treatment_form", "yes");
+              console.log(
+                "next treatment_form_index:",
+                targetedQuestionsSet + 1
+              );
+            }
             localStorage.setItem(
               "current_treatment_form_index",
               targetedQuestionsSet + 1
             );
-            console.log("next treatment_form_index:", targetedQuestionsSet + 1);
           }
         }, 2000); // An artificial delay to show the state of the submit button
       })

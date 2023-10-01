@@ -7,24 +7,6 @@ const initProcessForm = function () {
 
   let currentStep = 0;
 
-  /*****************************************************************************
-   * Get Treatment information
-   */
-  const current_treatment_type = localStorage.getItem("treatment_type");
-  const current_condition_id = parseInt(localStorage.getItem("condition_id"));
-  const current_treatment_id = parseInt(localStorage.getItem("treatment_id"));
-
-  const currentAssessmentFormType = localStorage.getItem(
-    "current_assessment_form_type"
-  );
-
-  const hasAnotherTreatmentForm = localStorage.getItem(
-    "has_another_treatment_form"
-  );
-  const current_treatment_form_index = parseInt(
-    localStorage.getItem("current_treatment_form_index")
-  );
-
   // Form Validation
 
   /*****************************************************************************
@@ -773,6 +755,34 @@ const initProcessForm = function () {
     // Prevent the form from submitting
     e.preventDefault();
 
+    /*****************************************************************************
+     * Get Treatment information
+     */
+    const current_treatment_type = localStorage.getItem("treatment_type");
+    const current_condition_id = parseInt(localStorage.getItem("condition_id"));
+    const current_treatment_id = parseInt(localStorage.getItem("treatment_id"));
+
+    const currentAssessmentFormType = localStorage.getItem(
+      "current_assessment_form_type"
+    );
+    console.log(
+      "#________> currentAssessmentFormType:",
+      currentAssessmentFormType
+    );
+
+    const hasAnotherTreatmentForm = localStorage.getItem(
+      "has_another_treatment_form"
+    );
+    console.log("#________> hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
+
+    const current_treatment_form_index = parseInt(
+      localStorage.getItem("current_treatment_form_index")
+    );
+    console.log(
+      "#________> current_treatment_form_index:",
+      current_treatment_form_index
+    );
+
     // Get the API endpoint using the form action attribute
     const form = e.currentTarget,
       API = new URL(form.action);
@@ -870,10 +880,17 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
+        console.log(
+          "#____1____> hasAnotherTreatmentForm:",
+          hasAnotherTreatmentForm
+        );
         getUUID()
           .then((uuid) => {
             var setUUID;
-
+            console.log(
+              "#____2____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
             if (currentAssessmentFormType === "condition") {
               setUUID = uuid;
               localStorage.setItem("submission_uuid", uuid);
@@ -890,22 +907,28 @@ const initProcessForm = function () {
                 localStorage.setItem("submission_uuid", uuid);
               }
             }
-
+            console.log(
+              "#____3____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
             return {
               submission_uuid: setUUID,
               treatment_type: current_treatment_type,
               condition_id: current_condition_id,
               treatment_id: current_treatment_id,
               submitted_at: formTime,
-              current_assessment_form_type: currentAssessmentFormType,
-              hasAnotherTreatmentForm: hasAnotherTreatmentForm,
-              currentTreatmentFormIndex: current_treatment_form_index,
+              has_another_treatment_form: hasAnotherTreatmentForm,
+              treatment_form_index: current_treatment_form_index,
               consultancy: consultancyFormData,
             };
           })
           .then((data) => postData(API, data))
           .then((response) => {
             var setNextURL;
+            console.log(
+              "#____4____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
             if (currentAssessmentFormType === "condition") {
               if (!current_treatment_id) {
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
@@ -918,8 +941,16 @@ const initProcessForm = function () {
               }
             } else {
               if (hasAnotherTreatmentForm === "yes") {
+                console.log(
+                  "if________> hasAnotherTreatmentForm:",
+                  hasAnotherTreatmentForm
+                );
                 setNextURL = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               } else {
+                console.log(
+                  "else________> hasAnotherTreatmentForm:",
+                  hasAnotherTreatmentForm
+                );
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               }
             }
