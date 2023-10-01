@@ -37,6 +37,7 @@ console.log("hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
 
 const hasConditionId = !!conditionId;
 const hasTreatmentId = !!treatmentId;
+
 console.log("hasConditionId:", hasConditionId);
 console.log("hasTreatmentId:", hasTreatmentId);
 
