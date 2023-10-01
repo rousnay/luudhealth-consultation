@@ -15,11 +15,6 @@ console.log("conditionId:", conditionId);
 const treatmentId = parseInt(localStorage.getItem("treatment_id"));
 console.log("treatmentId:", treatmentId);
 
-const completedAssessmentFormType = localStorage.getItem(
-  "completed_assessment_form_type"
-);
-console.log("completedAssessmentFormType:", completedAssessmentFormType);
-
 const currentAssessmentFormType = localStorage.getItem(
   "current_assessment_form_type"
 );
@@ -40,7 +35,7 @@ const getConsultancyBody = {};
 console.log("getConsultancyBody:", getConsultancyBody);
 
 const targetedQuestionsSet = currentTreatmentFormIndex || 0;
-console.log("targetedQuestionsSet:", targetedQuestionsSet);
+console.log("current targetedQuestionsSet:", targetedQuestionsSet);
 
 if (currentAssessmentFormType === "condition") {
   getConsultancyBody.conditionId = conditionId;
@@ -123,12 +118,15 @@ ready(function () {
             totalQuestionsSet === targetedQuestionsSet + 1
           ) {
             localStorage.setItem("has_another_treatment_form", "no");
+
+            console.log("totalQuestionsSet:", totalQuestionsSet);
           } else {
             localStorage.setItem("has_another_treatment_form", "yes");
             localStorage.setItem(
               "current_treatment_form_index",
               targetedQuestionsSet + 1
             );
+            console.log("next treatment_form_index:", targetedQuestionsSet + 1);
           }
         }, 2000); // An artificial delay to show the state of the submit button
       })

@@ -11,17 +11,18 @@ const initProcessForm = function () {
    * Get Treatment information
    */
   const current_treatment_type = localStorage.getItem("treatment_type");
-  const current_condition_id = localStorage.getItem("condition_id");
-  const current_treatment_id = localStorage.getItem("treatment_id");
+  const current_condition_id = parseInt(localStorage.getItem("condition_id"));
+  const current_treatment_id = parseInt(localStorage.getItem("treatment_id"));
 
   const currentAssessmentFormType = localStorage.getItem(
     "current_assessment_form_type"
   );
+
   const hasAnotherTreatmentForm = localStorage.getItem(
     "has_another_treatment_form"
   );
-  const currentTreatmentFormIndex = localStorage.getItem(
-    "current_treatment_form_index"
+  const current_treatment_form_index = parseInt(
+    localStorage.getItem("current_treatment_form_index")
   );
 
   // Form Validation
@@ -871,16 +872,34 @@ const initProcessForm = function () {
         //   .then((data) => postData(API, data))
         getUUID()
           .then((uuid) => {
-            localStorage.setItem("submission_uuid", uuid);
+            var setUUID;
+
+            if (currentAssessmentFormType === "condition") {
+              setUUID = uuid;
+              localStorage.setItem("submission_uuid", uuid);
+            } else if (currentAssessmentFormType === "treatment") {
+              if (current_condition_id) {
+                setUUID = localStorage.getItem("submission_uuid");
+              } else if (
+                hasAnotherTreatmentForm === "yes" &&
+                !current_treatment_form_index === 1
+              ) {
+                setUUID = localStorage.getItem("submission_uuid");
+              } else {
+                setUUID = uuid;
+                localStorage.setItem("submission_uuid", uuid);
+              }
+            }
+
             return {
-              submission_uuid: uuid,
+              submission_uuid: setUUID,
               treatment_type: current_treatment_type,
-              condition_id: parseInt(current_condition_id),
-              treatment_id: parseInt(current_treatment_id),
+              condition_id: current_condition_id,
+              treatment_id: current_treatment_id,
               submitted_at: formTime,
               current_assessment_form_type: currentAssessmentFormType,
               hasAnotherTreatmentForm: hasAnotherTreatmentForm,
-              currentTreatmentFormIndex: currentTreatmentFormIndex,
+              currentTreatmentFormIndex: current_treatment_form_index,
               consultancy: consultancyFormData,
             };
           })
@@ -888,7 +907,7 @@ const initProcessForm = function () {
           .then((response) => {
             var setNextURL;
             if (currentAssessmentFormType === "condition") {
-              if (!treatmentId) {
+              if (!current_treatment_id) {
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               } else {
                 localStorage.setItem(
