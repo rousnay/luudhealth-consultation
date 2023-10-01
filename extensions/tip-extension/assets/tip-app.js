@@ -126,7 +126,7 @@ ready(function () {
             localStorage.setItem("has_another_treatment_form", "true");
             localStorage.setItem(
               "current_treatment_form_index",
-              currentTreatmentFormIndex + 1
+              targetedQuestionsSet + 1
             );
           }
         }, 2000); // An artificial delay to show the state of the submit button

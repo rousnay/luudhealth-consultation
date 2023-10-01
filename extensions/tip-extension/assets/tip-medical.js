@@ -622,6 +622,7 @@ ready(function () {
         current_condition_id +
         current_treatment_id
     );
+    localStorage.setItem("current_assessment_form_type", "medical");
     window.location.href = current_targeted_product_url;
     console.log("HIT via Medical HandleSuccess");
     console.log(response);

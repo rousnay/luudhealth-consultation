@@ -694,10 +694,6 @@ const initProcessForm = function () {
       }
     } else {
       if (hasAnotherTreatmentForm === "true") {
-        localStorage.setItem(
-          "current_treatment_form_index",
-          currentTreatmentFormIndex + 1
-        );
         window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
       } else {
         window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
@@ -901,7 +897,6 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
-
         getUUID()
           .then((uuid) => {
             localStorage.setItem("submission_uuid", uuid);
@@ -911,6 +906,9 @@ const initProcessForm = function () {
               condition_id: parseInt(current_condition_id),
               treatment_id: parseInt(current_treatment_id),
               submitted_at: formTime,
+              current_assessment_form_type: currentAssessmentFormType,
+              hasAnotherTreatmentForm: hasAnotherTreatmentForm,
+              currentTreatmentFormIndex: currentTreatmentFormIndex,
               consultancy: consultancyFormData,
             };
           })
