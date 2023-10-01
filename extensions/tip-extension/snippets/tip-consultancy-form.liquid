@@ -31,7 +31,7 @@
 <!-- partial -->
 
 <script>
-  console.log('TIP Theme Ext Front-end loaded: v3');
+  console.log('TIP Theme Ext Front-end loaded: v6');
   const fullURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const urlWithoutParams = fullURL.split('?')[0];
@@ -40,6 +40,19 @@
   const current_treatment_type = getQueryParam('treatmentType');
   const current_condition_id = getQueryParam('conditionId');
   const current_treatment_id = getQueryParam('treatmentId');
+  const current_treatment_form_index = getQueryParam('currentTreatmentFormIndex');
+
+  if (!localStorage.getItem('current_treatment_form_index')) {
+    localStorage.setItem('current_treatment_form_index', 0);
+  }
+
+  if (!localStorage.getItem('current_assessment_form_type')) {
+    if (!!current_condition_id) {
+      localStorage.setItem('current_assessment_form_type', 'condition');
+    } else {
+      localStorage.setItem('current_assessment_form_type', 'treatment');
+    }
+  }
 
   localStorage.setItem('treatment_type', current_treatment_type);
   localStorage.setItem('condition_id', current_condition_id);

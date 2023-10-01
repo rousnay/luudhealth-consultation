@@ -891,22 +891,39 @@ const initProcessForm = function () {
               "#____2____> hasAnotherTreatmentForm:",
               hasAnotherTreatmentForm
             );
-            if (currentAssessmentFormType === "condition") {
-              setUUID = uuid;
-              localStorage.setItem("submission_uuid", uuid);
-            } else if (currentAssessmentFormType === "treatment") {
-              if (current_condition_id) {
-                setUUID = localStorage.getItem("submission_uuid");
-              } else if (
-                hasAnotherTreatmentForm === "yes" &&
-                !current_treatment_form_index === 1
-              ) {
+
+            if (currentAssessmentFormType === "treatment") {
+              if (!!current_condition_id) {
                 setUUID = localStorage.getItem("submission_uuid");
               } else {
-                setUUID = uuid;
-                localStorage.setItem("submission_uuid", uuid);
+                if (current_treatment_form_index === 1) {
+                  localStorage.setItem("submission_uuid", (setUUID = uuid));
+                } else {
+                  setUUID = localStorage.getItem("submission_uuid");
+                }
               }
+            } else {
+              localStorage.setItem("submission_uuid", (setUUID = uuid));
             }
+
+            // if (currentAssessmentFormType === "condition") {
+            //   localStorage.setItem("submission_uuid", (setUUID = uuid));
+            // } else if (currentAssessmentFormType === "treatment") {
+
+            //   if (
+            //     (current_condition_id && hasAnotherTreatmentForm === "yes") ||
+            //     (hasAnotherTreatmentForm === "no" &&!current_treatment_form_index === 1)
+            //   ) {
+            //     setUUID = localStorage.getItem("submission_uuid");
+            //   } else {
+            //     localStorage.setItem("submission_uuid", (setUUID = uuid));
+            //   }
+            // } else {
+            //   console.log(
+            //     "Unable to set UUID for, Unsupported assessment form type!"
+            //   );
+            // }
+
             console.log(
               "#____3____> hasAnotherTreatmentForm:",
               hasAnotherTreatmentForm
@@ -917,6 +934,7 @@ const initProcessForm = function () {
               condition_id: current_condition_id,
               treatment_id: current_treatment_id,
               submitted_at: formTime,
+              current_assessment_form_type: currentAssessmentFormType,
               has_another_treatment_form: hasAnotherTreatmentForm,
               treatment_form_index: current_treatment_form_index,
               consultancy: consultancyFormData,
@@ -954,6 +972,24 @@ const initProcessForm = function () {
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               }
             }
+
+            // if (currentAssessmentFormType === "condition") {
+            //   setNextURL = !current_treatment_id
+            //     ? `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`
+            //     : (() => {
+            //         localStorage.setItem(
+            //           "current_assessment_form_type",
+            //           "treatment"
+            //         );
+            //         return `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+            //       })();
+            // } else {
+            //   setNextURL =
+            //     hasAnotherTreatmentForm === "yes"
+            //       ? `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`
+            //       : `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+            // }
+
             setTimeout(() => {
               handleSuccess(response, setNextURL);
             }, 1000); // An artificial delay to show the state of the submit button
