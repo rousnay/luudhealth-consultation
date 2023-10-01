@@ -684,40 +684,12 @@ const initProcessForm = function () {
   }
 
   /****************************************************************************/
-  function handleSuccess(response) {
-    if (currentAssessmentFormType === "condition") {
-      if (!treatmentId) {
-        window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      } else {
-        localStorage.setItem("current_assessment_form_type", "treatment");
-        window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      }
-    } else {
-      if (hasAnotherTreatmentForm === "true") {
-        window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      } else {
-        window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      }
-    }
-
+  function handleSuccess(response, nextURL) {
+    window.location.href = nextURL;
     console.log("HIT via Consultancy HandleSuccess");
     console.log(response);
-    // const thankYou = progressForm.querySelector("#progress-form__thank-you");
-
-    // // Clear all HTML Nodes that are not the thank you panel
-    // while (progressForm.firstElementChild !== thankYou) {
-    //   progressForm.removeChild(progressForm.firstElementChild);
-    // }
-
-    // thankYou.removeAttribute("hidden");
-
-    // // Logging the response from httpbin for quick verification
-    // console.log(response);
-
     // window.setTimeout(function () {
-
     //   window.location.href = "/pages/medical-information";
-    //   // Move to a new location or you can do something else
     //   console.log("#sec passed!");
     // }, 3000);
   }
@@ -914,8 +886,26 @@ const initProcessForm = function () {
           })
           .then((data) => postData(API, data))
           .then((response) => {
+            var setNextURL;
+            if (currentAssessmentFormType === "condition") {
+              if (!treatmentId) {
+                setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              } else {
+                localStorage.setItem(
+                  "current_assessment_form_type",
+                  "treatment"
+                );
+                setNextURL = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              }
+            } else {
+              if (hasAnotherTreatmentForm === "yes") {
+                setNextURL = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              } else {
+                setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              }
+            }
             setTimeout(() => {
-              handleSuccess(response);
+              handleSuccess(response, setNextURL);
             }, 1000); // An artificial delay to show the state of the submit button
           })
           .catch((error) => {

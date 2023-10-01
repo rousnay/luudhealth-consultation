@@ -116,14 +116,15 @@ ready(function () {
           handleConsultancy(response?.data[targetedQuestionsSet].questions);
 
           const totalQuestionsSet = response?.data.length;
+          console.log("totalQuestionsSet:", totalQuestionsSet);
 
           if (
             totalQuestionsSet === 1 ||
             totalQuestionsSet === targetedQuestionsSet + 1
           ) {
-            localStorage.setItem("has_another_treatment_form", "false");
+            localStorage.setItem("has_another_treatment_form", "no");
           } else {
-            localStorage.setItem("has_another_treatment_form", "true");
+            localStorage.setItem("has_another_treatment_form", "yes");
             localStorage.setItem(
               "current_treatment_form_index",
               targetedQuestionsSet + 1
