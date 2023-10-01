@@ -14,6 +14,7 @@ const conditionSubmit = async (formConditionResponse) => {
       submission_uuid: formConditionResponse?.submission_uuid,
       treatment_type: formConditionResponse?.treatment_type,
       condition_id: formConditionResponse?.condition_id,
+      treatment_id: formConditionResponse?.treatment_id,
       condition: formConditionResponse?.consultancy,
     });
 
@@ -38,7 +39,8 @@ const consultancySubmit = async (formConsultancyResponse) => {
       condition_id: formConsultancyResponse?.condition_id,
       treatment_id: formConsultancyResponse?.treatment_id,
       treatment_form_index: formConsultancyResponse?.treatment_form_index,
-      has_another_treatment_form: formConsultancyResponse?.has_another_treatment_form,
+      has_another_treatment_form:
+        formConsultancyResponse?.has_another_treatment_form,
       consultancy: formConsultancyResponse?.consultancy,
     });
 

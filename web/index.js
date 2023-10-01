@@ -94,12 +94,16 @@ app.post("/proxy_route/consultancy/generate", async (req, res) => {
 app.post("/proxy_route/consultancy/submit", async (req, res) => {
   const payload = req.body;
 
+  console.log(
+    "### APP: current_assessment_form_type:",
+    JSON.stringify(payload?.current_assessment_form_type)
+  );
+
   if (payload?.current_assessment_form_type === "condition") {
     conditionSubmit(payload);
   } else {
     consultancySubmit(payload);
   }
-
 
   // if (payload?.treatment_type === "od_medicine_generic") {
   //   conditionSubmit(payload);
