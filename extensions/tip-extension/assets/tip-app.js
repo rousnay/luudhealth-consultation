@@ -25,10 +25,10 @@ const currentAssessmentFormType = localStorage.getItem(
 );
 console.log("currentAssessmentFormType:", currentAssessmentFormType);
 
-const currentTreatmentFormNumber = parseInt(
-  localStorage.getItem("current_treatment_form_number")
+const currentTreatmentFormIndex = parseInt(
+  localStorage.getItem("current_treatment_form_index")
 );
-console.log("currentTreatmentFormNumber:", currentTreatmentFormNumber);
+console.log("currentTreatmentFormIndex:", currentTreatmentFormIndex);
 
 const hasAnotherTreatmentForm = localStorage.getItem(
   "has_another_treatment_form"
@@ -46,41 +46,33 @@ console.log("getConsultancyBody:", getConsultancyBody);
 const targetedQuestionsSet = 0;
 console.log("targetedQuestionsSet:", targetedQuestionsSet);
 
-if (treatmentType === "od_medicine") {
-  if (hasTreatmentId) {
-    if (completedAssessmentFormType === "condition") {
-      getConsultancyBody.treatmentId = treatmentId;
-      getConsultancyBody.type = "NEW";
-      if (hasAnotherTreatmentForm) {
-        targetedQuestionsSet = targetedQuestionsSet + 1;
-      }
-    } else {
-      getConsultancyBody.conditionId = conditionId;
-      getConsultancyBody.type = "CONDITION";
-    }
-  } else {
-    getConsultancyBody.conditionId = conditionId;
-    getConsultancyBody.type = "CONDITION";
-  }
-} else if (treatmentType === "otc_medicine") {
-  getConsultancyBody.treatmentId = treatmentId;
-  getConsultancyBody.type = "NEW";
-} else {
-  console.log("Unsupported treatment type!");
-}
-
-if (treatmentType === "od_medicine_generic") {
+if (currentAssessmentFormType === "condition") {
   getConsultancyBody.conditionId = conditionId;
   getConsultancyBody.type = "CONDITION";
-} else if (
-  treatmentType === "od_medicine_treatment" ||
-  treatmentType === "otc_medicine"
-) {
+  targetedQuestionsSet = 0;
+} else {
   getConsultancyBody.treatmentId = treatmentId;
   getConsultancyBody.type = "NEW";
-} else {
-  console.log("Unsupported treatment type!");
+  if (hasAnotherTreatmentForm) {
+    targetedQuestionsSet++;
+    console.log("targetedQuestionsSet:", targetedQuestionsSet);
+  } else {
+    targetedQuestionsSet = 0;
+  }
 }
+
+// if (treatmentType === "od_medicine_generic") {
+//   getConsultancyBody.conditionId = conditionId;
+//   getConsultancyBody.type = "CONDITION";
+// } else if (
+//   treatmentType === "od_medicine_treatment" ||
+//   treatmentType === "otc_medicine"
+// ) {
+//   getConsultancyBody.treatmentId = treatmentId;
+//   getConsultancyBody.type = "NEW";
+// } else {
+//   console.log("Unsupported treatment type!");
+// }
 
 function ready(fn) {
   if (

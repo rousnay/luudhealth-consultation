@@ -14,6 +14,16 @@ const initProcessForm = function () {
   const current_condition_id = localStorage.getItem("condition_id");
   const current_treatment_id = localStorage.getItem("treatment_id");
 
+  const currentAssessmentFormType = localStorage.getItem(
+    "current_assessment_form_type"
+  );
+  const hasAnotherTreatmentForm = localStorage.getItem(
+    "has_another_treatment_form"
+  );
+  const currentTreatmentFormIndex = localStorage.getItem(
+    "current_treatment_form_index"
+  );
+
   // Form Validation
 
   /*****************************************************************************
@@ -676,6 +686,23 @@ const initProcessForm = function () {
   /****************************************************************************/
 
   function handleSuccess(response) {
+    if (currentAssessmentFormType === "condition") {
+      localStorage.setItem("current_assessment_form_type", "condition");
+      localStorage.setItem("current_assessment_form_type", "condition");
+    } else if (currentAssessmentFormType === "treatment") {
+      localStorage.setItem("has_another_treatment_form", true);
+      localStorage.setItem("current_treatment_form_index", 1);
+    } else {
+      console.log("Unsupported treatment type!");
+    }
+
+    const hasAnotherTreatmentForm = localStorage.getItem(
+      "has_another_treatment_form"
+    );
+    const currentTreatmentFormIndex = localStorage.getItem(
+      "current_treatment_form_index"
+    );
+
     window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
     console.log("HIT via Consultancy HandleSuccess");
     console.log(response);
