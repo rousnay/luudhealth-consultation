@@ -7,17 +7,67 @@ const API = `/apps/tip/consultancy/generate`;
 const method = "POST";
 
 const treatmentType = localStorage.getItem("treatment_type");
-console.log("local_treatment_type:", treatmentType);
+console.log("treatmentType:", treatmentType);
 
-const local_condition_id = localStorage.getItem("condition_id");
-const conditionId = parseInt(local_condition_id);
-console.log("local_condition_id:", conditionId);
+const conditionId = parseInt(localStorage.getItem("condition_id"));
+console.log("conditionId:", conditionId);
 
-const local_treatment_id = localStorage.getItem("treatment_id");
-const treatmentId = parseInt(local_treatment_id);
-console.log("local_treatment_id:", treatmentId);
+const treatmentId = parseInt(localStorage.getItem("treatment_id"));
+console.log("treatmentId:", treatmentId);
+
+const completedAssessmentFormType = localStorage.getItem(
+  "completed_assessment_form_type"
+);
+console.log("completedAssessmentFormType:", completedAssessmentFormType);
+
+const currentAssessmentFormType = localStorage.getItem(
+  "current_assessment_form_type"
+);
+console.log("currentAssessmentFormType:", currentAssessmentFormType);
+
+const currentTreatmentFormNumber = parseInt(
+  localStorage.getItem("current_treatment_form_number")
+);
+console.log("currentTreatmentFormNumber:", currentTreatmentFormNumber);
+
+const hasAnotherTreatmentForm = localStorage.getItem(
+  "has_another_treatment_form"
+);
+console.log("hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
+
+const hasConditionId = !!conditionId;
+const hasTreatmentId = !!treatmentId;
+console.log("hasConditionId:", hasConditionId);
+console.log("hasTreatmentId:", hasTreatmentId);
 
 const getConsultancyBody = {};
+console.log("getConsultancyBody:", getConsultancyBody);
+
+const targetedQuestionsSet = 0;
+console.log("targetedQuestionsSet:", targetedQuestionsSet);
+
+if (treatmentType === "od_medicine") {
+  if (hasTreatmentId) {
+    if (completedAssessmentFormType === "condition") {
+      getConsultancyBody.treatmentId = treatmentId;
+      getConsultancyBody.type = "NEW";
+      if (hasAnotherTreatmentForm) {
+        targetedQuestionsSet = targetedQuestionsSet + 1;
+      }
+    } else {
+      getConsultancyBody.conditionId = conditionId;
+      getConsultancyBody.type = "CONDITION";
+    }
+  } else {
+    getConsultancyBody.conditionId = conditionId;
+    getConsultancyBody.type = "CONDITION";
+  }
+} else if (treatmentType === "otc_medicine") {
+  getConsultancyBody.treatmentId = treatmentId;
+  getConsultancyBody.type = "NEW";
+} else {
+  console.log("Unsupported treatment type!");
+}
 
 if (treatmentType === "od_medicine_generic") {
   getConsultancyBody.conditionId = conditionId;
@@ -82,7 +132,7 @@ ready(function () {
     getConsultancy(API, getConsultancyBody)
       .then((response) => {
         setTimeout(() => {
-          handleConsultancy(response?.data[0].questions);
+          handleConsultancy(response?.data[targetedQuestionsSet].questions);
           // console.log("Hit the API");
           // console.log(response);
         }, 2000); // An artificial delay to show the state of the submit button

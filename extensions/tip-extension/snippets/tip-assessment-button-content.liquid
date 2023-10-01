@@ -54,15 +54,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 var product_treatment_id;
 var product_condition_id;
 
@@ -86,7 +77,9 @@ function handleAddToCart() {
 }
 
 function redirectToConsultancyPage(current_treatment_type, current_condition_id, current_treatment_id) {
-  localStorage.setItem('targeted_treatment_url', window.location.href);
+  localStorage.setItem('targeted_product_url', window.location.href);
+  localStorage.setItem('completed_assessment_form_type', "assessment_button");
+
   const startConsultancy = document.getElementById('start-consultancy');
   startConsultancy.addEventListener('click', () => {
       window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
@@ -98,10 +91,10 @@ getReady(function () {
   product_treatment_type = document.getElementById('product-treatment-type').value;
   localStorage.setItem('treatment_type', product_treatment_type);
 
-  product_condition_id = document.getElementById('product-condition-id').value;
+  product_condition_id = document.getElementById('product-condition-id').value || 0;
   localStorage.setItem('condition_id', product_condition_id);
 
-  product_treatment_id = document.getElementById('product-treatment-id').value;
+  product_treatment_id = document.getElementById('product-treatment-id').value  || 0;
   localStorage.setItem('treatment_id', product_treatment_id);
 
   const tip_app_block = document.querySelector('.product-form .shopify-app-block'); // Get the first item
@@ -161,6 +154,12 @@ getReady(function () {
 
   {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
+
+
+
+
+
+
 
 
 

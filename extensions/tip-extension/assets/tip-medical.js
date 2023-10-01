@@ -30,6 +30,9 @@ ready(function () {
   const current_treatment_id = localStorage.getItem("treatment_id");
 
   const current_submission_uuid = localStorage.getItem("submission_uuid");
+  const current_targeted_product_url = localStorage.getItem(
+    "targeted_product_url"
+  );
 
   // Form Validation
 
@@ -619,8 +622,7 @@ ready(function () {
         current_condition_id +
         current_treatment_id
     );
-    const targetedTreatmentUrl = localStorage.getItem("targeted_treatment_url");
-    window.location.href = targetedTreatmentUrl;
+    window.location.href = current_targeted_product_url;
     console.log("HIT via Medical HandleSuccess");
     console.log(response);
 
