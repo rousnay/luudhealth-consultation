@@ -30,11 +30,6 @@ const currentTreatmentFormIndex = parseInt(
 );
 console.log("currentTreatmentFormIndex:", currentTreatmentFormIndex);
 
-const hasAnotherTreatmentForm = localStorage.getItem(
-  "has_another_treatment_form"
-);
-console.log("hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
-
 const hasConditionId = !!conditionId;
 const hasTreatmentId = !!treatmentId;
 
@@ -44,22 +39,15 @@ console.log("hasTreatmentId:", hasTreatmentId);
 const getConsultancyBody = {};
 console.log("getConsultancyBody:", getConsultancyBody);
 
-const targetedQuestionsSet = 0;
+const targetedQuestionsSet = currentTreatmentFormIndex || 0;
 console.log("targetedQuestionsSet:", targetedQuestionsSet);
 
 if (currentAssessmentFormType === "condition") {
   getConsultancyBody.conditionId = conditionId;
   getConsultancyBody.type = "CONDITION";
-  targetedQuestionsSet = 0;
 } else {
   getConsultancyBody.treatmentId = treatmentId;
   getConsultancyBody.type = "NEW";
-  if (hasAnotherTreatmentForm) {
-    targetedQuestionsSet++;
-    console.log("targetedQuestionsSet:", targetedQuestionsSet);
-  } else {
-    targetedQuestionsSet = 0;
-  }
 }
 
 // if (treatmentType === "od_medicine_generic") {
@@ -126,8 +114,21 @@ ready(function () {
       .then((response) => {
         setTimeout(() => {
           handleConsultancy(response?.data[targetedQuestionsSet].questions);
-          // console.log("Hit the API");
-          // console.log(response);
+
+          const totalQuestionsSet = response?.data.length;
+
+          if (
+            totalQuestionsSet === 1 ||
+            totalQuestionsSet === targetedQuestionsSet + 1
+          ) {
+            localStorage.setItem("has_another_treatment_form", "false");
+          } else {
+            localStorage.setItem("has_another_treatment_form", "true");
+            localStorage.setItem(
+              "current_treatment_form_index",
+              currentTreatmentFormIndex + 1
+            );
+          }
         }, 2000); // An artificial delay to show the state of the submit button
       })
       .catch((error) => {

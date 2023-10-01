@@ -14,9 +14,6 @@ const initProcessForm = function () {
   const current_condition_id = localStorage.getItem("condition_id");
   const current_treatment_id = localStorage.getItem("treatment_id");
 
-  // const hasConditionId = !!conditionId;
-  // const hasTreatmentId = !!treatmentId;
-
   const currentAssessmentFormType = localStorage.getItem(
     "current_assessment_form_type"
   );
@@ -688,10 +685,15 @@ const initProcessForm = function () {
 
   /****************************************************************************/
   function handleSuccess(response) {
-    if (currentAssessmentFormType === "condition" && !current_treatment_id) {
-      window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+    if (currentAssessmentFormType === "condition") {
+      if (!treatmentId) {
+        window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+      } else {
+        localStorage.setItem("current_assessment_form_type", "treatment");
+        window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+      }
     } else {
-      if (hasAnotherTreatmentForm) {
+      if (hasAnotherTreatmentForm === "true") {
         localStorage.setItem(
           "current_treatment_form_index",
           currentTreatmentFormIndex + 1
