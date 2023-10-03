@@ -73,6 +73,7 @@ const placeOrder = async (submissionUuid) => {
       lastname: data_order?.customer?.lastname,
       phone: data_medical?.medical?.phone,
       email: data_order?.customer?.email,
+      gender: data_medical?.medical?.gender,
       dob: data_medical?.medical?.dob,
       address: data_order?.billing_address,
       special_dispensing_instructions: "Example",

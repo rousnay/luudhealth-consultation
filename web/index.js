@@ -174,7 +174,8 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       break;
 
     default: {
-      console.log("Empty action received.");
+      console.log("### Unknown Notification received.");
+      console.log("### Payload:", JSON.stringify(payload));
       responseMessage = "Notification has been received from App";
     }
   }
