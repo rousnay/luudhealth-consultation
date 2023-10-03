@@ -32,7 +32,7 @@ const placeOrderNonPres = async (submissionUuid) => {
   const salutation = "Mr";
 
   const order_data = {
-    uuid: "O" + submissionUuid,
+    uuid: "LUUD-O" + submissionUuid,
     brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
@@ -58,7 +58,7 @@ const placeOrderNonPres = async (submissionUuid) => {
     },
 
     patient: {
-      uuid: "P" + submissionUuid,
+      uuid: "LUUD-P" + submissionUuid,
       salutation: salutation,
       firstname: data_order?.customer?.firstname,
       // middlename: data_order?.customer?.firstname,

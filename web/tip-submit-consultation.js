@@ -45,12 +45,12 @@ const submitConsultancy = async (submissionUuid) => {
   const data_order = await findDocumentByUuid(4, submissionUuid);
 
   const consultancy_data = {
-    uuid: "C" + data_order?.submission_uuid,
+    uuid: "LUUD-C" + data_order?.submission_uuid,
     type: "NEW",
     treatment: data_order?.line_items[0]?.sku,
     quantity: data_order?.line_items[0]?.quantity,
     patient: {
-      uuid: "P" + data_order?.submission_uuid,
+      uuid: "LUUD-P" + data_order?.submission_uuid,
       salutation: "Mr",
       firstname: data_order?.customer?.firstname,
       // "middlename": "",

@@ -18,7 +18,7 @@ function identityCheck(data_medical, data_order) {
   const identity_data = {
     check_type: "GENERIC",
     patient: {
-      uuid: "P" + data_order?.submission_uuid,
+      uuid: "LUUD-P" + data_order?.submission_uuid,
       firstname: data_order?.customer?.firstname,
       //middlename: data_order?.customer?.middlename,
       lastname: data_order?.customer?.lastname,
