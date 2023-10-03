@@ -7,23 +7,6 @@ const initProcessForm = function () {
 
   let currentStep = 0;
 
-  /*****************************************************************************
-   * Get Treatment information
-   */
-  const current_treatment_type = localStorage.getItem("treatment_type");
-  const current_condition_id = localStorage.getItem("condition_id");
-  const current_treatment_id = localStorage.getItem("treatment_id");
-
-  const currentAssessmentFormType = localStorage.getItem(
-    "current_assessment_form_type"
-  );
-  const hasAnotherTreatmentForm = localStorage.getItem(
-    "has_another_treatment_form"
-  );
-  const currentTreatmentFormIndex = localStorage.getItem(
-    "current_treatment_form_index"
-  );
-
   // Form Validation
 
   /*****************************************************************************
@@ -684,40 +667,12 @@ const initProcessForm = function () {
   }
 
   /****************************************************************************/
-  function handleSuccess(response) {
-    if (currentAssessmentFormType === "condition") {
-      if (!treatmentId) {
-        window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      } else {
-        localStorage.setItem("current_assessment_form_type", "treatment");
-        window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      }
-    } else {
-      if (hasAnotherTreatmentForm === "true") {
-        window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      } else {
-        window.location.href = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
-      }
-    }
-
+  function handleSuccess(response, nextURL) {
+    window.location.href = nextURL;
     console.log("HIT via Consultancy HandleSuccess");
     console.log(response);
-    // const thankYou = progressForm.querySelector("#progress-form__thank-you");
-
-    // // Clear all HTML Nodes that are not the thank you panel
-    // while (progressForm.firstElementChild !== thankYou) {
-    //   progressForm.removeChild(progressForm.firstElementChild);
-    // }
-
-    // thankYou.removeAttribute("hidden");
-
-    // // Logging the response from httpbin for quick verification
-    // console.log(response);
-
     // window.setTimeout(function () {
-
     //   window.location.href = "/pages/medical-information";
-    //   // Move to a new location or you can do something else
     //   console.log("#sec passed!");
     // }, 3000);
   }
@@ -799,6 +754,34 @@ const initProcessForm = function () {
   progressForm.addEventListener("submit", (e) => {
     // Prevent the form from submitting
     e.preventDefault();
+
+    /*****************************************************************************
+     * Get Treatment information
+     */
+    const current_treatment_type = localStorage.getItem("treatment_type");
+    const current_condition_id = parseInt(localStorage.getItem("condition_id"));
+    const current_treatment_id = parseInt(localStorage.getItem("treatment_id"));
+
+    const currentAssessmentFormType = localStorage.getItem(
+      "current_assessment_form_type"
+    );
+    console.log(
+      "#________> currentAssessmentFormType:",
+      currentAssessmentFormType
+    );
+
+    const hasAnotherTreatmentForm = localStorage.getItem(
+      "has_another_treatment_form"
+    );
+    console.log("#________> hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
+
+    const current_treatment_form_index = parseInt(
+      localStorage.getItem("current_treatment_form_index")
+    );
+    console.log(
+      "#________> current_treatment_form_index:",
+      current_treatment_form_index
+    );
 
     // Get the API endpoint using the form action attribute
     const form = e.currentTarget,
@@ -897,25 +880,118 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
+        console.log(
+          "#____1____> hasAnotherTreatmentForm:",
+          hasAnotherTreatmentForm
+        );
         getUUID()
           .then((uuid) => {
-            localStorage.setItem("submission_uuid", uuid);
+            var setUUID;
+            console.log(
+              "#____2____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
+
+            if (currentAssessmentFormType === "treatment") {
+              if (!!current_condition_id) {
+                setUUID = localStorage.getItem("submission_uuid");
+              } else {
+                if (current_treatment_form_index === 1) {
+                  localStorage.setItem("submission_uuid", (setUUID = uuid));
+                } else {
+                  setUUID = localStorage.getItem("submission_uuid");
+                }
+              }
+            } else {
+              localStorage.setItem("submission_uuid", (setUUID = uuid));
+            }
+
+            // if (currentAssessmentFormType === "condition") {
+            //   localStorage.setItem("submission_uuid", (setUUID = uuid));
+            // } else if (currentAssessmentFormType === "treatment") {
+
+            //   if (
+            //     (current_condition_id && hasAnotherTreatmentForm === "yes") ||
+            //     (hasAnotherTreatmentForm === "no" &&!current_treatment_form_index === 1)
+            //   ) {
+            //     setUUID = localStorage.getItem("submission_uuid");
+            //   } else {
+            //     localStorage.setItem("submission_uuid", (setUUID = uuid));
+            //   }
+            // } else {
+            //   console.log(
+            //     "Unable to set UUID for, Unsupported assessment form type!"
+            //   );
+            // }
+
+            console.log(
+              "#____3____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
             return {
-              submission_uuid: uuid,
+              submission_uuid: setUUID,
               treatment_type: current_treatment_type,
-              condition_id: parseInt(current_condition_id),
-              treatment_id: parseInt(current_treatment_id),
+              condition_id: current_condition_id,
+              treatment_id: current_treatment_id,
               submitted_at: formTime,
               current_assessment_form_type: currentAssessmentFormType,
-              hasAnotherTreatmentForm: hasAnotherTreatmentForm,
-              currentTreatmentFormIndex: currentTreatmentFormIndex,
+              has_another_treatment_form: hasAnotherTreatmentForm,
+              treatment_form_index: current_treatment_form_index,
               consultancy: consultancyFormData,
             };
           })
           .then((data) => postData(API, data))
           .then((response) => {
+            var setNextURL;
+            console.log(
+              "#____4____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
+            if (currentAssessmentFormType === "condition") {
+              if (!current_treatment_id) {
+                setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              } else {
+                localStorage.setItem(
+                  "current_assessment_form_type",
+                  "treatment"
+                );
+                setNextURL = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              }
+            } else {
+              if (hasAnotherTreatmentForm === "yes") {
+                console.log(
+                  "if________> hasAnotherTreatmentForm:",
+                  hasAnotherTreatmentForm
+                );
+                setNextURL = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              } else {
+                console.log(
+                  "else________> hasAnotherTreatmentForm:",
+                  hasAnotherTreatmentForm
+                );
+                setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+              }
+            }
+
+            // if (currentAssessmentFormType === "condition") {
+            //   setNextURL = !current_treatment_id
+            //     ? `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`
+            //     : (() => {
+            //         localStorage.setItem(
+            //           "current_assessment_form_type",
+            //           "treatment"
+            //         );
+            //         return `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+            //       })();
+            // } else {
+            //   setNextURL =
+            //     hasAnotherTreatmentForm === "yes"
+            //       ? `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`
+            //       : `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+            // }
+
             setTimeout(() => {
-              handleSuccess(response);
+              handleSuccess(response, setNextURL);
             }, 1000); // An artificial delay to show the state of the submit button
           })
           .catch((error) => {

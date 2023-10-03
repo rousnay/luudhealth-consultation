@@ -60,6 +60,8 @@
 
 
 
+
+
 var product_treatment_id;
 var product_condition_id;
 
@@ -84,7 +86,6 @@ function handleAddToCart() {
 
 function redirectToConsultancyPage(current_treatment_type, current_condition_id, current_treatment_id) {
   localStorage.setItem('targeted_product_url', window.location.href);
-
   localStorage.setItem('current_treatment_form_index', 0);
 
   if(!!current_condition_id) {
@@ -96,6 +97,7 @@ function redirectToConsultancyPage(current_treatment_type, current_condition_id,
   const startConsultancy = document.getElementById('start-consultancy');
   startConsultancy.addEventListener('click', () => {
       window.location.href = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
+
   });
 }
 
@@ -167,6 +169,8 @@ getReady(function () {
 
   {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
+
+
 
 
 

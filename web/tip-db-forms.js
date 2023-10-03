@@ -14,6 +14,7 @@ const conditionSubmit = async (formConditionResponse) => {
       submission_uuid: formConditionResponse?.submission_uuid,
       treatment_type: formConditionResponse?.treatment_type,
       condition_id: formConditionResponse?.condition_id,
+      treatment_id: formConditionResponse?.treatment_id,
       condition: formConditionResponse?.consultancy,
     });
 
@@ -31,20 +32,32 @@ const consultancySubmit = async (formConsultancyResponse) => {
   if (formConsultancyResponse) {
     const data_consultancy = DB.collection("data_consultancy");
 
-    const result = await data_consultancy.insertOne({
-      submitted_at: formConsultancyResponse?.submitted_at,
-      submission_uuid: formConsultancyResponse?.submission_uuid,
-      treatment_type: formConsultancyResponse?.treatment_type,
-      condition_id: formConsultancyResponse?.condition_id,
-      treatment_id: formConsultancyResponse?.treatment_id,
-      treatment_form_index: formConsultancyResponse?.treatment_form_index,
-      has_another_treatment_form: formConsultancyResponse?.has_another_treatment_form,
-      consultancy: formConsultancyResponse?.consultancy,
-    });
-
-    console.log(
-      `## A document was inserted with the _id: ${result.insertedId}`
-    );
+    if (formConsultancyResponse.treatment_form_index === 1) {
+      const result = await data_consultancy.insertOne({
+        submitted_at: formConsultancyResponse?.submitted_at,
+        submission_uuid: formConsultancyResponse?.submission_uuid,
+        treatment_type: formConsultancyResponse?.treatment_type,
+        condition_id: formConsultancyResponse?.condition_id,
+        treatment_id: formConsultancyResponse?.treatment_id,
+        treatment_form_index: formConsultancyResponse?.treatment_form_index,
+        has_another_treatment_form:
+          formConsultancyResponse?.has_another_treatment_form,
+        consultancy: formConsultancyResponse?.consultancy,
+      });
+      console.log(
+        `## A document was inserted with the _id: ${result.insertedId}`
+      );
+    } else {
+      const result = await data_consultancy.updateOne(
+        { submission_uuid: formConsultancyResponse?.submission_uuid },
+        {
+          $push: {
+            consultancy: { $each: formConsultancyResponse?.consultancy },
+          },
+        }
+      );
+      console.log(`## A document was PUSHED to the _id: ${result.insertedId}`);
+    }
   } else {
     console.log("## There is error in Payload!");
   }
