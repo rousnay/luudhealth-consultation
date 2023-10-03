@@ -85,7 +85,7 @@ const submitConsultancy = async (submissionUuid) => {
     if (consultancyPayload_data) {
       const submitted_consultation = DB.collection("submitted_consultation");
       const result = await submitted_consultation.insertOne({
-        // submitted_at: submitted_at,
+        submitted_at: new Date().toJSON(),
         consultancy_uuid: consultancyPayload_data?.uuid,
         consultancy_data: consultancyPayload_data,
         response_data: response_data,

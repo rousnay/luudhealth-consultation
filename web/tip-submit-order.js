@@ -95,7 +95,7 @@ const placeOrder = async (submissionUuid) => {
     if (orderPayload_data) {
       const submitted_order = DB.collection("submitted_order");
       const result = await submitted_order.insertOne({
-        // submitted_at: submitted_at,
+        submitted_at: new Date().toJSON(),
         order_uuid: orderPayload_data?.uuid,
         order_data: orderPayload_data,
         response_data: response_data,

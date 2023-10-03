@@ -3,7 +3,7 @@ import { DB } from "./db.js";
 const identityNotification = async (notificationData) => {
   const notification_identity = DB.collection("notification_identity");
   const result = await notification_identity.insertOne({
-    created_at: new Date().toJSON(),
+    received_at: new Date().toJSON(),
     submission_uuid: notificationData?.data?.uuid,
     type: notificationData?.type,
     data: notificationData?.data,
@@ -16,7 +16,7 @@ const identityNotification = async (notificationData) => {
 const consultationNotification = async (notificationData) => {
   const notification_consultation = DB.collection("notification_consultation");
   const result = await notification_consultation.insertOne({
-    created_at: new Date().toJSON(),
+    received_at: new Date().toJSON(),
     submission_uuid: notificationData?.data?.consultation?.uuid,
     type: notificationData?.type,
     data: notificationData?.data,
@@ -29,7 +29,7 @@ const consultationNotification = async (notificationData) => {
 const orderNotification = async (notificationData) => {
   const notification_order = DB.collection("notification_order");
   const result = await notification_order.insertOne({
-    created_at: new Date().toJSON(),
+    received_at: new Date().toJSON(),
     submission_uuid: notificationData?.data?.uuid,
     type: notificationData?.type,
     data: notificationData?.data,
