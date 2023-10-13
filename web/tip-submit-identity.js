@@ -18,7 +18,7 @@ function identityCheck(data_medical, data_order) {
   const identity_data = {
     check_type: "GENERIC",
     patient: {
-      uuid: "P" + data_order?.submission_uuid,
+      uuid: "LUUD-P" + data_order?.submission_uuid,
       firstname: data_order?.customer?.firstname,
       //middlename: data_order?.customer?.middlename,
       lastname: data_order?.customer?.lastname,
@@ -36,7 +36,7 @@ function identityCheck(data_medical, data_order) {
     if (identityCheckPayload_data) {
       const submitted_identity = DB.collection("submitted_identity");
       const result = await submitted_identity.insertOne({
-        // submitted_at: submitted_at,
+        submitted_at: new Date().toJSON(),
         patient_uuid: identityCheckPayload_data?.patient?.uuid,
         identity_data: identityCheckPayload_data,
         response_data: response_data,

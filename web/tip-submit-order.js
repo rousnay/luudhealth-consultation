@@ -40,7 +40,7 @@ const placeOrder = async (submissionUuid) => {
   const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
 
   const order_data = {
-    uuid: "O" + submissionUuid,
+    uuid: "LUUD-O" + submissionUuid,
     brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
@@ -66,7 +66,7 @@ const placeOrder = async (submissionUuid) => {
     },
 
     patient: {
-      uuid: "P" + submissionUuid,
+      uuid: "LUUD-P" + submissionUuid,
       salutation: salutation,
       firstname: data_order?.customer?.firstname,
       // middlename: data_order?.customer?.firstname,
@@ -96,7 +96,7 @@ const placeOrder = async (submissionUuid) => {
     if (orderPayload_data) {
       const submitted_order = DB.collection("submitted_order");
       const result = await submitted_order.insertOne({
-        // submitted_at: submitted_at,
+        submitted_at: new Date().toJSON(),
         order_uuid: orderPayload_data?.uuid,
         order_data: orderPayload_data,
         response_data: response_data,
