@@ -1,6 +1,8 @@
-import { DB } from "./db.js";
 import dotenv from "dotenv";
 dotenv.config();
+
+import { DB } from "./db.js";
+import { placeOrder } from "./tip-submit-order.js";
 
 const TIP_HOST = process.env.TIP_HOST;
 const TIP_API_VERSION = process.env.TIP_API_VERSION;
@@ -120,10 +122,19 @@ const submitConsultancy = async (submissionUuid) => {
       return "OK";
     } else if (response.status === 201) {
       console.log(
-        "## consultation has been submitted!",
+        "## consultation has been created!",
         JSON.stringify(response)
       );
-      return "consultation has been submitted!";
+
+      if (treatment_type === "otc_medicine") {
+        responseMessage = await placeOrder(response?.data?.uuid?.substring(6));
+        console.log(
+          "OTC Order submission response:",
+          JSON.stringify(responseMessage)
+        );
+      }
+
+      return "consultation has been created!";
     } else {
       console.log(
         "## Error with consultancy submission",
