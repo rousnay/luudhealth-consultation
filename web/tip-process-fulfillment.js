@@ -35,6 +35,11 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
     headers: API_HEADER,
   }).then((response) => response.json());
 
+  console.log(
+    "### APP: fulfillment_orders_api response:",
+    JSON.stringify(fulfillment_orders_response)
+  );
+
   const fulfillment_order_id =
     fulfillment_orders_response?.fulfillment_orders[0]?.id;
 
