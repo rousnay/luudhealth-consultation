@@ -64,11 +64,35 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
       },
     };
 
+    const storeFulfillmentDataToDB = async (
+      fulfillmentPayload_data,
+      response_data
+    ) => {
+      console.log("## Form: Medical -> Submit");
+      // const order_id = webhookResponse?.id;
+      if (fulfillmentPayload_data) {
+        const submitted_order = DB.collection("submitted_fulfillment");
+        const result = await submitted_order.insertOne({
+          submitted_at: new Date().toJSON(),
+          order_uuid: fulfillmentPayload_data?.uuid,
+          order_data: fulfillmentPayload_data,
+          response_data: response_data,
+        });
+        console.log(
+          `## A document was inserted with the _id: ${result.insertedId}`
+        );
+      } else {
+        console.log("## There is error in Payload!");
+      }
+    };
+
     const fulfillments_response = await fetch(fulfillments_api, {
       method: "POST",
       headers: API_HEADER,
       body: JSON.stringify(fulfillment_payload),
     }).then((response) => response.json());
+
+    storeFulfillmentDataToDB(fulfillment_payload, fulfillments_response);
 
     const fulfillmentStatus =
       fulfillments_response?.fulfillment?.status === "success"

@@ -105,12 +105,6 @@ app.post("/proxy_route/consultancy/submit", async (req, res) => {
     consultancySubmit(payload);
   }
 
-  // if (payload?.treatment_type === "od_medicine_generic") {
-  //   conditionSubmit(payload);
-  // } else {
-  //   consultancySubmit(payload);
-  // }
-
   console.log("### APP: consultancy/submit:", JSON.stringify(payload));
 
   res.json(payload);

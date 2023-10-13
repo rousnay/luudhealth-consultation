@@ -58,8 +58,8 @@ const dataAggregate = async (submissionUuid) => {
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    identityCheck(data_medical, data_order);
-    // submitConsultancy(submissionUuid);
+    // identityCheck(data_medical, data_order);
+    submitConsultancy(submissionUuid);
   } else {
     console.log("## There is error in Payload!");
   }

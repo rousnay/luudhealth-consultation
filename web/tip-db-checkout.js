@@ -11,20 +11,6 @@ const OrderSubmit = async (webhookResponse) => {
   let submission_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
   const product_id = webhookResponse?.line_items[0]?.product_id;
 
-  // let order_type = "Non-TIP";
-  // if (line_items_uuid === null && product_id != 8040651292980) {
-  //   console.log("Product Type: Non-TIP");
-  // } else if (product_id === 8040651292980) {
-  //   console.log("Product Type: Non-prescribed");
-  //   order_type = "Non-prescribed";
-  //   line_items_uuid = line_items_uuid ?? generated_uuid;
-  // } else {
-  //   console.log("Product Type: Prescribed");
-  //   order_type = "Prescribed";
-  // }
-
-  // console.log("## line_items_uuid:", line_items_uuid);
-
   if (submission_uuid != null) {
     const data_order = DB.collection("data_order");
     const createdAt = webhookResponse?.created_at;
