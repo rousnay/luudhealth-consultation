@@ -38,6 +38,19 @@ const placeOrder = async (submissionUuid) => {
   const data_medical = await findDocumentByUuid(2, submissionUuid);
   const data_order = await findDocumentByUuid(3, submissionUuid);
   const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
+  const line_items = data_order?.line_items;
+
+  const items = line_items.map((item) => {
+    const newItem = {
+      quantity: item?.quantity,
+      total: item?.total,
+      treatment: parseInt(item?._treatment_id),
+      condition: parseInt(item?._condition_id),
+      consultation: "LUUD-C" + item?._submission_uuid,
+    };
+
+    return newItem;
+  });
 
   const order_data = {
     uuid: "LUUD-O" + submissionUuid,
@@ -79,14 +92,7 @@ const placeOrder = async (submissionUuid) => {
       special_dispensing_instructions: "Example",
     },
 
-    items: [
-      {
-        treatment: data_order?.line_items[0]?.sku,
-        quantity: data_order?.line_items[0]?.quantity,
-        total: data_order?.total_price,
-        consultation: "LUUD-C" + submissionUuid,
-      },
-    ],
+    items: items,
   };
 
   // console.log(JSON.stringify(order_data));

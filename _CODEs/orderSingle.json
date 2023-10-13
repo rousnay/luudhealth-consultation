@@ -1,0 +1,362 @@
+{
+    "id": 5393679352116,
+    "admin_graphql_api_id": "gid://shopify/Order/5393679352116",
+    "app_id": 580111,
+    "browser_ip": "119.148.101.197",
+    "buyer_accepts_marketing": true,
+    "cancel_reason": null,
+    "cancelled_at": null,
+    "cart_token": "a3a44e46b3915038d3741805b2f74bbf",
+    "checkout_id": 36793680265524,
+    "checkout_token": "538e8106cfb9d0684d042b8256ce18e7",
+    "client_details": {
+        "accept_language": "en-GB",
+        "browser_height": null,
+        "browser_ip": "119.148.101.197",
+        "browser_width": null,
+        "session_hash": null,
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+    },
+    "closed_at": null,
+    "confirmed": true,
+    "contact_email": "mr.rousnay@gmail.com",
+    "created_at": "2023-07-12T22:30:39+01:00",
+    "currency": "GBP",
+    "current_subtotal_price": "1.00",
+    "current_subtotal_price_set": {
+        "shop_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        }
+    },
+    "current_total_discounts": "0.00",
+    "current_total_discounts_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        }
+    },
+    "current_total_duties_set": null,
+    "current_total_price": "1.00",
+    "current_total_price_set": {
+        "shop_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        }
+    },
+    "current_total_tax": "0.00",
+    "current_total_tax_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        }
+    },
+    "customer_locale": "en-GB",
+    "device_id": null,
+    "discount_codes": [],
+    "email": "mr.rousnay@gmail.com",
+    "estimated_taxes": false,
+    "financial_status": "paid",
+    "fulfillment_status": null,
+    "gateway": "bogus",
+    "landing_site": "/68902158644/orders/8bc0b5797cf0b0c84042676111c53196",
+    "landing_site_ref": null,
+    "location_id": null,
+    "merchant_of_record_app_id": null,
+    "name": "#1074",
+    "note": null,
+    "note_attributes": [],
+    "number": 74,
+    "order_number": 1074,
+    "order_status_url": "https://luudhealth.com/68902158644/orders/b78281b16f241576d5a78f4a6f7a4f8d/authenticate?key=a42f6742d20566373651d327dd75a203",
+    "original_total_duties_set": null,
+    "payment_gateway_names": [
+        "bogus"
+    ],
+    "phone": null,
+    "presentment_currency": "GBP",
+    "processed_at": "2023-07-12T22:30:37+01:00",
+    "processing_method": "direct",
+    "reference": "407dee0f29f05064de74d748843a8a3d",
+    "referring_site": "",
+    "source_identifier": "407dee0f29f05064de74d748843a8a3d",
+    "source_name": "web",
+    "source_url": null,
+    "subtotal_price": "1.00",
+    "subtotal_price_set": {
+        "shop_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        }
+    },
+    "tags": "",
+    "tax_lines": [],
+    "taxes_included": true,
+    "test": true,
+    "token": "b78281b16f241576d5a78f4a6f7a4f8d",
+    "total_discounts": "0.00",
+    "total_discounts_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        }
+    },
+    "total_line_items_price": "1.00",
+    "total_line_items_price_set": {
+        "shop_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        }
+    },
+    "total_outstanding": "0.00",
+    "total_price": "1.00",
+    "total_price_set": {
+        "shop_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "1.00",
+            "currency_code": "GBP"
+        }
+    },
+    "total_shipping_price_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        }
+    },
+    "total_tax": "0.00",
+    "total_tax_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "GBP"
+        }
+    },
+    "total_tip_received": "0.00",
+    "total_weight": 0,
+    "updated_at": "2023-07-12T22:30:40+01:00",
+    "user_id": null,
+    "billing_address": {
+        "first_name": "Mozahidur",
+        "address1": "House 25, Road 10, Sector 10",
+        "phone": null,
+        "city": "Bedfordshire",
+        "zip": "AL3 8QE",
+        "province": "England",
+        "country": "United Kingdom",
+        "last_name": "Rahman",
+        "address2": null,
+        "company": null,
+        "latitude": null,
+        "longitude": null,
+        "name": "Mozahidur Rahman",
+        "country_code": "GB",
+        "province_code": "ENG"
+    },
+    "customer": {
+        "id": 6927530033460,
+        "email": "mr.rousnay@gmail.com",
+        "accepts_marketing": true,
+        "created_at": "2023-04-15T07:27:59+01:00",
+        "updated_at": "2023-07-12T22:30:39+01:00",
+        "first_name": "Mozahidur",
+        "last_name": "Rahman",
+        "state": "enabled",
+        "note": null,
+        "verified_email": false,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "phone": null,
+        "email_marketing_consent": {
+            "state": "subscribed",
+            "opt_in_level": "single_opt_in",
+            "consent_updated_at": "2023-04-15T07:28:00+01:00"
+        },
+        "sms_marketing_consent": null,
+        "tags": "",
+        "currency": "GBP",
+        "accepts_marketing_updated_at": "2023-04-15T07:28:00+01:00",
+        "marketing_opt_in_level": "single_opt_in",
+        "tax_exemptions": [],
+        "admin_graphql_api_id": "gid://shopify/Customer/6927530033460",
+        "default_address": {
+            "id": 9335405904180,
+            "customer_id": 6927530033460,
+            "first_name": "Mozahidur",
+            "last_name": "Rahman",
+            "company": null,
+            "address1": "House 25, Road 10, Sector 10",
+            "address2": null,
+            "city": "Bedfordshire",
+            "province": "England",
+            "country": "United Kingdom",
+            "zip": "AL3 8QE",
+            "phone": null,
+            "name": "Mozahidur Rahman",
+            "province_code": "ENG",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "default": true
+        }
+    },
+    "discount_applications": [],
+    "fulfillments": [],
+    "line_items": [
+        {
+            "id": 13972568277300,
+            "admin_graphql_api_id": "gid://shopify/LineItem/13972568277300",
+            "fulfillable_quantity": 1,
+            "fulfillment_service": "manual",
+            "fulfillment_status": null,
+            "gift_card": false,
+            "grams": 0,
+            "name": "Erectile Dysfunction (ED) - 50mg / 4 / Sildenafil",
+            "price": "1.00",
+            "price_set": {
+                "shop_money": {
+                    "amount": "1.00",
+                    "currency_code": "GBP"
+                },
+                "presentment_money": {
+                    "amount": "1.00",
+                    "currency_code": "GBP"
+                }
+            },
+            "product_exists": true,
+            "product_id": 8063694897460,
+            "properties": [
+                {
+                    "name": "_uuid",
+                    "value": "1bdffd7b-1fd0-4f7e-adb6-48221511046a"
+                }
+            ],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": "",
+            "taxable": true,
+            "title": "Erectile Dysfunction (ED)",
+            "total_discount": "0.00",
+            "total_discount_set": {
+                "shop_money": {
+                    "amount": "0.00",
+                    "currency_code": "GBP"
+                },
+                "presentment_money": {
+                    "amount": "0.00",
+                    "currency_code": "GBP"
+                }
+            },
+            "variant_id": 45599029133620,
+            "variant_inventory_management": null,
+            "variant_title": "50mg / 4 / Sildenafil",
+            "vendor": "Guud Self",
+            "tax_lines": [],
+            "duties": [],
+            "discount_allocations": []
+        }
+    ],
+    "payment_details": {
+        "credit_card_bin": "1",
+        "avs_result_code": null,
+        "cvv_result_code": null,
+        "credit_card_number": "•••• •••• •••• 1",
+        "credit_card_company": "Bogus",
+        "buyer_action_info": null,
+        "credit_card_name": "Bogus Gateway",
+        "credit_card_wallet": null,
+        "credit_card_expiration_month": 3,
+        "credit_card_expiration_year": 2033
+    },
+    "payment_terms": null,
+    "refunds": [],
+    "shipping_address": {
+        "first_name": "Mozahidur",
+        "address1": "House 25, Road 10, Sector 10",
+        "phone": null,
+        "city": "Bedfordshire",
+        "zip": "AL3 8QE",
+        "province": "England",
+        "country": "United Kingdom",
+        "last_name": "Rahman",
+        "address2": null,
+        "company": null,
+        "latitude": 51.84793209999999,
+        "longitude": -0.4473919,
+        "name": "Mozahidur Rahman",
+        "country_code": "GB",
+        "province_code": "ENG"
+    },
+    "shipping_lines": [
+        {
+            "id": 4409190973748,
+            "carrier_identifier": "650f1a14fa979ec5c74d063e968411d4",
+            "code": "Next Day (24 Tracked) Order Before 3pm",
+            "delivery_category": null,
+            "discounted_price": "0.00",
+            "discounted_price_set": {
+                "shop_money": {
+                    "amount": "0.00",
+                    "currency_code": "GBP"
+                },
+                "presentment_money": {
+                    "amount": "0.00",
+                    "currency_code": "GBP"
+                }
+            },
+            "phone": null,
+            "price": "0.00",
+            "price_set": {
+                "shop_money": {
+                    "amount": "0.00",
+                    "currency_code": "GBP"
+                },
+                "presentment_money": {
+                    "amount": "0.00",
+                    "currency_code": "GBP"
+                }
+            },
+            "requested_fulfillment_service_id": null,
+            "source": "shopify",
+            "title": "Next Day (24 Tracked) Order Before 3pm",
+            "tax_lines": [],
+            "discount_allocations": []
+        }
+    ]
+}

@@ -1,0 +1,152 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 3,
+            "title": "Erectile Dysfunction",
+            "description": "- tell us about your condition",
+            "questions": [
+                {
+                    "question_id": 90,
+                    "question_type": "yes",
+                    "question_text": "<p>Do you have difficultly in gaining and/or sustaining an erection?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "<p>Erectile dysfunction can be the inability to to achieve an erection or to sustain one long enough for satisfactory intercourse.</p>",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 91,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Have you been diagnosed with erectile dysfunction by a doctor?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "<p>If you have not had your erectile dysfunction diagnosed by your doctor, we would recommend that you visit your doctor for a general check-up. Erectile dysfunction can indicate the onset of heart disease&nbsp;that should be checked and treated if appropriate.</p>",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": "",
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 96,
+                    "question_type": "radio",
+                    "question_text": "<p>How long have you suffered with erectile dysfunction?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "<p>Erectile dysfinction that occurs suddenly may indicate that it is caused by psychological problems or by the emergence of an underlying health condition. Either cause should be investigated by your doctor.&nbsp;</p>",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [
+                        "It has occurred suddenly",
+                        ">182.5 days",
+                        "6 months to 2 years",
+                        "More than 2 years"
+                    ],
+                    "conditional": [],
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 93,
+                    "question_type": "no",
+                    "question_text": "<p>Have you ever been medically advised not to have sexual intercourse or undertake rigorous exercise?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "<p>This would indicate that erectile dysfunction treatments would not be appropriate as they may place too much strain on your heart.</p>",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 94,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Are you currently suffering with any emotional or psychological problems?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "<p>Erectile dysfunction treatments may be less effective at treating erectile dysfunction that is caused by emotional or psychological problems. They can still be of use whilst the underlying issues are addressed.</p>",
+                    "more_detail_trigger": [
+                        1
+                    ],
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 95,
+                    "question_type": "no",
+                    "question_text": "<p>Are you suffering with, or have ever been diagnosed with, any of the following conditions:</p>\n<ul>\n<li>Vision problems or degenerative eye conditions, including a family history of these conditions.</li>\n<li>Deformity or angulation of the penis (Peyronie&rsquo;s disease).</li>\n<li>Sickle cell disease or leukaemia or multiple myeloma.</li>\n<li>A bleeding disorder, such as haemophilia.</li>\n<li>Active stomach, peptic, or gastric ulcers.</li>\n</ul>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "<p>These conditions may indicate that erectile dysfunction treatments are not appropriate for you to take. If any of the above apply, you should see your doctor to ensure you get suitable treatment.</p>",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": []
+                }
+            ]
+        }
+    ]
+}
