@@ -126,7 +126,7 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 //TIP Notification Handler
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
-  const uuid = payload?.data?.uuid?.substring(6);
+  const uuid = payload?.data?.uuid?.substring(9);
   let responseMessage = "Notification has been received from App";
 
   switch (payload?.type) {
@@ -144,9 +144,11 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
 
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
-      responseMessage = await placeOrder(
-        payload?.data?.consultation?.uuid.substring(6)
-      );
+      const con_uuid = payload?.data?.consultation?.uuid
+        .split("-")
+        .slice(3)
+        .join("-");
+      responseMessage = await placeOrder(con_uuid);
       await consultationNotification(payload);
       break;
 
