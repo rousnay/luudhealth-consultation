@@ -77,9 +77,10 @@ const dataAggregate = async (submissionUuid) => {
     );
     // identityCheck(data_medical_array[0], data_order);
 
-    for (const item of data_orders_items) {
+    for (const [index, item] of data_orders_items.entries()) {
       const item_uuid = item._submission_uuid;
-      submitConsultancy(item_uuid, submissionUuid);
+      console.log(`##UUIDs: ${index}, ${item_uuid}, ${submissionUuid}`);
+      submitConsultancy(index, item_uuid, submissionUuid);
     }
   } else {
     console.log("## There is error in Payload!");

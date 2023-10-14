@@ -10,9 +10,10 @@ const consultancyHandler = async (submissionUuid) => {
 
   let data_orders_items = data_order?.items;
 
-  for (const item of data_orders_items) {
+  for (const [index, item] of data_orders_items.entries()) {
     const item_uuid = item._submission_uuid;
-    submitConsultancy(item_uuid, submissionUuid);
+    console.log(`##UUIDs: ${index}, ${item_uuid}, ${submissionUuid}`);
+    submitConsultancy(index, item_uuid, submissionUuid);
   }
 };
 

@@ -40,7 +40,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
   }
 }
 // data_consultancy, data_medical, data_order
-const submitConsultancy = async (item_uuid, order_uuid) => {
+const submitConsultancy = async (index, item_uuid, order_uuid) => {
   const data_condition = await findDocumentByUuid(1, item_uuid);
   const data_consultancy = await findDocumentByUuid(2, item_uuid);
   const data_medical = await findDocumentByUuid(3, item_uuid);
@@ -49,8 +49,8 @@ const submitConsultancy = async (item_uuid, order_uuid) => {
   const consultancy_data = {
     uuid: "LUUD-C" + data_order?.submission_uuid,
     type: "NEW",
-    treatment: data_order?.items[0]?.sku,
-    quantity: data_order?.items[0]?.quantity,
+    treatment: data_order?.items[index]?.sku,
+    quantity: data_order?.items[index]?.quantity,
     patient: {
       uuid: "LUUD-P" + data_order?.submission_uuid,
       salutation: "Mr",
@@ -79,7 +79,6 @@ const submitConsultancy = async (item_uuid, order_uuid) => {
     consultancyPayload_data,
     response_data
   ) => {
-    console.log("## Form: Medical -> Submit");
     // const order_id = webhookResponse?.id;
     if (consultancyPayload_data) {
       const submitted_consultation = DB.collection("submitted_consultation");
