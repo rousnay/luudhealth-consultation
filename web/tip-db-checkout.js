@@ -1,15 +1,15 @@
 //@ts-check
-import crypto from "crypto";
 import { DB } from "./db.js";
 import { dataAggregate } from "./tip-db-aggregator.js";
 import { placeOrderNonPres } from "./tip-submit-order-nonpres.js";
 
-const generated_uuid = crypto.randomUUID();
+// import crypto from "crypto";
+// const generated_uuid = crypto.randomUUID();
 
 //Webhook: User info to DB
-const OrderSubmit = async (webhookResponse) => {
-  let submission_uuid = webhookResponse?.line_items[0]?.properties[0]?.value;
-  const product_id = webhookResponse?.line_items[0]?.product_id;
+const OrderSubmit = async (webhookResponse, submission_uuid) => {
+  const order_type =
+    webhookResponse?.line_items.length > 1 ? "Multiple" : "Single";
 
   if (submission_uuid != null) {
     const data_order = DB.collection("data_order");
@@ -24,6 +24,7 @@ const OrderSubmit = async (webhookResponse) => {
 
     const items = line_items.map((item) => {
       const newItem = {
+        order_uuid: submission_uuid,
         id: item?.id,
         sku: parseInt(item?.sku),
         title: item?.title,
@@ -39,13 +40,10 @@ const OrderSubmit = async (webhookResponse) => {
       return newItem;
     });
 
-    // ********* NEED TO UPDATE *********
-    // add treatmentID and consultation ID in line_items array via forms
-    // ********* NEED TO UPDATE *********
-
     const result = await data_order.insertOne({
       created_at: createdAt,
       submission_uuid: submission_uuid,
+      order_type: order_type,
       order_number: order_number,
       customer_name: orderCustomer?.first_name + " " + orderCustomer?.last_name,
       customer_id: orderCustomer?.id,
@@ -74,16 +72,59 @@ const OrderSubmit = async (webhookResponse) => {
         county: orderShippingAddress?.country,
         postcode: orderShippingAddress?.zip,
       },
-      line_items: items,
+      items: items,
     });
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    if (product_id === 8040651292980) {
+
+    // Adding the "submissionUuid" as "order_uuid" to the collections "data_condition," "data_medical," and "data_consultancy"
+
+    async function updateCollectionWithOrderId(collectionName, submissionUuid) {
+      const collection = DB.collection(collectionName);
+      const filter = { _submission_uuid: submissionUuid };
+      const updateDoc = { $set: { order_id } };
+      await collection.updateMany(filter, updateDoc);
+    }
+
+    async function processLineItems() {
+      const uniqueSubmissionUuids = [
+        ...new Set(items.map((item) => item._submission_uuid)),
+      ];
+
+      for (const submissionUuid of uniqueSubmissionUuids) {
+        // Update data_condition, data_medical, and data_consultancy collections
+        await updateCollectionWithOrderId("data_condition", submissionUuid);
+        await updateCollectionWithOrderId("data_medical", submissionUuid);
+        await updateCollectionWithOrderId("data_consultancy", submissionUuid);
+      }
+    }
+
+    processLineItems()
+      .then(() => {
+        console.log("## Documents updated successfully with order_id.");
+      })
+      .catch((err) => {
+        console.error("## Error updating documents with order_id:", err);
+      });
+
+    // ********* NEED TO UPDATE *********
+    const first_line_item_properties =
+      webhookResponse?.line_items[0]?.properties;
+    let treatment_type;
+
+    for (const obj of first_line_item_properties) {
+      if (obj.name === "_treatment_type") {
+        treatment_type = obj.value;
+        break; // Exit the loop once the value is found
+      }
+    }
+    if (order_type === "Single" && treatment_type === "non_pharmacy") {
       placeOrderNonPres(submission_uuid);
     } else {
       dataAggregate(submission_uuid);
     }
+    // ********* NEED TO UPDATE *********
   } else {
     console.log("## There is error in Payload!");
   }

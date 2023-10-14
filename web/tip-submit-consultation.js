@@ -40,11 +40,11 @@ async function findDocumentByUuid(DBCollection, uuid) {
   }
 }
 // data_consultancy, data_medical, data_order
-const submitConsultancy = async (submissionUuid) => {
-  const data_condition = await findDocumentByUuid(1, submissionUuid);
-  const data_consultancy = await findDocumentByUuid(2, submissionUuid);
-  const data_medical = await findDocumentByUuid(3, submissionUuid);
-  const data_order = await findDocumentByUuid(4, submissionUuid);
+const submitConsultancy = async (item_uuid, order_uuid) => {
+  const data_condition = await findDocumentByUuid(1, item_uuid);
+  const data_consultancy = await findDocumentByUuid(2, item_uuid);
+  const data_medical = await findDocumentByUuid(3, item_uuid);
+  const data_order = await findDocumentByUuid(4, order_uuid);
 
   const consultancy_data = {
     uuid: "LUUD-C" + data_order?.submission_uuid,
@@ -126,14 +126,17 @@ const submitConsultancy = async (submissionUuid) => {
         JSON.stringify(response)
       );
 
-      if (treatment_type === "otc_medicine") {
+      // ********* NEED TO UPDATE *********
+      const order_type = data_order?.order_type;
+
+      if (order_type === "Single" && treatment_type === "otc_medicine") {
         responseMessage = await placeOrder(response?.data?.uuid?.substring(6));
         console.log(
           "OTC Order submission response:",
           JSON.stringify(responseMessage)
         );
       }
-
+      // ********* NEED TO UPDATE *********
       return "consultation has been created!";
     } else {
       console.log(
