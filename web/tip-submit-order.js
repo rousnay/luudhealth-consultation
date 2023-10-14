@@ -38,7 +38,7 @@ const placeOrder = async (submissionUuid) => {
   const data_medical = await findDocumentByUuid(2, submissionUuid);
   const data_order = await findDocumentByUuid(3, submissionUuid);
   const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
-  const line_items = data_order?.line_items;
+  const line_items = data_order?.items;
 
   const items = line_items.map((item) => {
     const newItem = {

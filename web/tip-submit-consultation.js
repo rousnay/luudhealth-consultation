@@ -49,8 +49,8 @@ const submitConsultancy = async (item_uuid, order_uuid) => {
   const consultancy_data = {
     uuid: "LUUD-C" + data_order?.submission_uuid,
     type: "NEW",
-    treatment: data_order?.line_items[0]?.sku,
-    quantity: data_order?.line_items[0]?.quantity,
+    treatment: data_order?.items[0]?.sku,
+    quantity: data_order?.items[0]?.quantity,
     patient: {
       uuid: "LUUD-P" + data_order?.submission_uuid,
       salutation: "Mr",
@@ -130,7 +130,7 @@ const submitConsultancy = async (item_uuid, order_uuid) => {
       const order_type = data_order?.order_type;
 
       if (order_type === "Single" && treatment_type === "otc_medicine") {
-        responseMessage = await placeOrder(response?.data?.uuid?.substring(6));
+        responseMessage = await placeOrder(order_uuid);
         console.log(
           "OTC Order submission response:",
           JSON.stringify(responseMessage)
