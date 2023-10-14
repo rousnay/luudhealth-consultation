@@ -19,7 +19,8 @@ import {
   consultancySubmit,
   medicalSubmit,
 } from "./tip-db-forms.js";
-import { submitConsultancy } from "./tip-submit-consultation.js";
+import { consultancyHandler } from "./tip-notification-handlers.js";
+// import { submitConsultancy } from "./tip-submit-consultation.js";
 import { placeOrder } from "./tip-submit-order.js";
 import { orderFulfilled } from "./tip-process-fulfillment.js";
 import {
@@ -131,7 +132,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   switch (payload?.type) {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
-      responseMessage = await submitConsultancy(uuid);
+      responseMessage = await consultancyHandler(uuid);
       await identityNotification(payload);
       break;
 

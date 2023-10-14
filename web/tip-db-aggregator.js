@@ -75,7 +75,7 @@ const dataAggregate = async (submissionUuid) => {
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    // identityCheck(data_medical, data_order);
+    // identityCheck(data_medical_array[0], data_order);
 
     for (const item of data_orders_items) {
       const item_uuid = item._submission_uuid;
