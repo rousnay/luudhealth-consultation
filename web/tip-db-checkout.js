@@ -24,7 +24,7 @@ const OrderSubmit = async (webhookResponse, submission_uuid) => {
 
     const items = line_items.map((item) => {
       const newItem = {
-        order_uuid: submission_uuid,
+        // order_uuid: submission_uuid,
         id: item?.id,
         sku: parseInt(item?.sku),
         title: item?.title,
@@ -84,7 +84,7 @@ const OrderSubmit = async (webhookResponse, submission_uuid) => {
       const collection = DB.collection(collectionName); // Use the imported DB connection
 
       const filter = { _submission_uuid: submissionUuid };
-      const updateDoc = { $set: { order_id } };
+      const updateDoc = { $set: { order_id: order_id } };
 
       await collection.updateMany(filter, updateDoc);
     }
@@ -93,6 +93,8 @@ const OrderSubmit = async (webhookResponse, submission_uuid) => {
       const uniqueSubmissionUuids = [
         ...new Set(items.map((item) => item._submission_uuid)),
       ];
+
+      console.log("## Unique submission_uuids:", uniqueSubmissionUuids);
 
       for (const submissionUuid of uniqueSubmissionUuids) {
         // Update data_condition, data_medical, and data_consultancy collections
