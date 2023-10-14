@@ -83,7 +83,7 @@ const OrderSubmit = async (webhookResponse, submission_uuid) => {
     async function updateCollectionWithOrderId(collectionName, submissionUuid) {
       const collection = DB.collection(collectionName); // Use the imported DB connection
 
-      const filter = { _submission_uuid: submissionUuid };
+      const filter = { submission_uuid: submissionUuid };
       const updateDoc = { $set: { order_id: order_id } };
 
       await collection.updateMany(filter, updateDoc);
