@@ -43,8 +43,8 @@ const placeOrder = async (submissionUuid) => {
   const items = line_items.map((item, index) => {
     const newItem = {
       quantity: item?.quantity,
-      total: item?.total,
-      treatment: parseInt(item?._treatment_id),
+      total: Math.round(item?.total),
+      treatment: parseInt(item?.sku),
       condition: parseInt(item?._condition_id),
       // consultation: "LUUD-C" + item?._submission_uuid,
       consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`,
