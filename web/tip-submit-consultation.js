@@ -47,12 +47,12 @@ const submitConsultancy = async (index, item_uuid, order_uuid) => {
   const data_order = await findDocumentByUuid(4, order_uuid);
 
   const consultancy_data = {
-    uuid: `LUUD-CON-${index}-${data_order?.item_uuid}`,
+    uuid: `LUUD-CON-${index}-${item_uuid}-${order_uuid}`,
     type: "NEW",
     treatment: data_order?.items[index]?.sku,
     quantity: data_order?.items[index]?.quantity,
     patient: {
-      uuid: "LUUD-PAT-" + data_order?.submission_uuid,
+      uuid: "LUUD-PAT-" + order_uuid,
       salutation: "Mr",
       firstname: data_order?.customer?.firstname,
       // "middlename": "",
@@ -136,6 +136,7 @@ const submitConsultancy = async (index, item_uuid, order_uuid) => {
         );
       }
       // ********* NEED TO UPDATE *********
+      
       return "consultation has been created!";
     } else {
       console.log(

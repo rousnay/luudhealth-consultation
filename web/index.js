@@ -146,7 +146,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
       console.log("### CONSULTATION_APPROVED");
       const con_uuid = payload?.data?.consultation?.uuid
         .split("-")
-        .slice(3)
+        .slice(8)
         .join("-");
       responseMessage = await placeOrder(con_uuid);
       await consultationNotification(payload);

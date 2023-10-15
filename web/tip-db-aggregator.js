@@ -62,7 +62,7 @@ const dataAggregate = async (submissionUuid) => {
 
     const result = await data_aggregated.insertOne({
       created_at: data_order?.created_at,
-      order_uuid: submissionUuid,
+      submission_uuid: submissionUuid,
       order_number: data_order?.order_number,
       customer_name: data_order?.customer_name,
       total_price: data_order?.total_price,

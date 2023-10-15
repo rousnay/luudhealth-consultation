@@ -24,7 +24,7 @@ const OrderSubmit = async (webhookResponse, submission_uuid) => {
 
     const items = line_items.map((item) => {
       const newItem = {
-        // order_uuid: submission_uuid,
+        order_uuid: submission_uuid,
         id: item?.id,
         sku: parseInt(item?.sku),
         title: item?.title,
