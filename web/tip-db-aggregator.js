@@ -75,13 +75,13 @@ const dataAggregate = async (submissionUuid) => {
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    // identityCheck(data_medical_array[0], data_order);
+    identityCheck(data_medical_array[0], data_order);
 
-    for (const [index, item] of data_orders_items.entries()) {
-      const item_uuid = item._submission_uuid;
-      console.log(`##UUIDs: ${index}, ${item_uuid}, ${submissionUuid}`);
-      submitConsultancy(index, item_uuid, submissionUuid);
-    }
+    // for (const [index, item] of data_orders_items.entries()) {
+    //   const item_uuid = item._submission_uuid;
+    //   console.log(`##UUIDs: ${index}, ${item_uuid}, ${submissionUuid}`);
+    //   submitConsultancy(index, item_uuid, submissionUuid);
+    // }
   } else {
     console.log("## There is error in Payload!");
   }
