@@ -47,7 +47,7 @@ const placeOrder = async (submissionUuid) => {
       treatment: parseInt(item?._treatment_id),
       condition: parseInt(item?._condition_id),
       // consultation: "LUUD-C" + item?._submission_uuid,
-      consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${order_uuid}`,
+      consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`,
     };
 
     return newItem;
