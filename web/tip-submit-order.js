@@ -40,14 +40,14 @@ const placeOrder = async (submissionUuid) => {
   const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
   const line_items = data_order?.items;
 
-  const items = line_items.map((item) => {
+  const items = line_items.map((item, index) => {
     const newItem = {
       quantity: item?.quantity,
       total: item?.total,
       treatment: parseInt(item?._treatment_id),
       condition: parseInt(item?._condition_id),
       // consultation: "LUUD-C" + item?._submission_uuid,
-      consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${order_uuid}`
+      consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${order_uuid}`,
     };
 
     return newItem;
