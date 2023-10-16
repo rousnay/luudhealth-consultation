@@ -72,8 +72,8 @@ const placeOrderNonPres = async (submissionUuid) => {
 
     items: [
       {
-        treatment: 6721,
-        quantity: data_order?.line_items[0]?.quantity,
+        treatment: data_order?.items[0]?.sku,
+        quantity: data_order?.items[0]?.quantity,
         total: data_order?.total_price,
         // consultation: "IPS-C" + lineItemsUuid,
       },
