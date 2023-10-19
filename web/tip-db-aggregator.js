@@ -3,6 +3,8 @@ import { DB } from "./db.js";
 
 import { identityCheck } from "./tip-submit-identity.js";
 import { submitConsultancy } from "./tip-submit-consultation.js";
+import { placeOrder } from "./tip-submit-order.js";
+// import { placeOrderNonPres } from "./tip-submit-order-nonpres.js";
 
 async function findDocumentByUuid(DBCollection, uuid) {
   let collection;
@@ -29,9 +31,9 @@ async function findDocumentByUuid(DBCollection, uuid) {
   }
 }
 
-const dataAggregate = async (submissionUuid) => {
+const dataAggregate = async (submission_uuid) => {
   console.log("## DB: data_aggregated");
-  const data_order = await findDocumentByUuid(4, submissionUuid);
+  const data_order = await findDocumentByUuid(4, submission_uuid);
 
   let data_orders_items = data_order?.items;
 
@@ -57,14 +59,18 @@ const dataAggregate = async (submissionUuid) => {
   );
   console.log("## data_medical_array", JSON.stringify(data_medical_array));
 
-  if (submissionUuid) {
+  if (submission_uuid) {
     const data_aggregated = DB.collection("data_aggregated");
 
     const result = await data_aggregated.insertOne({
       created_at: data_order?.created_at,
-      submission_uuid: submissionUuid,
+      submission_uuid: submission_uuid,
       order_number: data_order?.order_number,
+      order_type: data_order?.order_type,
+      total_items: data_order?.total_items,
+      order_id: data_order?.order_id,
       customer_name: data_order?.customer_name,
+      customer_id: data_order?.customer_id,
       total_price: data_order?.total_price,
       data_condition_array: data_condition_array,
       data_consultancy_array: data_consultancy_array,
@@ -75,13 +81,22 @@ const dataAggregate = async (submissionUuid) => {
     console.log(
       `## A document was inserted with the _id: ${result.insertedId}`
     );
-    identityCheck(data_medical_array[0], data_order);
 
-    // for (const [index, item] of data_orders_items.entries()) {
-    //   const item_uuid = item._submission_uuid;
-    //   console.log(`##UUIDs: ${index}, ${item_uuid}, ${submissionUuid}`);
-    //   submitConsultancy(index, item_uuid, submissionUuid);
-    // }
+    // ********* NEED TO UPDATE *********
+    const first_line_item = data_order?.items[0];
+    const order_type = data_order?.order_type;
+    const treatment_type = first_line_item._treatment_type;
+    const item_uuid = first_line_item._submission_uuid;
+
+    if (order_type === "Single" && treatment_type === "non_pharmacy") {
+      placeOrder(submission_uuid);
+    } else if (order_type === "Single" && treatment_type === "otc_medicine") {
+      submitConsultancy(0, item_uuid, submission_uuid);
+    } else {
+      identityCheck(data_medical_array[0], data_order);
+    }
+
+    // ********* NEED TO UPDATE *********
   } else {
     console.log("## There is error in Payload!");
   }

@@ -33,7 +33,7 @@ const placeOrderNonPres = async (submissionUuid) => {
 
   const order_data = {
     uuid: "LUUD-ORD-" + submissionUuid,
-    brand: "Luud Heath",
+    // brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
       reference: 43,
@@ -43,9 +43,8 @@ const placeOrderNonPres = async (submissionUuid) => {
       lastname: data_order?.customer?.lastname,
       // phone: data_medical?.medical?.phone,
       email: data_order?.customer?.email,
-      notes: "Example of a note must be max 24 character",
+      notes: "",
       address: data_order?.shipping_address,
-
       post_through_letterbox: false,
     },
 

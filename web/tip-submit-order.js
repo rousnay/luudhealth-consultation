@@ -37,7 +37,6 @@ async function findDocumentByUuid(DBCollection, uuid) {
 const placeOrder = async (submissionUuid) => {
   const data_medical = await findDocumentByUuid(2, submissionUuid);
   const data_order = await findDocumentByUuid(3, submissionUuid);
-  const salutation = data_medical?.medical?.gender === "female" ? "Ms" : "Mr";
   const line_items = data_order?.items;
 
   const items = line_items.map((item, index) => {
@@ -45,7 +44,7 @@ const placeOrder = async (submissionUuid) => {
       quantity: item?.quantity,
       total: Math.round(item?.total),
       treatment: parseInt(item?.sku),
-      condition: parseInt(item?._condition_id),
+      // condition: parseInt(item?._condition_id),
       // consultation: "LUUD-C" + item?._submission_uuid,
       consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`,
     };
@@ -55,46 +54,53 @@ const placeOrder = async (submissionUuid) => {
 
   const order_data = {
     uuid: "LUUD-ORD-" + submissionUuid,
-    brand: "Luud Heath",
+    // brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
       reference: 43,
-      salutation: salutation,
       firstname: data_order?.customer?.firstname,
-      // middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
-      phone: data_medical?.medical?.phone,
       email: data_order?.customer?.email,
-      notes: "Example of a note must be max 24 character",
+      notes: "",
       address: data_order?.shipping_address,
-
       post_through_letterbox: false,
     },
 
     billing: {
-      salutation: salutation,
       firstname: data_order?.customer?.firstname,
-      // middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
       address: data_order?.billing_address,
     },
 
     patient: {
       uuid: "LUUD-PAT-" + submissionUuid,
-      salutation: salutation,
       firstname: data_order?.customer?.firstname,
-      // middlename: data_order?.customer?.firstname,
       lastname: data_order?.customer?.lastname,
-      phone: data_medical?.medical?.phone,
       email: data_order?.customer?.email,
-      gender: data_medical?.medical?.gender,
-      dob: data_medical?.medical?.dob,
       address: data_order?.billing_address,
       special_dispensing_instructions: "Example",
     },
 
     items: items,
   };
+
+  // manipulate user data based on non-tip and tip products
+  const defaultMedicalData = data_medical?.medical ?? {
+    phone: "6721",
+    gender: "male",
+    dob: "2001-01-01",
+  };
+
+  const { phone, gender, dob } = defaultMedicalData;
+  const salutation = gender === "female" ? "Ms" : "Mr";
+
+  order_data.delivery.salutation = salutation;
+  order_data.delivery.phone = phone;
+  order_data.billing.salutation = salutation;
+  order_data.patient.salutation = salutation;
+  order_data.patient.gender = gender;
+  order_data.patient.dob = dob;
+  order_data.patient.phone = phone;
 
   // console.log(JSON.stringify(order_data));
   const storeOrderDataToDB = async (orderPayload_data, response_data) => {

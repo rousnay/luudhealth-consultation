@@ -19,7 +19,7 @@ import {
   consultancySubmit,
   medicalSubmit,
 } from "./tip-db-forms.js";
-import { consultancyHandler } from "./tip-notification-handlers.js";
+import { consultancyHandler } from "./tip-data-handlers.js";
 // import { submitConsultancy } from "./tip-submit-consultation.js";
 import { placeOrder } from "./tip-submit-order.js";
 import { orderFulfilled } from "./tip-process-fulfillment.js";

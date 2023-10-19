@@ -1,6 +1,6 @@
 //@ts-check
 import { DeliveryMethod } from "@shopify/shopify-api";
-import { OrderSubmit } from "./tip-db-checkout.js";
+import { processCheckout } from "./tip-db-checkout.js";
 // import { OrderNonPresSubmit } from "./tip-db-checkout-nonpres.js";
 
 const receivedWebhooks = {};
@@ -195,7 +195,7 @@ export default {
       console.log("## WEBHOOK: Has submission_uuid? :", submission_uuid);
 
       if (submission_uuid) {
-        OrderSubmit(ordersPaid, submission_uuid);
+        processCheckout(ordersPaid, submission_uuid);
       } else {
         console.log("## NON-TIP Products");
       }
