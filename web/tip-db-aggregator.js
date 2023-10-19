@@ -72,13 +72,25 @@ const dataAggregate = async (submission_uuid) => {
     }
   }
 
+  // Get the count of od_medicine
+  const filteredOrderObjects = data_orders_items.filter(
+    (obj) => obj._treatment_type === "od_medicine"
+  );
+  const approval_required_item_count = filteredOrderObjects.length;
+
   //Inserting patient info object into data_order Object
   data_order.patient_info = patient_info;
+  data_order.approval_required_item_count = approval_required_item_count;
 
   //Inserting patient info object into data_order collection in DB
   const order_collection = DB.collection("data_order");
   const filter = { submission_uuid: submission_uuid };
-  const update = { $set: { patient_info: patient_info } };
+  const update = {
+    $set: {
+      patient_info: patient_info,
+      approval_required_item_count: approval_required_item_count,
+    },
+  };
   const orderUpdateResult = await order_collection.updateOne(filter, update);
   console.log(
     `Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s)`
@@ -97,6 +109,7 @@ const dataAggregate = async (submission_uuid) => {
     customer_name: data_order?.customer_name,
     customer_id: data_order?.customer_id,
     patient_info: patient_info,
+    approval_required_item_count: approval_required_item_count,
     data_condition_array: data_condition_array,
     data_consultancy_array: data_consultancy_array,
     data_medical_array: data_medical_array,

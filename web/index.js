@@ -19,7 +19,10 @@ import {
   consultancySubmit,
   medicalSubmit,
 } from "./tip-db-forms.js";
-import { consultancyHandler } from "./tip-data-handlers.js";
+import {
+  consultancySubmitter,
+  consultancyApprovalProcessor,
+} from "./tip-process-consultation.js";
 // import { submitConsultancy } from "./tip-submit-consultation.js";
 import { placeOrder } from "./tip-submit-order.js";
 import { orderFulfilled } from "./tip-process-fulfillment.js";
@@ -132,7 +135,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   switch (payload?.type) {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
-      responseMessage = await consultancyHandler(uuid);
+      responseMessage = await consultancySubmitter(uuid);
       await identityNotification(payload);
       break;
 
@@ -148,7 +151,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
         .split("-")
         .slice(8)
         .join("-");
-      responseMessage = await placeOrder(con_uuid);
+      responseMessage = await consultancyApprovalProcessor(con_uuid);
       await consultationNotification(payload);
       break;
 

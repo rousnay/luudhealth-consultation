@@ -45,6 +45,7 @@ const processCheckout = async (webhookResponse, submission_uuid) => {
     customer_id: orderCustomer?.id,
     order_id: order_id,
     total_price: parseInt(total_price),
+    approved_item_count: 0,
     customer: {
       firstname: orderCustomer?.first_name,
       middlename: orderCustomer?.middle_name || "",
