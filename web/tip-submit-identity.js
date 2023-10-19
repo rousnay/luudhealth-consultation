@@ -14,19 +14,12 @@ const tip_header = {
   "Content-Type": "application/json",
 };
 
-function identityCheck(data_medical, data_order) {
+function identityCheck(identity_info) {
   const identity_data = {
     check_type: "GENERIC",
-    patient: {
-      uuid: "LUUD-PAT-" + data_order?.submission_uuid,
-      firstname: data_order?.customer?.firstname,
-      //middlename: data_order?.customer?.middlename,
-      lastname: data_order?.customer?.lastname,
-      dob: data_medical?.medical?.dob,
-      gender: data_medical?.medical?.gender,
-      address: data_order?.billing_address,
-    },
+    patient: identity_info,
   };
+
   const storeIdentityDataToDB = async (
     identityCheckPayload_data,
     response_data

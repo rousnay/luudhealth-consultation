@@ -35,7 +35,7 @@ async function findDocumentByUuid(DBCollection, uuid) {
 }
 // data_consultancy, data_medical, data_order
 const placeOrder = async (submissionUuid) => {
-  const data_medical = await findDocumentByUuid(2, submissionUuid);
+  // const data_medical = await findDocumentByUuid(2, submissionUuid);
   const data_order = await findDocumentByUuid(3, submissionUuid);
   const line_items = data_order?.items;
 
@@ -85,7 +85,7 @@ const placeOrder = async (submissionUuid) => {
   };
 
   // manipulate user data based on non-tip and tip products
-  const defaultMedicalData = data_medical?.medical ?? {
+  const defaultMedicalData = data_order?.patient_info ?? {
     phone: "6721",
     gender: "male",
     dob: "2001-01-01",
