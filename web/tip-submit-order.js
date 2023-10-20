@@ -47,7 +47,7 @@ const placeOrder = async (submissionUuid) => {
     };
 
     if (item?._treatment_type !== "non_pharmacy") {
-      newItem.consultation = `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`,
+      newItem.consultation = `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`;
     }
 
     return newItem;
