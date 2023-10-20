@@ -23,8 +23,6 @@ import {
   consultancySubmitter,
   consultancyApprovalProcessor,
 } from "./tip-process-consultation.js";
-// import { submitConsultancy } from "./tip-submit-consultation.js";
-import { placeOrder } from "./tip-submit-order.js";
 import { orderFulfilled } from "./tip-process-fulfillment.js";
 import {
   identityNotification,

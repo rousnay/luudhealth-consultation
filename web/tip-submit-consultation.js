@@ -126,15 +126,15 @@ const submitConsultancy = async (index, item_uuid, order_uuid) => {
       );
 
       // ********* NEED TO UPDATE *********
-      const order_type = data_order?.order_type;
+      // const order_type = data_order?.order_type;
 
-      if (order_type === "Single" && treatment_type === "otc_medicine") {
-        const responseMessage = await placeOrder(order_uuid);
-        console.log(
-          "OTC Order submission response:",
-          JSON.stringify(responseMessage)
-        );
-      }
+      // if (order_type === "Single" && treatment_type === "otc_medicine") {
+      //   const responseMessage = await placeOrder(order_uuid);
+      //   console.log(
+      //     "OTC Order submission response:",
+      //     JSON.stringify(responseMessage)
+      //   );
+      // }
       // ********* NEED TO UPDATE *********
 
       return "consultation has been created!";
