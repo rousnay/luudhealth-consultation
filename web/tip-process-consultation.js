@@ -4,6 +4,7 @@ import { submitConsultancy } from "./tip-submit-consultation.js";
 import { placeOrder } from "./tip-submit-order.js";
 
 const consultancySubmitter = async (submission_uuid) => {
+  console.log(`## UUID from Notification: ${submission_uuid}`);
   let collection = DB.collection("data_order");
   const data_order = await collection.findOne({
     submission_uuid: submission_uuid,
@@ -28,6 +29,7 @@ const consultancySubmitter = async (submission_uuid) => {
 };
 
 const consultancyApprovalProcessor = async (submission_uuid) => {
+  console.log(`## UUID from Notification: ${submission_uuid}`);
   const submitted_order_collection = DB.collection("submitted_order");
   const submitted_order = await submitted_order_collection.findOne({
     submission_uuid: submission_uuid,
