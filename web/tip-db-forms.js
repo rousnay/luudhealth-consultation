@@ -48,7 +48,7 @@ const consultancySubmit = async (formConsultancyResponse) => {
         `## A document was inserted with the _id: ${result.insertedId}`
       );
     } else {
-      const result = await data_consultancy.updateOne(
+      const orderUpdateResult = await data_consultancy.updateOne(
         { submission_uuid: formConsultancyResponse?.submission_uuid },
         {
           $push: {
@@ -56,7 +56,9 @@ const consultancySubmit = async (formConsultancyResponse) => {
           },
         }
       );
-      console.log(`## A document was PUSHED to the _id: ${result.insertedId}`);
+      console.log(
+        `## Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s)`
+      );
     }
   } else {
     console.log("## There is error in Payload!");
