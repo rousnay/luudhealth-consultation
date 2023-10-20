@@ -129,18 +129,19 @@ const dataAggregate = async (submission_uuid) => {
   };
 
   // Process the flow to relevant destination
-  const first_line_item = data_order?.items[0];
-  const order_type = data_order?.order_type;
-  const treatment_type = first_line_item._treatment_type;
-  const item_uuid = first_line_item._submission_uuid;
+  // const first_line_item = data_order?.items[0];
+  // const order_type = data_order?.order_type;
+  // const treatment_type = first_line_item._treatment_type;
 
-  if (order_type === "Single" || approval_required_item_count === 0) {
-    if (treatment_type === "non_pharmacy") {
-      placeOrder(submission_uuid);
-    } else if (treatment_type === "otc_medicine") {
-      submitConsultancy(0, item_uuid, submission_uuid);
-    } else {
-      identityCheck(identity_info);
+  if (approval_required_item_count === 0) {
+    for (const [index, item] of data_orders_items.entries()) {
+      const item_uuid = item._submission_uuid;
+      const treatment_type = item._treatment_type;
+      if (treatment_type === "non_pharmacy") {
+        placeOrder(submission_uuid);
+      } else if (treatment_type === "otc_medicine") {
+        submitConsultancy(index, item_uuid, submission_uuid);
+      }
     }
   } else {
     identityCheck(identity_info);
