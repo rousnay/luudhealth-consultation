@@ -104,8 +104,6 @@ const placeOrder = async (submissionUuid) => {
 
   // console.log(JSON.stringify(order_data));
   const storeOrderDataToDB = async (orderPayload_data, response_data) => {
-    console.log("## Form: Medical -> Submit");
-    // const order_id = webhookResponse?.id;
     if (orderPayload_data) {
       const submitted_order = DB.collection("submitted_order");
       const result = await submitted_order.insertOne({

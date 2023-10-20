@@ -68,8 +68,6 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
       fulfillmentPayload_data,
       response_data
     ) => {
-      console.log("## Form: Medical -> Submit");
-      // const order_id = webhookResponse?.id;
       if (fulfillmentPayload_data) {
         const submitted_order = DB.collection("submitted_fulfillment");
         const result = await submitted_order.insertOne({

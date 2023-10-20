@@ -196,15 +196,13 @@ export default {
 
       if (submission_uuid) {
         processCheckout(ordersPaid, submission_uuid);
+        console.log(
+          "## WEBHOOK: Paid order Payload:",
+          JSON.stringify(ordersPaid)
+        );
       } else {
         console.log("## NON-TIP Products");
       }
-      console.log(
-        "## WEBHOOK: Paid order Payload:",
-        JSON.stringify(ordersPaid)
-      );
-      // console.log("## IDs of all received webhooks:");
-      // console.log(receivedWebhooks);
     },
   },
 };
