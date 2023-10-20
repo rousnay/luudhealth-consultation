@@ -74,7 +74,8 @@ const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
         const submitted_order = DB.collection("submitted_fulfillment");
         const result = await submitted_order.insertOne({
           submitted_at: new Date().toJSON(),
-          order_uuid: fulfillmentPayload_data?.uuid,
+          order_uuid: lineItemsUuid,
+          order_id: order_id,
           order_data: fulfillmentPayload_data,
           response_data: response_data,
         });
