@@ -33,9 +33,9 @@ async function findDocumentByUuid(DBCollection, uuid) {
     return null;
   }
 }
-// data_consultancy, data_medical, data_order
+
+// data_order
 const placeOrder = async (submissionUuid) => {
-  // const data_medical = await findDocumentByUuid(2, submissionUuid);
   const data_order = await findDocumentByUuid(3, submissionUuid);
   const line_items = data_order?.items;
 
@@ -44,17 +44,17 @@ const placeOrder = async (submissionUuid) => {
       quantity: item?.quantity,
       total: Math.round(item?.total),
       treatment: parseInt(item?.sku),
-      // condition: parseInt(item?._condition_id),
-      // consultation: "LUUD-C" + item?._submission_uuid,
-      consultation: `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`,
     };
+
+    if (item?._treatment_type !== "non_pharmacy") {
+      newItem.consultation = `LUUD-CON-${index}-${item?._submission_uuid}-${submissionUuid}`,
+    }
 
     return newItem;
   });
 
   const order_data = {
     uuid: "LUUD-ORD-" + submissionUuid,
-    // brand: "Luud Heath",
     partner_references: [data_order?.order_number],
     delivery: {
       reference: 43,
