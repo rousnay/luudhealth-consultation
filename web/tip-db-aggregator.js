@@ -128,20 +128,23 @@ const dataAggregate = async (submission_uuid) => {
     dob: patient_info?.dob,
   };
 
-  // ********* NEED TO UPDATE *********
+  // Process the flow to relevant destination
   const first_line_item = data_order?.items[0];
   const order_type = data_order?.order_type;
   const treatment_type = first_line_item._treatment_type;
   const item_uuid = first_line_item._submission_uuid;
 
-  if (order_type === "Single" && treatment_type === "non_pharmacy") {
-    placeOrder(submission_uuid);
-  } else if (order_type === "Single" && treatment_type === "otc_medicine") {
-    submitConsultancy(0, item_uuid, submission_uuid);
+  if (order_type === "Single" || approval_required_item_count === 0) {
+    if (treatment_type === "non_pharmacy") {
+      placeOrder(submission_uuid);
+    } else if (treatment_type === "otc_medicine") {
+      submitConsultancy(0, item_uuid, submission_uuid);
+    } else {
+      identityCheck(identity_info);
+    }
   } else {
     identityCheck(identity_info);
   }
-  // ********* NEED TO UPDATE *********
 };
 
 export { dataAggregate };
