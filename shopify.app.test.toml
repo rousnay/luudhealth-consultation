@@ -2,7 +2,7 @@
 
 name = "Luudhealth Consultation"
 client_id = "b1836b6fc7d2c08fd814f99a16984825"
-application_url = "https://lg-munich-tones-customized.trycloudflare.com"
+application_url = "https://slides-personalized-tradition-fruit.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,16 +12,16 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://lg-munich-tones-customized.trycloudflare.com/auth/callback",
-  "https://lg-munich-tones-customized.trycloudflare.com/auth/shopify/callback",
-  "https://lg-munich-tones-customized.trycloudflare.com/api/auth/callback"
+  "https://slides-personalized-tradition-fruit.trycloudflare.com/auth/callback",
+  "https://slides-personalized-tradition-fruit.trycloudflare.com/auth/shopify/callback",
+  "https://slides-personalized-tradition-fruit.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2023-01"
 
 [app_proxy]
-url = "https://lg-munich-tones-customized.trycloudflare.com"
+url = "https://slides-personalized-tradition-fruit.trycloudflare.com"
 subpath = "tip"
 prefix = "apps"
 

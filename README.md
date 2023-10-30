@@ -1,4 +1,4 @@
-# Shopify App For Luudhealth built on top of Node and React
+# Shopify App for Luudhealth built on top of Node and React
 
 Follow the for building a [Shopify app](https://shopify.dev/apps/getting-started) using Node and React. It contains the basics for building a Shopify app.
 
