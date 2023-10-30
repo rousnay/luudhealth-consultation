@@ -41,3 +41,6 @@ let created_response = {
   <label for="prop1">Property 1</label>
   <input id="prop1" type="text" name="properties[_prop1]">
  </p>
+
+
+//
