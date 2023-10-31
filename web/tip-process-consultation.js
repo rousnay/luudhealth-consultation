@@ -50,16 +50,21 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
     `Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s)`
   );
 
-  const data_order = await order_collection.findOne({
-    submission_uuid: submission_uuid,
-  });
-
-  if (
-    data_order?.approval_required_item_count === data_order?.approved_item_count
-  ) {
-    placeOrder(submission_uuid);
+  if (orderUpdateResult.matchedCount === 0) {
+    return "UUID is not found";
   } else {
-    console.log("## Some Items are not approved yet");
+    const data_order = await order_collection.findOne({
+      submission_uuid: submission_uuid,
+    });
+
+    if (
+      data_order?.approval_required_item_count ===
+      data_order?.approved_item_count
+    ) {
+      placeOrder(submission_uuid);
+    } else {
+      console.log("## Some Items are not approved yet");
+    }
   }
   return "All consultancy approved";
 };
