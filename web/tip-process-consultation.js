@@ -42,11 +42,13 @@ const consultancySubmitter = async (submission_uuid) => {
   };
 };
 
-const consultancyApprovalProcessor = async (submission_uuid) => {
-  console.log(`## UUID from Notification: ${submission_uuid}`);
+const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
+  console.log(
+    `##Con index and ord UUID from notification: ${con_index}, ${ord_uuid}`
+  );
   const submitted_order_collection = DB.collection("submitted_order");
   const submitted_order = await submitted_order_collection.findOne({
-    submission_uuid: submission_uuid,
+    order_uuid: "LUUD-ORD-" + ord_uuid,
   });
   if (submitted_order) {
     console.log("## Order has already been submitted");
@@ -56,37 +58,39 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
   const order_collection = DB.collection("data_order");
 
   //Increase approved_item_count to data_order object collection in DB
-  const filter = { submission_uuid: submission_uuid };
-  const update = { $inc: { approved_item_count: 1 } };
-  const orderUpdateResult = await order_collection.updateOne(filter, update);
-  console.log(
-    `Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s)`
-  );
 
-  if (orderUpdateResult.matchedCount === 0) {
-    return {
-      statusCode: 400,
-      statusText: "Please try with a valid UUID",
-    };
+  if (order_collection?.items[con_index]?._treatment_type === "od_medicine") {
+    const filter = { submission_uuid: ord_uuid };
+    const update = { $inc: { approved_item_count: 1 } };
+    const orderUpdateResult = await order_collection.updateOne(filter, update);
+    console.log(
+      `Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s)`
+    );
+
+    if (orderUpdateResult.matchedCount === 0) {
+      return {
+        statusCode: 400,
+        statusText: "Please try with a valid UUID",
+      };
+    }
   }
 
   const data_order = await order_collection.findOne({
-    submission_uuid: submission_uuid,
+    submission_uuid: ord_uuid,
   });
 
   if (data_order?.approval_required_item_count == 0) {
     return {
       statusCode: 200,
       statusText:
-        "Consultancy has been approved, but order should have been placed already",
+        "Consultancy has been approved, but the order should have been placed already",
     };
   }
 
   if (
-    data_order?.approval_required_item_count != 0 ||
     data_order?.approval_required_item_count === data_order?.approved_item_count
   ) {
-    placeOrder(submission_uuid);
+    placeOrder(ord_uuid);
   } else {
     console.log("## Some Items are not approved yet");
   }

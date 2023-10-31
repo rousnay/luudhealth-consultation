@@ -148,11 +148,11 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
 
     case "CONSULTATION_APPROVED":
       console.log("### CONSULTATION_APPROVED");
-      const con_uuid = payload?.data?.consultation?.uuid
-        .split("-")
-        .slice(8)
-        .join("-");
-      responseObj = await consultancyApprovalProcessor(con_uuid);
+      const full_uuid = payload?.data?.consultation?.uuid;
+      const con_index = parseInt(full_uuid.split("-")[2]);
+      const ord_uuid = full_uuid.split("-").slice(8).join("-");
+
+      responseObj = await consultancyApprovalProcessor(con_index, ord_uuid);
       await consultationNotification(payload);
       break;
 
