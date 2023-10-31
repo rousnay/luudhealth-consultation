@@ -74,7 +74,16 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
     submission_uuid: submission_uuid,
   });
 
-  if ( data_order?.approval_required_item_count === 0 ||
+  if (data_order?.approval_required_item_count == 0) {
+    return {
+      statusCode: 200,
+      statusText:
+        "Consultancy has been approved, but order should have been placed already",
+    };
+  }
+
+  if (
+    data_order?.approval_required_item_count != 0 ||
     data_order?.approval_required_item_count === data_order?.approved_item_count
   ) {
     placeOrder(submission_uuid);
