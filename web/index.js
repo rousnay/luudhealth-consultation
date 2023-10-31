@@ -180,7 +180,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   }
   // console.log("### Notification Received Body:", JSON.stringify(payload));
   res.json({ message: responseObj.statusText });
-  res.status(responseObj.statusCode).end();
+  res.status(404).end();
 });
 
 //Consultations: Create Configuration
