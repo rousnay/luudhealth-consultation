@@ -128,22 +128,21 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
   const uuid = payload?.data?.uuid?.substring(9);
-  let responseStatus = 200;
-  let responseMessage = "Notification has been received from App";
+
+  let responseObj = {
+    statusCode: 200,
+    statusText: "Notification has been received from App",
+  };
 
   switch (payload?.type) {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
       responseObj = await consultancySubmitter(uuid);
-      responseStatus = responseObj.statusCode;
-      responseMessage = responseObj.statusText;
-
       await identityNotification(payload);
       break;
 
     case "USER_ID_FAIL":
       console.log("### USER_ID_FAIL");
-      responseMessage = "Identity Failed";
       await identityNotification(payload);
       break;
 
@@ -154,27 +153,22 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
         .slice(8)
         .join("-");
       responseObj = await consultancyApprovalProcessor(con_uuid);
-      responseStatus = responseObj.statusCode;
-      responseMessage = responseObj.statusText;
-
       await consultationNotification(payload);
       break;
 
     case "CONSULTATION_DECLINED":
       console.log("### CONSULTATION_DECLINED");
-      responseMessage = "Consultation Declined";
       await consultationNotification(payload);
       break;
 
     case "ORDER_FULFILLED":
       console.log("### ORDER_FULFILLED");
-      responseMessage = await orderFulfilled(uuid, payload?.data);
+      responseObj.statusText = await orderFulfilled(uuid, payload?.data);
       await orderNotification(payload);
       break;
 
     case "ORDER_CANCELLED":
       console.log("### ORDER_CANCELLED");
-      responseMessage = "Order Cancelled";
       await orderNotification(payload);
       break;
 
@@ -185,8 +179,8 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
     }
   }
   // console.log("### Notification Received Body:", JSON.stringify(payload));
-  res.json({ message: responseMessage });
-  res.status(responseStatus).end();
+  res.json({ message: responseObj.statusText });
+  res.status(responseObj.statusCode).end();
 });
 
 //Consultations: Create Configuration
