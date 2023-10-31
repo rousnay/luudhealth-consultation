@@ -14,7 +14,7 @@ const consultancySubmitter = async (submission_uuid) => {
 
   if (!data_orders_items) {
     return {
-      statusCode: 404,
+      statusCode: 400,
       statusText: "Please try with a valid UUID",
     };
   }
@@ -63,7 +63,7 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
 
   if (orderUpdateResult.matchedCount === 0) {
     return {
-      statusCode: 404,
+      statusCode: 400,
       statusText: "Please try with a valid UUID",
     };
   }
