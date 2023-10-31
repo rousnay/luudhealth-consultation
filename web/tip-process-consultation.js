@@ -19,7 +19,7 @@ const consultancySubmitter = async (submission_uuid) => {
       const result = await submitConsultancy(index, item_uuid, submission_uuid);
       console.log("%%% submitConsultancy response: ", result);
       if (
-        data_orders_items.length === index + 1 ||
+        data_orders_items.length === index + 1 &&
         data_order?.approval_required_item_count === 0
       ) {
         placeOrder(submission_uuid);
