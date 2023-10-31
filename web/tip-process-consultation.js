@@ -22,15 +22,17 @@ const consultancySubmitter = async (submission_uuid) => {
   for (const [index, item] of data_orders_items.entries()) {
     const item_uuid = item._submission_uuid;
     console.log(`##UUIDs: ${index}, ${item_uuid}, ${submission_uuid}`);
+
     if (item._treatment_type !== "non_pharmacy") {
       const result = await submitConsultancy(index, item_uuid, submission_uuid);
       console.log("%%% submitConsultancy response: ", result);
-      if (
-        data_orders_items.length === index + 1 &&
-        data_order?.approval_required_item_count === 0
-      ) {
-        placeOrder(submission_uuid);
-      }
+    }
+
+    if (
+      data_orders_items.length === index + 1 &&
+      data_order?.approval_required_item_count === 0
+    ) {
+      placeOrder(submission_uuid);
     }
   }
 
