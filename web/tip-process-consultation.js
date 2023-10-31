@@ -74,7 +74,7 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
     submission_uuid: submission_uuid,
   });
 
-  if (
+  if ( data_order?.approval_required_item_count === 0 ||
     data_order?.approval_required_item_count === data_order?.approved_item_count
   ) {
     placeOrder(submission_uuid);
