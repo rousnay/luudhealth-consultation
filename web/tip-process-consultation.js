@@ -52,7 +52,11 @@ const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
   });
   if (submitted_order) {
     console.log("## Order has already been submitted");
-    return;
+    return {
+      statusCode: 200,
+      statusText:
+        "Consultancy has been approved, but the order has been placed already",
+    };
   }
 
   const order_collection = DB.collection("data_order");
