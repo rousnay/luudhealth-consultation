@@ -13,7 +13,10 @@ const consultancySubmitter = async (submission_uuid) => {
   let data_orders_items = data_order?.items;
 
   if (!data_orders_items) {
-    return "Please try with a valid UUID";
+    return {
+      statusCode: 404,
+      statusText: "Please try with a valid UUID",
+    };
   }
 
   for (const [index, item] of data_orders_items.entries()) {
@@ -31,7 +34,10 @@ const consultancySubmitter = async (submission_uuid) => {
     }
   }
 
-  return "Identity verified";
+  return {
+    statusCode: 200,
+    statusText: "Identity verified",
+  };
 };
 
 const consultancyApprovalProcessor = async (submission_uuid) => {
@@ -56,7 +62,10 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
   );
 
   if (orderUpdateResult.matchedCount === 0) {
-    return "Please try with a valid UUID";
+    return {
+      statusCode: 404,
+      statusText: "Please try with a valid UUID",
+    };
   }
 
   const data_order = await order_collection.findOne({
@@ -71,7 +80,10 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
     console.log("## Some Items are not approved yet");
   }
 
-  return "Consultancy has been approved";
+  return {
+    statusCode: 200,
+    statusText: "Consultancy has been approved",
+  };
 };
 
 export { consultancySubmitter, consultancyApprovalProcessor };

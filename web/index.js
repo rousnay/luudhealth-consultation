@@ -128,12 +128,16 @@ app.post("/proxy_route/medical/submit", async (req, res) => {
 app.post("/proxy_route/notifications_receiver", async (req, res) => {
   const payload = req.body;
   const uuid = payload?.data?.uuid?.substring(9);
+  let responseStatus = 200;
   let responseMessage = "Notification has been received from App";
 
   switch (payload?.type) {
     case "USER_ID_PASS":
       console.log("### USER_ID_PASS");
-      responseMessage = await consultancySubmitter(uuid);
+      responseObj = await consultancySubmitter(uuid);
+      responseStatus = responseObj.statusCode;
+      responseMessage = responseObj.statusText;
+
       await identityNotification(payload);
       break;
 
@@ -149,7 +153,10 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
         .split("-")
         .slice(8)
         .join("-");
-      responseMessage = await consultancyApprovalProcessor(con_uuid);
+      responseObj = await consultancyApprovalProcessor(con_uuid);
+      responseStatus = responseObj.statusCode;
+      responseMessage = responseObj.statusText;
+
       await consultationNotification(payload);
       break;
 
@@ -179,7 +186,7 @@ app.post("/proxy_route/notifications_receiver", async (req, res) => {
   }
   // console.log("### Notification Received Body:", JSON.stringify(payload));
   res.json({ message: responseMessage });
-  res.status(200).end();
+  res.status(responseStatus).end();
 });
 
 //Consultations: Create Configuration
