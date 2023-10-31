@@ -1,0 +1,5 @@
+[shopify-api/WARNING] API Deprecation Notice 10/31/2023, 2:02:45 PM : {"message":"https://shopify.dev/api/usage/versioning#deprecation-practices","path":"https://iplaysafe-consultancy-app-store.myshopify.com/admin/api/2023-01/graphql.json","body":"{\n  webhookSubscriptions(\n    first: 250,\n    after: null,\n  ) {\n    edges {\n      node {\n        id..."}  -  Stack Trace: Error
+at NewHttpClient.<anonymous> (/app/node_modules/@shopify/shopify-api/lib/clients/http_client/http_client.js:267:33)
+at step (/app/node_modules/tslib/tslib.js:193:27)
+at Object.next (/app/node_modules/tslib/tslib.js:174:57)
+at fulfilled (/app/node_modules/tslib/tslib.js:164:62)
