@@ -12,6 +12,10 @@ const consultancySubmitter = async (submission_uuid) => {
 
   let data_orders_items = data_order?.items;
 
+  if (!data_orders_items) {
+    return "Please try with a valid UUID";
+  }
+
   for (const [index, item] of data_orders_items.entries()) {
     const item_uuid = item._submission_uuid;
     console.log(`##UUIDs: ${index}, ${item_uuid}, ${submission_uuid}`);
@@ -26,6 +30,7 @@ const consultancySubmitter = async (submission_uuid) => {
       }
     }
   }
+
   return "Identity verified";
 };
 
@@ -51,22 +56,22 @@ const consultancyApprovalProcessor = async (submission_uuid) => {
   );
 
   if (orderUpdateResult.matchedCount === 0) {
-    return "UUID is not found";
-  } else {
-    const data_order = await order_collection.findOne({
-      submission_uuid: submission_uuid,
-    });
-
-    if (
-      data_order?.approval_required_item_count ===
-      data_order?.approved_item_count
-    ) {
-      placeOrder(submission_uuid);
-    } else {
-      console.log("## Some Items are not approved yet");
-    }
+    return "Please try with a valid UUID";
   }
-  return "All consultancy approved";
+
+  const data_order = await order_collection.findOne({
+    submission_uuid: submission_uuid,
+  });
+
+  if (
+    data_order?.approval_required_item_count === data_order?.approved_item_count
+  ) {
+    placeOrder(submission_uuid);
+  } else {
+    console.log("## Some Items are not approved yet");
+  }
+
+  return "Consultancy has been approved";
 };
 
 export { consultancySubmitter, consultancyApprovalProcessor };
