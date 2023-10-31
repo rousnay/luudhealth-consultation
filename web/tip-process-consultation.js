@@ -62,6 +62,7 @@ const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
   const order_collection = DB.collection("data_order");
   const filter = { submission_uuid: ord_uuid };
   const data_order = await order_collection.findOne(filter);
+  let total_approved_item = data_order?.approved_item_count;
 
   //Increase approved_item_count to data_order object collection in DB
   if (data_order?.items[con_index]?._treatment_type === "od_medicine") {
@@ -70,6 +71,8 @@ const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
     console.log(
       `Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s)`
     );
+
+    total_approved_item += 1;
 
     if (orderUpdateResult.matchedCount === 0) {
       return {
@@ -87,9 +90,7 @@ const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
     };
   }
 
-  if (
-    data_order?.approval_required_item_count === data_order?.approved_item_count
-  ) {
+  if (data_order?.approval_required_item_count === total_approved_item) {
     placeOrder(ord_uuid);
   } else {
     console.log("## Some Items are not approved yet");
