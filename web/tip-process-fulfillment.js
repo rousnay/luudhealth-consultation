@@ -26,6 +26,13 @@ async function findDocumentByUuid(uuid) {
 
 const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
   const data_order = await findDocumentByUuid(lineItemsUuid);
+  console.log(data_order);
+
+  // Check if data_order is nullish and return early if it is
+  if (!data_order) {
+    return;
+  }
+
   const order_id = data_order?.order_id;
   const fulfillment_orders_api = `https://${PRD_SHOP}/admin/api/2023-01/orders/${order_id}/fulfillment_orders.json`;
   const fulfillments_api = `https://${PRD_SHOP}/admin/api/2023-01/fulfillments.json`;
