@@ -27,10 +27,9 @@ async function findDocumentByUuid(uuid) {
 const orderFulfilled = async (lineItemsUuid, fulfillment_data) => {
   const data_order = await findDocumentByUuid(lineItemsUuid);
   console.log(data_order);
-
   // Check if data_order is nullish and return early if it is
   if (!data_order) {
-    return;
+    return "Fulfillment order ID has not Found!";
   }
 
   const order_id = data_order?.order_id;
