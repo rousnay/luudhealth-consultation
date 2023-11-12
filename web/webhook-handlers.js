@@ -182,19 +182,30 @@ export default {
       // Add to our queue for processing
       console.log("## +++Orders Paid +++++++++++");
       const ordersPaid = JSON.parse(body);
-      const first_line_item_properties = ordersPaid?.line_items[0]?.properties;
-      let submission_uuid;
 
-      for (const obj of first_line_item_properties) {
-        if (obj.name === "_submission_uuid") {
-          submission_uuid = obj.value;
-          break; // Exit the loop once the value is found
+      const hasSubmissionUuid = ordersPaid?.line_items.some(
+        (item) =>
+          item.properties &&
+          item.properties.some((prop) => prop.name === "_submission_uuid")
+      );
+
+      if (hasSubmissionUuid) {
+        const indexWithSubmissionUuid = ordersPaid?.line_items.findIndex(
+          (item) =>
+            item.properties &&
+            item.properties.some((prop) => prop.name === "_submission_uuid")
+        );
+
+        const first_line_item_properties =
+          ordersPaid?.line_items[indexWithSubmissionUuid]?.properties;
+        let submission_uuid;
+        for (const obj of first_line_item_properties) {
+          if (obj.name === "_submission_uuid") {
+            submission_uuid = obj.value;
+            break; // Exit the loop once the value is found
+          }
         }
-      }
-
-      console.log("## WEBHOOK: Has submission_uuid? :", submission_uuid);
-
-      if (submission_uuid) {
+        console.log("## WEBHOOK: Has submission_uuid? :", submission_uuid);
         processCheckout(ordersPaid, submission_uuid);
         console.log(
           "## WEBHOOK: Paid order Payload:",

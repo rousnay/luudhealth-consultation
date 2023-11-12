@@ -7,7 +7,6 @@ import { dataAggregate } from "./tip-db-aggregator.js";
 //Webhook: User info to DB
 const processCheckout = async (webhookResponse, submission_uuid) => {
   const line_items = webhookResponse?.line_items;
-  const order_type = line_items.length > 1 ? "Multiple" : "Single";
   const data_order = DB.collection("data_order");
   const createdAt = webhookResponse?.created_at;
   const order_number = webhookResponse?.order_number;
@@ -35,11 +34,18 @@ const processCheckout = async (webhookResponse, submission_uuid) => {
     return newItem;
   });
 
+  // Filter the array to include only items with "_submission_uuid"
+  const tip_only_items = items.filter((item) =>
+    Object.keys(item).some((key) => key === "_submission_uuid")
+  );
+
+  const order_type = tip_only_items.length > 1 ? "Multiple" : "Single";
+
   const result = await data_order.insertOne({
     created_at: createdAt,
     submission_uuid: submission_uuid,
     order_type: order_type,
-    total_items: line_items.length,
+    total_items: tip_only_items.length,
     order_number: order_number,
     customer_name: orderCustomer?.first_name + " " + orderCustomer?.last_name,
     customer_id: orderCustomer?.id,
@@ -69,7 +75,7 @@ const processCheckout = async (webhookResponse, submission_uuid) => {
       county: orderShippingAddress?.country,
       postcode: orderShippingAddress?.zip,
     },
-    items: items,
+    items: tip_only_items,
   });
   console.log(`## A document was inserted with the _id: ${result.insertedId}`);
 
@@ -86,7 +92,7 @@ const processCheckout = async (webhookResponse, submission_uuid) => {
 
   async function processLineItems() {
     const uniqueSubmissionUuids = [
-      ...new Set(items.map((item) => item._submission_uuid)),
+      ...new Set(tip_only_items.map((item) => item._submission_uuid)),
     ];
 
     console.log("## Unique submission_uuids:", uniqueSubmissionUuids);
