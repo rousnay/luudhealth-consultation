@@ -78,7 +78,7 @@ const placeOrder = async (submissionUuid) => {
       lastname: data_order?.customer?.lastname,
       email: data_order?.customer?.email,
       address: data_order?.billing_address,
-      special_dispensing_instructions: "Example",
+      special_dispensing_instructions: " ",
     },
 
     items: items,
