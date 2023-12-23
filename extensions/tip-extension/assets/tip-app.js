@@ -177,7 +177,8 @@ ready(function () {
         if (
           question?.question_type === "yes" ||
           question?.question_type === "no" ||
-          question?.question_type === "yes-no"
+          (question?.question_type === "yes-no" &&
+            question?.more_detail_trigger === null)
         ) {
           //create element and add inner html to that element
           let divButtons = document.createElement("div");
@@ -256,6 +257,31 @@ ready(function () {
           }
 
           tipForm.appendChild(section);
+        } else if (
+          question?.question_type === "yes-no" &&
+          question?.more_detail_trigger !== null
+        ) {
+          // Create a text input for additional details
+          let moreDetailInput = document.createElement("input");
+          moreDetailInput.setAttribute("type", "text");
+          moreDetailInput.setAttribute("placeholder", "Enter more details");
+          moreDetailInput.setAttribute("data-input-type", "more-detail");
+          section.appendChild(moreDetailInput);
+
+          // Handle showing/hiding based on user's selection
+          const radioInputs = section.querySelectorAll(
+            `input[name="${question?.question_id}"]`
+          );
+          radioInputs.forEach((input) => {
+            input.addEventListener("change", function () {
+              const isYesSelected = input.value === "1";
+              if (isYesSelected) {
+                moreDetailInput.style.display = "block";
+              } else {
+                moreDetailInput.style.display = "none";
+              }
+            });
+          });
         } else if (question?.question_type === "multiple-selection") {
           //create element and add inner html to that element
           let divCheckboxes = document.createElement("div");
