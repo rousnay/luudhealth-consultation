@@ -1,6 +1,6 @@
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v31");
+  console.log("TIP Theme Ext Back-end loaded: v38");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -203,6 +203,20 @@ ready(function () {
           //   '<span class="required-mark" data-required="true" aria-hidden="true"></span>'
           // );
           // ;input.setAttribute("data-input-type", ${option});
+          divButtons.insertAdjacentHTML(
+            "beforeend",
+            `<label class="form__choice-wrapper">
+            <input data-input-type="yes" type="radio" name="${question?.question_id}" value="1" required>
+            <span>Yes</span>
+          </label>
+          <label class="form__choice-wrapper">
+            <input data-input-type="no" type="radio" name="${question?.question_id}" value="0">
+            <span>No</span>
+          </label>`
+          );
+
+          fieldset.appendChild(legend);
+          fieldset.appendChild(divButtons);
 
           if (
             question?.question_type === "yes-no" &&
@@ -211,6 +225,7 @@ ready(function () {
             // Create a text input for additional details
             let moreDetailInput = document.createElement("input");
             moreDetailInput.setAttribute("type", "text");
+            moreDetailInput.setAttribute("name", "more_detail");
             moreDetailInput.setAttribute("placeholder", "Enter more details");
             moreDetailInput.setAttribute("data-input-type", "more-detail");
             // section.appendChild(moreDetailInput);
@@ -233,20 +248,6 @@ ready(function () {
             });
           }
 
-          divButtons.insertAdjacentHTML(
-            "beforeend",
-            `<label class="form__choice-wrapper">
-            <input data-input-type="yes" type="radio" name="${question?.question_id}" value="1" required>
-            <span>Yes</span>
-          </label>
-          <label class="form__choice-wrapper">
-            <input data-input-type="no" type="radio" name="${question?.question_id}" value="0">
-            <span>No</span>
-          </label>`
-          );
-
-          fieldset.appendChild(legend);
-          fieldset.appendChild(divButtons);
           section.appendChild(fieldset);
 
           if (i === 0) {
@@ -454,11 +455,12 @@ ready(function () {
           let input = document.createElement("input");
 
           //setting attributes to the elements
-          span.innerHTML = `${option}`;
+          span.innerHTML = `${question?.helper_text}`;
           label.classList.add("form__choice-wrapper");
           input.setAttribute("data-input-type", "free-text");
           input.setAttribute("type", "text");
           input.setAttribute("name", `${question?.question_id}`);
+          input.setAttribute("placeholder", `${question?.helper_text}`);
           // input.setAttribute("value", `${option}`);
           //append child elements to the parents
           label.appendChild(input);
