@@ -177,8 +177,7 @@ ready(function () {
         if (
           question?.question_type === "yes" ||
           question?.question_type === "no" ||
-          (question?.question_type === "yes-no" &&
-            question?.more_detail_trigger === null)
+          question?.question_type === "yes-no"
         ) {
           //create element and add inner html to that element
           let divButtons = document.createElement("div");
@@ -204,6 +203,35 @@ ready(function () {
           //   '<span class="required-mark" data-required="true" aria-hidden="true"></span>'
           // );
           // ;input.setAttribute("data-input-type", ${option});
+
+          if (
+            question?.question_type === "yes-no" &&
+            question?.more_detail_trigger !== null
+          ) {
+            // Create a text input for additional details
+            let moreDetailInput = document.createElement("input");
+            moreDetailInput.setAttribute("type", "text");
+            moreDetailInput.setAttribute("placeholder", "Enter more details");
+            moreDetailInput.setAttribute("data-input-type", "more-detail");
+            // section.appendChild(moreDetailInput);
+
+            fieldset.appendChild(moreDetailInput);
+
+            // Handle showing/hiding based on user's selection
+            const radioInputs = section.querySelectorAll(
+              `input[name="${question?.question_id}"]`
+            );
+            radioInputs.forEach((input) => {
+              input.addEventListener("change", function () {
+                const isYesSelected = input.value === "1";
+                if (isYesSelected) {
+                  moreDetailInput.style.display = "block";
+                } else {
+                  moreDetailInput.style.display = "none";
+                }
+              });
+            });
+          }
 
           divButtons.insertAdjacentHTML(
             "beforeend",
@@ -257,31 +285,6 @@ ready(function () {
           }
 
           tipForm.appendChild(section);
-        } else if (
-          question?.question_type === "yes-no" &&
-          question?.more_detail_trigger !== null
-        ) {
-          // Create a text input for additional details
-          let moreDetailInput = document.createElement("input");
-          moreDetailInput.setAttribute("type", "text");
-          moreDetailInput.setAttribute("placeholder", "Enter more details");
-          moreDetailInput.setAttribute("data-input-type", "more-detail");
-          section.appendChild(moreDetailInput);
-
-          // Handle showing/hiding based on user's selection
-          const radioInputs = section.querySelectorAll(
-            `input[name="${question?.question_id}"]`
-          );
-          radioInputs.forEach((input) => {
-            input.addEventListener("change", function () {
-              const isYesSelected = input.value === "1";
-              if (isYesSelected) {
-                moreDetailInput.style.display = "block";
-              } else {
-                moreDetailInput.style.display = "none";
-              }
-            });
-          });
         } else if (question?.question_type === "multiple-selection") {
           //create element and add inner html to that element
           let divCheckboxes = document.createElement("div");
@@ -416,6 +419,75 @@ ready(function () {
                   Back
                 </button>
                 <button  class="button button-progress" type="submit">
+                  Submit
+                </button>
+              </div>`
+            );
+          } else {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+              <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+                Back
+              </button>
+              <button class="button button-next button-progress" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          }
+
+          tipForm.appendChild(section);
+        } else if (question?.question_type === "free-text") {
+          //create element and add inner html to that element
+          let divFreeText = document.createElement("div");
+          let fieldset = document.createElement("fieldset");
+          fieldset.classList.add("mt-3", "form__field", "field_wrapper");
+          fieldset.setAttribute("data-question-type", "free-text");
+          divFreeText.classList.add("free-text");
+          let legend = document.createElement("legend");
+          legend.innerHTML = `${question?.question_text}`;
+
+          //create element
+          let label = document.createElement("label");
+          let span = document.createElement("span");
+          let input = document.createElement("input");
+
+          //setting attributes to the elements
+          span.innerHTML = `${option}`;
+          label.classList.add("form__choice-wrapper");
+          input.setAttribute("data-input-type", "free-text");
+          input.setAttribute("type", "text");
+          input.setAttribute("name", `${question?.question_id}`);
+          // input.setAttribute("value", `${option}`);
+          //append child elements to the parents
+          label.appendChild(input);
+          label.appendChild(span);
+          divFreeText.appendChild(label);
+
+          fieldset.appendChild(legend);
+          fieldset.appendChild(divFreeText);
+          // fieldset.appendChild(label);
+
+          section.appendChild(fieldset);
+
+          if (i === 0) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+            <button class="next-button" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          } else if (i === questions.length - 1) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+                <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple" data-action="prev">
+                  Back
+                </button>
+                <button class="button button-progress" type="submit">
                   Submit
                 </button>
               </div>`
