@@ -1,6 +1,6 @@
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v38");
+  console.log("TIP Theme Ext Back-end loaded: v39");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -158,6 +158,10 @@ ready(function () {
         section.setAttribute("tabindex", i + 1);
 
         if (i !== 0) {
+          section.hidden = true;
+        }
+
+        if (Array.isArray(question?.conditional)) {
           section.hidden = true;
         }
 
