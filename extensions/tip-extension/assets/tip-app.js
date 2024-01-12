@@ -1,6 +1,6 @@
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v39");
+  console.log("TIP Theme Ext Back-end loaded: v40");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -161,8 +161,10 @@ ready(function () {
           section.hidden = true;
         }
 
-        if (Array.isArray(question?.conditional)) {
+        // Array.isArray(question?.conditional)
+        if (typeof question?.conditional === "object") {
           section.hidden = true;
+          // console.log("Conditional:", question?.conditional);
         }
 
         tipFormTab.insertAdjacentHTML(
