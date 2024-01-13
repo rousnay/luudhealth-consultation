@@ -1,6 +1,6 @@
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v46");
+  console.log("TIP Theme Ext Back-end loaded: v47");
 });
 
 const API = `/apps/tip/consultancy/generate`;

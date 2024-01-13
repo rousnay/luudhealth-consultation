@@ -7,6 +7,8 @@ const initProcessForm = function () {
 
   let currentStep = 0;
 
+  const answers = [];
+
   // Form Validation
 
   /*****************************************************************************
@@ -551,6 +553,19 @@ const initProcessForm = function () {
    * at which the listener is fired, making the errors less "noisy". Improves
    * both performance and user experience.
    */
+  // function collectResponses() {
+  //   answers.length = 0; // Clear existing responses
+  //   questions.forEach(question => {
+  //     const inputElement = document.getElementById(`answer-${question.question_id}`);
+  //     if (inputElement) {
+  //       const response = {
+  //         id: question.question_id,
+  //         value: question.question_type === "yes-no" ? [parseInt(inputElement.value, 10)] : [inputElement.value],
+  //       };
+  //       answers.push(response);
+  //     }
+  //   });
+  // }
 
   progressForm.addEventListener(
     "input",
@@ -561,6 +576,14 @@ const initProcessForm = function () {
       );
       const isFreeText = target.matches('[data-input-type="free-text"]');
       const isRadioSelection = target.matches('[data-input-type="radio"]');
+
+      const response = {
+        id: question.question_id,
+        value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
+      };
+      answers.push(response);
+
+      console.log(answers);
 
       validateStep(currentStep)
         .then(() => {
