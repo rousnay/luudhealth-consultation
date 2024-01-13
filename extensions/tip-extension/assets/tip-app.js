@@ -1,6 +1,6 @@
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v40");
+  console.log("TIP Theme Ext Back-end loaded: v41");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -163,7 +163,8 @@ ready(function () {
 
         // Array.isArray(question?.conditional)
         if (typeof question?.conditional === "object") {
-          section.hidden = true;
+          // section.hidden = true;
+          section.classList.add("conditional-obj");
           // console.log("Conditional:", question?.conditional);
         }
 
