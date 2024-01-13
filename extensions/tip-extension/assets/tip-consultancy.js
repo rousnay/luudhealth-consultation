@@ -578,7 +578,7 @@ const initProcessForm = function () {
       const isRadioSelection = target.matches('[data-input-type="radio"]');
 
       const response = {
-        id: question.question_id,
+        id: parseInt(target.name, 10),
         value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
       };
       answers.push(response);
