@@ -571,17 +571,23 @@ const initProcessForm = function () {
     "input",
     debounce((e) => {
       const { target } = e;
-      const isMultipleSelection = target.matches(
-        '[data-input-type="multiple-selection"]'
-      );
-      const isFreeText = target.matches('[data-input-type="free-text"]');
-      const isRadioSelection = target.matches('[data-input-type="radio"]');
+      const isMultipleSelection = target.type === "checkbox";
+      const isFreeText = target.type === "text";
+      const isRadioSelection = target.type === "radio";
 
       const response = {
         id: parseInt(target.name, 10),
         value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
       };
-      answers.push(response);
+
+      const existingAnswerIndex = answers.findIndex(
+        (answer) => answer.id === response.id
+      );
+      if (isMultipleSelection || existingAnswerIndex === -1) {
+        answers.push(response);
+      } else {
+        answers[existingAnswerIndex] = response;
+      }
 
       console.log(answers);
 
