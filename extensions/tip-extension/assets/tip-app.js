@@ -164,7 +164,7 @@ ready(function () {
         // Array.isArray(question?.conditional)
         if (!Array.isArray(question?.conditional)) {
           // section.hidden = true;
-          section.classList.add("conditional-obj");
+          section.style.display = "none!important";
           // console.log("Conditional:", question?.conditional);
         }
 
