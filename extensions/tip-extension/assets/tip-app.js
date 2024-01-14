@@ -2,7 +2,7 @@
 
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v50");
+  console.log("TIP Theme Ext Back-end loaded: v52");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -151,7 +151,24 @@ ready(function () {
       consultancyHeader.style.display = "none";
       formProgressStatusContainer.style.display = "block";
       console.log(questions);
-      const CURRENT_QUESTIONS = questions;
+
+      const conditional_questions = questions.map((question, index) => {
+        const { conditional } = question;
+        const tabIndex = index + 1;
+
+        // Check if 'conditional' is an object
+        if (typeof conditional === "object" && conditional !== null) {
+          // Copy 'conditional' and add the 'index' property
+          return { ...conditional, tabIndex };
+        } else if (Array.isArray(conditional)) {
+          // If 'conditional' is an array, add only the 'index' property
+          return { tabIndex };
+        } else {
+          // If 'conditional' is neither an object nor an array, set it to null
+          return null;
+        }
+      });
+
       questions.map(function (question, i) {
         let section = document.createElement("section");
         section.classList.add("pop-in");
@@ -547,7 +564,7 @@ ready(function () {
       //   window.location.href = "/pages/medical-information";
       // });
 
-      initProcessForm(CURRENT_QUESTIONS);
+      initProcessForm(conditional_questions);
     }
   })();
 });

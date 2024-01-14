@@ -1,4 +1,4 @@
-const initProcessForm = function (QUESTIONS) {
+const initProcessForm = function (conditional_questions) {
   // Global Constants
   const progressForm = document.getElementById("progress-form"),
     tabItems = progressForm.querySelectorAll('[role="tab"]'),
@@ -6,10 +6,34 @@ const initProcessForm = function (QUESTIONS) {
     formProgressBar = document.getElementById("progress-form-status-bar");
 
   let currentStep = 0;
-  console.log("currentQUESTIONS:", QUESTIONS);
 
+  console.log("conditional_questions:", conditional_questions);
   const answers = [];
 
+  function findVisibleTabs(answers, conditionalQuestions) {
+    const visibleTabs = [];
+
+    conditionalQuestions.forEach((cq) => {
+      const matchingAnswers = answers.filter((answer) => answer.id === cq.id);
+
+      if (matchingAnswers.length > 0) {
+        const isValueMatch = matchingAnswers.some(
+          (matchingAnswer) =>
+            cq.value === undefined ||
+            matchingAnswer.value.some((value) => cq.value.includes(value))
+        );
+
+        if (isValueMatch) {
+          visibleTabs.push({ ...cq, my_tabs: cq.tabIndex });
+        }
+      }
+    });
+
+    return visibleTabs;
+  }
+
+  const visibleTabs = findVisibleTabs(answers, conditional_questions);
+  console.log("visibleTabs:", visibleTabs);
   // Form Validation
 
   /*****************************************************************************
@@ -591,6 +615,8 @@ const initProcessForm = function (QUESTIONS) {
       }
 
       console.log(answers);
+      let currentVisibleTabs = findVisibleTabs(answers, conditional_questions);
+      console.log("currentVisibleTabs:", currentVisibleTabs);
 
       validateStep(currentStep)
         .then(() => {
