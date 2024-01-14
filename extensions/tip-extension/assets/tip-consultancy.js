@@ -1,4 +1,4 @@
-const initProcessForm = function () {
+const initProcessForm = function (QUESTIONS) {
   // Global Constants
   const progressForm = document.getElementById("progress-form"),
     tabItems = progressForm.querySelectorAll('[role="tab"]'),
@@ -6,6 +6,7 @@ const initProcessForm = function () {
     formProgressBar = document.getElementById("progress-form-status-bar");
 
   let currentStep = 0;
+  console.log("currentQUESTIONS:", QUESTIONS);
 
   const answers = [];
 

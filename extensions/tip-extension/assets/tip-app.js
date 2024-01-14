@@ -1,3 +1,5 @@
+// const { CURSOR_FLAGS } = require("mongodb");
+
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
   console.log("TIP Theme Ext Back-end loaded: v50");
@@ -149,6 +151,7 @@ ready(function () {
       consultancyHeader.style.display = "none";
       formProgressStatusContainer.style.display = "block";
       console.log(questions);
+      const CURRENT_QUESTIONS = questions;
       questions.map(function (question, i) {
         let section = document.createElement("section");
         section.classList.add("pop-in");
@@ -544,7 +547,7 @@ ready(function () {
       //   window.location.href = "/pages/medical-information";
       // });
 
-      initProcessForm();
+      initProcessForm(CURRENT_QUESTIONS);
     }
   })();
 });
