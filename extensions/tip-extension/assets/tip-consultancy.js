@@ -16,7 +16,9 @@ const initProcessForm = function (conditional_questions) {
     conditionalQuestions.forEach((cq) => {
       const matchingAnswers = answers.filter((answer) => answer.id === cq.id);
 
-      if (matchingAnswers.length > 0) {
+      if (cq.unconditional) {
+        visibleTabs.push({ ...cq });
+      } else if (matchingAnswers.length > 0) {
         const isValueMatch = matchingAnswers.some(
           (matchingAnswer) =>
             cq.value === undefined ||
@@ -24,7 +26,7 @@ const initProcessForm = function (conditional_questions) {
         );
 
         if (isValueMatch) {
-          visibleTabs.push({ ...cq, my_tabs: cq.tabIndex });
+          visibleTabs.push({ ...cq });
         }
       }
     });

@@ -2,7 +2,7 @@
 
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v52");
+  console.log("TIP Theme Ext Back-end loaded: v53");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -162,7 +162,7 @@ ready(function () {
           return { ...conditional, tabIndex };
         } else if (Array.isArray(conditional)) {
           // If 'conditional' is an array, add only the 'index' property
-          return { tabIndex };
+          return { unconditional: true, tabIndex };
         } else {
           // If 'conditional' is neither an object nor an array, set it to null
           return null;
