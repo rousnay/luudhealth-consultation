@@ -2,7 +2,7 @@
 
 name = "Luudhealth Consultation"
 client_id = "b1836b6fc7d2c08fd814f99a16984825"
-application_url = "https://consultation.luudhealth.com"
+application_url = "https://dv-antibodies-attention-sort.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,16 +12,16 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://consultation.luudhealth.com/auth/callback",
-  "https://consultation.luudhealth.com/auth/shopify/callback",
-  "https://consultation.luudhealth.com/api/auth/callback"
+  "https://dv-antibodies-attention-sort.trycloudflare.com/auth/callback",
+  "https://dv-antibodies-attention-sort.trycloudflare.com/auth/shopify/callback",
+  "https://dv-antibodies-attention-sort.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2023-10"
 
 [app_proxy]
-url = "https://consultation.luudhealth.com"
+url = "https://dv-antibodies-attention-sort.trycloudflare.com"
 subpath = "tip"
 prefix = "apps"
 
@@ -29,5 +29,5 @@ prefix = "apps"
 embedded = false
 
 [build]
-automatically_update_urls_on_dev = false
+automatically_update_urls_on_dev = true
 dev_store_url = "iplaysafe-consultancy-app-store.myshopify.com"

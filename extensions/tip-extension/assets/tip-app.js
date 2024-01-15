@@ -1,6 +1,8 @@
+// const { CURSOR_FLAGS } = require("mongodb");
+
 console.clear();
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v31");
+  console.log("TIP Theme Ext Back-end loaded: v53");
 });
 
 const API = `/apps/tip/consultancy/generate`;
@@ -149,6 +151,24 @@ ready(function () {
       consultancyHeader.style.display = "none";
       formProgressStatusContainer.style.display = "block";
       console.log(questions);
+
+      const conditional_questions = questions.map((question, index) => {
+        const { conditional } = question;
+        const tabIndex = index + 1;
+
+        // Check if 'conditional' is an object
+        if (typeof conditional === "object" && conditional !== null) {
+          // Copy 'conditional' and add the 'index' property
+          return { ...conditional, tabIndex };
+        } else if (Array.isArray(conditional)) {
+          // If 'conditional' is an array, add only the 'index' property
+          return { unconditional: true, tabIndex };
+        } else {
+          // If 'conditional' is neither an object nor an array, set it to null
+          return null;
+        }
+      });
+
       questions.map(function (question, i) {
         let section = document.createElement("section");
         section.classList.add("pop-in");
@@ -159,6 +179,15 @@ ready(function () {
 
         if (i !== 0) {
           section.hidden = true;
+        }
+
+        // Array.isArray(question?.conditional)
+        if (!Array.isArray(question?.conditional)) {
+          // section.hidden = true;
+          section.classList.add(`is-conditional-question`);
+          section.classList.add(`cq-id-${question?.conditional?.id}`);
+          // section.classList.add(`cq-value-${question?.conditional?.value}`);
+          // console.log("Conditional:", question?.conditional);
         }
 
         tipFormTab.insertAdjacentHTML(
@@ -203,7 +232,6 @@ ready(function () {
           //   '<span class="required-mark" data-required="true" aria-hidden="true"></span>'
           // );
           // ;input.setAttribute("data-input-type", ${option});
-
           divButtons.insertAdjacentHTML(
             "beforeend",
             `<label class="form__choice-wrapper">
@@ -218,6 +246,37 @@ ready(function () {
 
           fieldset.appendChild(legend);
           fieldset.appendChild(divButtons);
+
+          if (
+            question?.question_type === "yes-no" &&
+            question?.more_detail_trigger !== null
+          ) {
+            // Create a text input for additional details
+            let moreDetailInput = document.createElement("input");
+            moreDetailInput.setAttribute("type", "text");
+            moreDetailInput.setAttribute("name", "more_detail");
+            moreDetailInput.setAttribute("placeholder", "Enter more details");
+            moreDetailInput.setAttribute("data-input-type", "more-detail");
+            // section.appendChild(moreDetailInput);
+
+            fieldset.appendChild(moreDetailInput);
+
+            // Handle showing/hiding based on user's selection
+            const radioInputs = section.querySelectorAll(
+              `input[name="${question?.question_id}"]`
+            );
+            radioInputs.forEach((input) => {
+              input.addEventListener("change", function () {
+                const isYesSelected = input.value === "1";
+                if (isYesSelected) {
+                  moreDetailInput.style.display = "block";
+                } else {
+                  moreDetailInput.style.display = "none";
+                }
+              });
+            });
+          }
+
           section.appendChild(fieldset);
 
           if (i === 0) {
@@ -409,6 +468,76 @@ ready(function () {
           }
 
           tipForm.appendChild(section);
+        } else if (question?.question_type === "free-text") {
+          //create element and add inner html to that element
+          let divFreeText = document.createElement("div");
+          let fieldset = document.createElement("fieldset");
+          fieldset.classList.add("mt-3", "form__field", "field_wrapper");
+          fieldset.setAttribute("data-question-type", "free-text");
+          divFreeText.classList.add("free-text");
+          let legend = document.createElement("legend");
+          legend.innerHTML = `${question?.question_text}`;
+
+          //create element
+          let label = document.createElement("label");
+          let span = document.createElement("span");
+          let input = document.createElement("input");
+
+          //setting attributes to the elements
+          span.innerHTML = `${question?.helper_text}`;
+          label.classList.add("form__choice-wrapper");
+          input.setAttribute("data-input-type", "free-text");
+          input.setAttribute("type", "text");
+          input.setAttribute("name", `${question?.question_id}`);
+          input.setAttribute("placeholder", `${question?.helper_text}`);
+          // input.setAttribute("value", `${option}`);
+          //append child elements to the parents
+          label.appendChild(input);
+          label.appendChild(span);
+          divFreeText.appendChild(label);
+
+          fieldset.appendChild(legend);
+          fieldset.appendChild(divFreeText);
+          // fieldset.appendChild(label);
+
+          section.appendChild(fieldset);
+
+          if (i === 0) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+            <button class="next-button" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          } else if (i === questions.length - 1) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+                <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple" data-action="prev">
+                  Back
+                </button>
+                <button class="button button-progress" type="submit">
+                  Submit
+                </button>
+              </div>`
+            );
+          } else {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+              <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+                Back
+              </button>
+              <button class="button button-next button-progress" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          }
+
+          tipForm.appendChild(section);
         } else if (question?.question_type === "text") {
           console.log("API has Text field");
         } else if (question?.question_type === "textarea") {
@@ -435,7 +564,7 @@ ready(function () {
       //   window.location.href = "/pages/medical-information";
       // });
 
-      initProcessForm();
+      initProcessForm(conditional_questions);
     }
   })();
 });

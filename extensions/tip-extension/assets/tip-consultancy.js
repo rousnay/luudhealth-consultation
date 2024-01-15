@@ -1,4 +1,4 @@
-const initProcessForm = function () {
+const initProcessForm = function (conditional_questions) {
   // Global Constants
   const progressForm = document.getElementById("progress-form"),
     tabItems = progressForm.querySelectorAll('[role="tab"]'),
@@ -7,6 +7,35 @@ const initProcessForm = function () {
 
   let currentStep = 0;
 
+  console.log("conditional_questions:", conditional_questions);
+  const answers = [];
+
+  function findVisibleTabs(answers, conditionalQuestions) {
+    const visibleTabs = [];
+
+    conditionalQuestions.forEach((cq) => {
+      const matchingAnswers = answers.filter((answer) => answer.id === cq.id);
+
+      if (cq.unconditional) {
+        visibleTabs.push({ ...cq });
+      } else if (matchingAnswers.length > 0) {
+        const isValueMatch = matchingAnswers.some(
+          (matchingAnswer) =>
+            cq.value === undefined ||
+            matchingAnswer.value.some((value) => cq.value.includes(value))
+        );
+
+        if (isValueMatch) {
+          visibleTabs.push({ ...cq });
+        }
+      }
+    });
+
+    return visibleTabs;
+  }
+
+  const visibleTabs = findVisibleTabs(answers, conditional_questions);
+  console.log("visibleTabs:", visibleTabs);
   // Form Validation
 
   /*****************************************************************************
@@ -551,15 +580,45 @@ const initProcessForm = function () {
    * at which the listener is fired, making the errors less "noisy". Improves
    * both performance and user experience.
    */
+  // function collectResponses() {
+  //   answers.length = 0; // Clear existing responses
+  //   questions.forEach(question => {
+  //     const inputElement = document.getElementById(`answer-${question.question_id}`);
+  //     if (inputElement) {
+  //       const response = {
+  //         id: question.question_id,
+  //         value: question.question_type === "yes-no" ? [parseInt(inputElement.value, 10)] : [inputElement.value],
+  //       };
+  //       answers.push(response);
+  //     }
+  //   });
+  // }
 
   progressForm.addEventListener(
     "input",
     debounce((e) => {
       const { target } = e;
-      const isMultipleSelection = target.matches(
-        '[data-input-type="multiple-selection"]'
+      const isMultipleSelection = target.type === "checkbox";
+      const isFreeText = target.type === "text";
+      const isRadioSelection = target.type === "radio";
+
+      const response = {
+        id: parseInt(target.name, 10),
+        value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
+      };
+
+      const existingAnswerIndex = answers.findIndex(
+        (answer) => answer.id === response.id
       );
-      const isRadioSelection = target.matches('[data-input-type="radio"]');
+      if (isMultipleSelection || existingAnswerIndex === -1) {
+        answers.push(response);
+      } else {
+        answers[existingAnswerIndex] = response;
+      }
+
+      console.log(answers);
+      let currentVisibleTabs = findVisibleTabs(answers, conditional_questions);
+      console.log("currentVisibleTabs:", currentVisibleTabs);
 
       validateStep(currentStep)
         .then(() => {
@@ -568,7 +627,7 @@ const initProcessForm = function () {
 
           // Progress to the next step
           const isLastTab = currentStep === tabItems.length - 1;
-          if (!isLastTab && !isMultipleSelection) {
+          if (!isLastTab && !isMultipleSelection && !isFreeText) {
             activateTab(currentStep + 1);
             handleFromSteps(currentStep);
           }
@@ -646,7 +705,7 @@ const initProcessForm = function () {
 
   /****************************************************************************/
   function handleProgressBar(progressPercentage) {
-    console.log("currentPercentage:", progressPercentage);
+    // console.log("currentPercentage:", progressPercentage);
     formProgressBar.style.width = progressPercentage + "%";
     formProgressBar.innerHTML = progressPercentage + "%";
   }
@@ -765,23 +824,23 @@ const initProcessForm = function () {
     const currentAssessmentFormType = localStorage.getItem(
       "current_assessment_form_type"
     );
-    console.log(
-      "#________> currentAssessmentFormType:",
-      currentAssessmentFormType
-    );
+    // console.log(
+    //   "#________> currentAssessmentFormType:",
+    //   currentAssessmentFormType
+    // );
 
     const hasAnotherTreatmentForm = localStorage.getItem(
       "has_another_treatment_form"
     );
-    console.log("#________> hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
+    // console.log("#________> hasAnotherTreatmentForm:", hasAnotherTreatmentForm);
 
     const current_treatment_form_index = parseInt(
       localStorage.getItem("current_treatment_form_index")
     );
-    console.log(
-      "#________> current_treatment_form_index:",
-      current_treatment_form_index
-    );
+    // console.log(
+    //   "#________> current_treatment_form_index:",
+    //   current_treatment_form_index
+    // );
 
     // Get the API endpoint using the form action attribute
     const form = e.currentTarget,
@@ -796,7 +855,12 @@ const initProcessForm = function () {
         const formData = new FormData(form);
         formTime = new Date().toJSON();
 
-        const updatedData = {};
+        const updatedFormData = {};
+
+        localStorage.setItem(
+          "0_answers_data_init_form:",
+          JSON.stringify(formData)
+        );
 
         //Handle single and multiple check-box's answers..
         const checkboxes = form.querySelectorAll('input[type="checkbox"]');
@@ -814,57 +878,81 @@ const initProcessForm = function () {
 
         for (const [name, value] of formData.entries()) {
           if (checkedQuestionNames.includes(name)) {
-            if (!updatedData[name]) {
-              updatedData[name] = [];
+            if (!updatedFormData[name]) {
+              updatedFormData[name] = [];
             }
-            updatedData[name].push(value);
+            updatedFormData[name].push(value);
           } else {
-            updatedData[name] = value;
+            updatedFormData[name] = value;
           }
         }
 
-        console.log(updatedData);
+        console.log(updatedFormData);
+        localStorage.setItem(
+          "1_answers_data_mod_checkbox:",
+          JSON.stringify(updatedFormData)
+        );
 
-        //convert object properties to integer (except the array and string with alphabetic values)
-        function convertIntObj(obj) {
-          const result = {};
-          for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-              var value = obj[key];
-              var integerValue = parseInt(value, 10);
-              // Check if the value contains non-integer characters or spaces, or the value can be parsed as an integer
-              if (/[^0-9\s]/.test(value) || isNaN(integerValue)) {
-                // If it does, store it as an array with the original value
-                result[key] = [value];
-              } else {
-                // If not,  store it as an integer
-                result[key] = integerValue;
-              }
-            }
-          }
-          return result;
-        }
-        const consultancyDataIntObj = convertIntObj(updatedData);
-        console.log("Questions data:", consultancyDataIntObj);
+        // //convert object properties to integer (except the array and string with alphabetic values)
+        // function convertIntObj(obj) {
+        //   const result = {};
+        //   for (var key in obj) {
+        //     if (obj.hasOwnProperty(key)) {
+        //       var value = obj[key];
+        //       var integerValue = parseInt(value, 10);
+        //       // Check if the value contains non-integer characters or spaces, or the value can be parsed as an integer
+        //       if (/[^0-9\s]/.test(value) || isNaN(integerValue)) {
+        //         // If it does, store it as an array with the original value
+        //         result[key] = [value];
+        //       } else {
+        //         // If not,  store it as an integer
+        //         result[key] = integerValue;
+        //       }
+        //     }
+        //   }
+        //   return result;
+        // }
+        // const consultancyDataIntObj = convertIntObj(updatedData);
+        // console.log("Answers data - prop to int:", consultancyDataIntObj);
+        // localStorage.setItem(
+        //   "2_answers_data_prop_int:",
+        //   JSON.stringify(consultancyDataIntObj)
+        // );
 
         //convert to match TIP accepted datatype, e.g. {"90": 1, "91": 0,} into  [{"question": 90,"answer": 1},{"question": 91,"answer": 1},
-        function convertIntoTipPayload(obj) {
-          var result = [];
+        // function convertIntoTipPayload(obj) {
+        //   var result = [];
 
-          for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-              var question = parseInt(key, 10);
-              var answer = obj[key];
-              result.push({ question: question, answer: answer });
-            }
+        //   for (var key in obj) {
+        //     if (obj.hasOwnProperty(key)) {
+        //       var question = parseInt(key, 10);
+        //       var answer = obj[key];
+        //       result.push({ question: question, answer: answer });
+        //     }
+        //   }
+        //   return result;
+        // }
+
+        // const consultancyFormData = convertIntoTipPayload(
+        //   consultancyDataIntObj
+        // );
+
+        const consultancyFormData = Object.keys(updatedFormData).map((key) => {
+          let answer = updatedFormData[key];
+          if (answer === "0" || answer === "1") {
+            answer = parseInt(answer);
           }
-          return result;
-        }
+          return {
+            question: parseInt(key),
+            answer: answer,
+          };
+        });
 
-        const consultancyFormData = convertIntoTipPayload(
-          consultancyDataIntObj
+        console.log("Answers data - final data:", consultancyFormData);
+        localStorage.setItem(
+          "3_answers_data_final:",
+          JSON.stringify(consultancyFormData)
         );
-        console.log("Questions data:", consultancyFormData);
 
         // Get the user's IP address (for fun)
         // Build the final data structure, including the IP
@@ -880,17 +968,18 @@ const initProcessForm = function () {
         //     };
         //   })
         //   .then((data) => postData(API, data))
-        console.log(
-          "#____1____> hasAnotherTreatmentForm:",
-          hasAnotherTreatmentForm
-        );
+
+        // console.log(
+        //   "#____1____> hasAnotherTreatmentForm:",
+        //   hasAnotherTreatmentForm
+        // );
         getUUID()
           .then((uuid) => {
             var setUUID;
-            console.log(
-              "#____2____> hasAnotherTreatmentForm:",
-              hasAnotherTreatmentForm
-            );
+            // console.log(
+            //   "#____2____> hasAnotherTreatmentForm:",
+            //   hasAnotherTreatmentForm
+            // );
 
             if (currentAssessmentFormType === "treatment") {
               if (!!current_condition_id) {
@@ -924,10 +1013,10 @@ const initProcessForm = function () {
             //   );
             // }
 
-            console.log(
-              "#____3____> hasAnotherTreatmentForm:",
-              hasAnotherTreatmentForm
-            );
+            // console.log(
+            //   "#____3____> hasAnotherTreatmentForm:",
+            //   hasAnotherTreatmentForm
+            // );
             return {
               submission_uuid: setUUID,
               treatment_type: current_treatment_type,
@@ -943,10 +1032,10 @@ const initProcessForm = function () {
           .then((data) => postData(API, data))
           .then((response) => {
             var setNextURL;
-            console.log(
-              "#____4____> hasAnotherTreatmentForm:",
-              hasAnotherTreatmentForm
-            );
+            // console.log(
+            //   "#____4____> hasAnotherTreatmentForm:",
+            //   hasAnotherTreatmentForm
+            // );
             if (currentAssessmentFormType === "condition") {
               if (!current_treatment_id) {
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
@@ -959,16 +1048,16 @@ const initProcessForm = function () {
               }
             } else {
               if (hasAnotherTreatmentForm === "yes") {
-                console.log(
-                  "if________> hasAnotherTreatmentForm:",
-                  hasAnotherTreatmentForm
-                );
+                // console.log(
+                //   "if________> hasAnotherTreatmentForm:",
+                //   hasAnotherTreatmentForm
+                // );
                 setNextURL = `/pages/consultancy/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               } else {
-                console.log(
-                  "else________> hasAnotherTreatmentForm:",
-                  hasAnotherTreatmentForm
-                );
+                // console.log(
+                //   "else________> hasAnotherTreatmentForm:",
+                //   hasAnotherTreatmentForm
+                // );
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               }
             }

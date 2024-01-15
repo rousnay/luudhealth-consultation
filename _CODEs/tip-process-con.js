@@ -11,11 +11,9 @@ const STATUS_CODES = {
 const STATUS_TEXT = {
   IDENTITY_VERIFIED: "Identity verified",
   CONSULTANCY_APPROVED: "Consultancy has been approved",
-  CONSULTANCY_APPROVED_ORDER_PLACED:
-    "Consultancy has been approved, and the order has been placed",
+  CONSULTANCY_APPROVED_ORDER_PLACED: "Consultancy has been approved, and the order has been placed",
   INVALID_UUID: "Please try with a valid UUID",
-  ORDER_PLACED_ALREADY:
-    "Consultancy has been approved, but the order has been placed already",
+  ORDER_PLACED_ALREADY: "Consultancy has been approved, but the order has been placed already",
   ITEMS_NOT_APPROVED_YET: "Some Items are not approved yet",
 };
 
@@ -44,18 +42,11 @@ const consultancySubmitter = async (submission_uuid) => {
       console.log(`##UUIDs: ${index}, ${item_uuid}, ${submission_uuid}`);
 
       if (item._treatment_type !== "non_pharmacy") {
-        const result = await submitConsultancy(
-          index,
-          item_uuid,
-          submission_uuid
-        );
+        const result = await submitConsultancy(index, item_uuid, submission_uuid);
         console.log("%%% submitConsultancy response: ", result);
       }
 
-      if (
-        dataOrderItems.length === index + 1 &&
-        dataOrder.approval_required_item_count === 0
-      ) {
+      if (dataOrderItems.length === index + 1 && dataOrder.approval_required_item_count === 0) {
         placeOrder(submission_uuid);
       }
     }
@@ -71,13 +62,9 @@ const consultancySubmitter = async (submission_uuid) => {
 
 const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
   try {
-    console.log(
-      `##Con index and ord UUID from notification: ${con_index}, ${ord_uuid}`
-    );
+    console.log(`##Con index and ord UUID from notification: ${con_index}, ${ord_uuid}`);
     const submittedOrderCollection = DB.collection("submitted_order");
-    const submittedOrder = await submittedOrderCollection.findOne({
-      order_uuid: "LUUD-ORD-" + ord_uuid,
-    });
+    const submittedOrder = await submittedOrderCollection.findOne({ order_uuid: "LUUD-ORD-" + ord_uuid });
 
     if (submittedOrder) {
       console.log("## Order has already been submitted");
@@ -102,7 +89,7 @@ const consultancyApprovalProcessor = async (con_index, ord_uuid) => {
       const orderUpdateResult = await orderCollection.updateOne(filter, update);
       console.log(
         `Matched ${orderUpdateResult.matchedCount} document(s) and modified ${orderUpdateResult.modifiedCount} document(s`
-      );
+        );
 
       totalApprovedItem += 1;
 

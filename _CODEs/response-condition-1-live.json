@@ -1,0 +1,1387 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 660,
+            "title": "Erectile dysfunction",
+            "description": "- tell us about your condition",
+            "questions": [
+                {
+                    "question_id": 3716,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Can you always get an erection when you need?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 3717,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Can you always keep an erection for as long as you need?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 3716,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 3718,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Can you always get an erection that is hard enough for penetration?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 3717,
+                        "value": [
+                            0
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 3719,
+                    "question_type": "free-text",
+                    "question_text": "<p>Can you tell us why you need this treatment?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 3718,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "ANSWER_PROVIDED",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                ""
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2538,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Have you had your prostate checked by a doctor in the last year?</p>",
+                    "question_description": "",
+                    "error_message": "<p>If you have not had your prostate checked and your symptoms have started quickly we might not be able to help you on this occasion. You can call us for advice 0333 2200 519</p>",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2537,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 1503,
+                    "question_type": "multiple-selection",
+                    "question_text": "<p><strong>Have you taken any ED treatments before?</strong></p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": [
+                        "I haven't taken ED treatment before"
+                    ],
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": "",
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [
+                        "Viagra (sildenafil)",
+                        "Cialis (tadalafil)",
+                        "Levitra (vardenafil)",
+                        "Spedra (avanafil)",
+                        "I haven't taken ED treatment before"
+                    ],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "Viagra (sildenafil)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "Cialis (tadalafil)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "Levitra (vardenafil)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "I haven't taken ED treatment before"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "Spedra (avanafil)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2539,
+                    "question_type": "yes-no",
+                    "question_text": "<p><span data-whi-docs=\"[[:p [:b \"></span>Did you get any side effects from the previous treatment?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 1503,
+                        "value": [
+                            "Viagra (sildenafil)",
+                            "Cialis (tadalafil)",
+                            "Levitra (vardenafil)",
+                            "Spedra (avanafil)"
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2540,
+                    "question_type": "free-text",
+                    "question_text": "<p>What side effects did you experience?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2539,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2541,
+                    "question_type": "free-text",
+                    "question_text": "<p>What dose did you take?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2539,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2522,
+                    "question_type": "yes-no",
+                    "question_text": "<p><span data-whi-docs=\"[[:p [:b \"></span> <strong>Have you ever had a painful erection?</strong></p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2523,
+                    "question_type": "multiple-selection",
+                    "question_text": "<p>What was this caused by?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [
+                        "Peyronie's disease",
+                        "Scarring or bend of the penis",
+                        "Trauma or injury to the penis",
+                        "Unable to retract the foreskin (phimosis)",
+                        "Foreskin stuck behind the head (paraphimosis)",
+                        "Deformed or bent penis",
+                        "Other"
+                    ],
+                    "conditional": {
+                        "id": 2522,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Peyronie's disease"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Scarring or bend of the penis"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Trauma or injury to the penis"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Unable to retract the foreskin (phimosis)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Foreskin stuck behind the head (paraphimosis)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Deformed or bent penis"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Other"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2654,
+                    "question_type": "yes-no",
+                    "question_text": "<p><span data-whi-docs=\"[[:p \"></span>Have you used ED treatment since having a painful erection?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2523,
+                        "value": [
+                            "Peyronie's disease",
+                            "Scarring or bend of the penis",
+                            "Trauma or injury to the penis",
+                            "Unable to retract the foreskin (phimosis)",
+                            "Foreskin stuck behind the head (paraphimosis)",
+                            "Deformed or bent penis"
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2524,
+                    "question_type": "free-text",
+                    "question_text": "<p><span data-whi-docs=\"[[:p [:b \"></span> Please describe what caused your painful erection?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2523,
+                        "value": [
+                            "Other"
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2525,
+                    "question_type": "yes-no",
+                    "question_text": "<p><strong>Have you ever been told that you have high or low blood pressure?</strong></p>\n<p>This may have been done by your GP or another healthcare professional, or by taking your own blood pressure on a home monitor.</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2526,
+                    "question_type": "yes-no",
+                    "question_text": "<p><span data-whi-docs=\"[[:p [:b \"></span> Is your blood pressure controlled and do you see your GP regularly to monitor it?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2525,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2527,
+                    "question_type": "free-text",
+                    "question_text": "<p><span data-whi-docs=\"[[:p \"></span> What was your last BP reading?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2526,
+                        "value": [
+                            0
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2528,
+                    "question_type": "free-text",
+                    "question_text": "<p><span data-whi-docs=\"[[:p \"></span> What medications are you taking for this condition?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2526,
+                        "value": [
+                            0
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2529,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Do you often get breathless or have chest pain when you do light exercise, like walking up the stairs?</p>\n<p>or in the last 6 months, have you been told by a doctor to avoid physical or sexual activity?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2547,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Has your doctor sent you for an exercise tolerance test? This usually involves walking on a treadmill</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2529,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2549,
+                    "question_type": "free-text",
+                    "question_text": "<p>What was the outcome of the test?</p>",
+                    "question_description": "<p>Can you tell us more so we can advise further:</p>\n<ul>\n<li>When was the test?</li>\n<li>What did the doctor tell you after you had completed the test (what were your results?)</li>\n<li>Do they want to see you again for a follow-up?</li>\n</ul>\n<p>&nbsp;</p>",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2547,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2548,
+                    "question_type": "free-text",
+                    "question_text": "<p>How often do you get breathless when doing lite exercise such as walking up the stairs?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2529,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2531,
+                    "question_type": "yes-no",
+                    "question_text": "<p><span data-whi-docs=\"[[:p \"></span> Do you have any medical conditions affecting the eye?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2542,
+                    "question_type": "multiple-selection",
+                    "question_text": "<p>Do you have any of the following conditions?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": [
+                        "None of the above"
+                    ],
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [
+                        "Sight in only one eye",
+                        "NAION (Non-arteritic anterior ischemic optic neuropathy)",
+                        "Retinitis pigmentosis",
+                        "None of the above"
+                    ],
+                    "conditional": {
+                        "id": 2531,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "None of the above"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "Sight in only one eye"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "NAION (Non-arteritic anterior ischemic optic neuropathy)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "Retinitis pigmentosis"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2532,
+                    "question_type": "multiple-selection",
+                    "question_text": "<p>Do you have any of the following:</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": [
+                        "None of the above"
+                    ],
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [
+                        "Bleeding disorder such as haemophilia",
+                        "Active stomach peptic or gastric ulcers",
+                        "Sickle cell disease",
+                        "Leukaemia or multiple myeloma",
+                        "None of the above"
+                    ],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "None of the above"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "Bleeding disorder such as haemophilia"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Active stomach peptic or gastric ulcers",
+                                ""
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "Sickle cell disease"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "Leukaemia or multiple myeloma"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2550,
+                    "question_type": "yes-no",
+                    "question_text": "<p>Do you still have an ulcer?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2532,
+                        "value": [
+                            "Active stomach peptic or gastric ulcers"
+                        ]
+                    },
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2551,
+                    "question_type": "free-text",
+                    "question_text": "<p>Can you tell us more about your condition so that we can advise further?</p>",
+                    "question_description": "<p>For example:</p>\n<ul>\n<li>What treatment have you had</li>\n<li>Are you still using the treatment?</li>\n<li>Have you used ED treatment since having this diagnosis?</li>\n<li>Are you waiting for any investigations, treatments or procedures for your condition?</li>\n</ul>\n<p>&nbsp;</p>",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2550,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2552,
+                    "question_type": "free-text",
+                    "question_text": "<p>Can you tell us more about the condition so that we can advise further?</p>",
+                    "question_description": "<p>For example:</p>\n<ul>\n<li>When was the ulcer diagnosed?</li>\n<li>What treatment did you have</li>\n<li>Have you used ED treatment since having this diagnosis</li>\n</ul>",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2550,
+                        "value": [
+                            0
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2543,
+                    "question_type": "free-text",
+                    "question_text": "<p>Can you tell us more about your condition so that we can advise further?</p>",
+                    "question_description": "<ul>\n<li style=\"text-align: justify;\">Are you receiving treatment?</li>\n<li style=\"text-align: justify;\">Are you waiting for any investigations, treatments or procedures for your condition?</li>\n<li style=\"text-align: justify;\">When were you last hospitalised for this</li>\n<li style=\"text-align: justify;\">Have you used ED treatment since having this diagnosis?</li>\n</ul>",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 0,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2532,
+                        "value": [
+                            "Bleeding disorder such as haemophilia",
+                            "Sickle cell disease",
+                            "Leukaemia or multiple myeloma"
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2533,
+                    "question_type": "yes-no",
+                    "question_text": "<p><span data-whi-docs=\"[[:p \"></span> Have you had a heart attack or stroke in the last 6 months?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                0
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                1
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 2534,
+                    "question_type": "free-text",
+                    "question_text": "<p>Can you provide more details about your health so that we can advise further?</p>",
+                    "question_description": "<p>For example:</p>\n<ul>\n<li>When was this event?</li>\n<li>What medications are you taking for this?</li>\n<li>When are you next seeing your consultant?</li>\n<li>Have you taken ED treatment since your heart attack or stroke?</li>\n</ul>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2533,
+                        "value": [
+                            1
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 2536,
+                    "question_type": "multiple-selection",
+                    "question_text": "<p>Do you take any of the following medications?</p>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": [
+                        "None of the above"
+                    ],
+                    "required": 1,
+                    "never_autofill": 1,
+                    "never_autofill_conditions": null,
+                    "highlight": 1,
+                    "highlight_colour": null,
+                    "options": [
+                        "GTN spray",
+                        "Nitrates (such as isosorbide mononitrate or dinitrate to treat angina)",
+                        "Nicorandil",
+                        "Erythromycin",
+                        "Riociguat (to treat pulmonary arterial hypertension)",
+                        "Protease inhibitors (including ritonavir indinavir nelfinavir and selquinavir - to treat HIV)",
+                        "Alpha blockers (including alfuzosin indoramin terazosin prazosin doxazosin and tamsulosin)",
+                        "Amyl nitrate (poppers)",
+                        "None of the above"
+                    ],
+                    "conditional": [],
+                    "expected_answers": [
+                        {
+                            "type": "CONTAINS",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONTRAINDICATION",
+                            "recommendation_modifier": -100,
+                            "expected_answer": [
+                                "GTN spray",
+                                "Nitrates (isosorbide mononitrate to treat angina)",
+                                "Nicorandil",
+                                "Erythromycin",
+                                "Riociguat (to treat pulmonary arterial hypertension)",
+                                "Protease inhibitors (including ritonavir indinavir nelfinavir and selquinavir - to treat HIV)",
+                                "Amyl nitrate (poppers)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "EXPECTED",
+                            "recommendation_modifier": 50,
+                            "expected_answer": [
+                                "None of the above"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        },
+                        {
+                            "type": "EXACT",
+                            "indication": "EXPECTED_ANSWER",
+                            "determination": "CONSIDER",
+                            "recommendation_modifier": -10,
+                            "expected_answer": [
+                                "Alpha blockers (including alfuzosin indoramin terazosin prazosin doxazosin and tamsulosin)"
+                            ],
+                            "status": "ACTIVE",
+                            "products": [],
+                            "matched_answers": null
+                        }
+                    ]
+                },
+                {
+                    "question_id": 4050,
+                    "question_type": "yes",
+                    "question_text": "<p>Are you aware that this medication can interact with erectile dysfunction treatments and you should ensure that you space these treatments at least 6 hours apart.</p>\n<p>&nbsp;</p>",
+                    "question_description": "",
+                    "error_message": "<p>These can interact and cause your blood pressure to drop if taken closer together. Please ensure that you leave a 6-hour gap. If this is not possible please reach out to us by telephone or email and we can provide assistance and advice.</p>",
+                    "helper_text": "<p>If you need help or support with your treatment our helpful medical team can communicate with you via telephone or email. Please reach out to us.</p>",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": {
+                        "id": 2536,
+                        "value": [
+                            "Alpha blockers (including alfuzosin indoramin terazosin prazosin doxazosin and tamsulosin)"
+                        ]
+                    },
+                    "expected_answers": []
+                },
+                {
+                    "question_id": 1719,
+                    "question_type": "yes",
+                    "question_text": "<p><strong>Do you agree to seek urgent medical attention if you experience any of the following symptoms:</strong></p>\n<ul>\n<li>An erection that lasts longer than 4 hours.</li>\n<li>Blurred vision.</li>\n<li>Sudden decrease or loss of vision in one or both eyes.</li>\n<li>Chest pain.</li>\n</ul>",
+                    "question_description": "",
+                    "error_message": "",
+                    "helper_text": "",
+                    "more_detail_trigger": null,
+                    "deselect_trigger": null,
+                    "required": 1,
+                    "never_autofill": 0,
+                    "never_autofill_conditions": null,
+                    "highlight": 0,
+                    "highlight_colour": null,
+                    "options": [],
+                    "conditional": [],
+                    "expected_answers": []
+                }
+            ]
+        }
+    ]
+}

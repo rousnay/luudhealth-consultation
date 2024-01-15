@@ -1,9 +1,11 @@
 {
-  "name": "consultancy-and-kit-management",
+  "name": "luudhealth-consultation",
   "version": "1.0.0",
+  "author": "rousnay",
   "main": "web/index.js",
-  "license": "UNLICENSED",
   "type": "module",
+  "license": "https://github.com/rousnay/luudhealth-consultation",
+  "bugs": "https://github.com/rousnay/luudhealth-consultation/issues",
   "scripts": {
     "shopify": "shopify",
     "build": "shopify app build",
@@ -24,5 +26,16 @@
     "mongoose": "^7.0.3",
     "node-fetch": "^3.3.0"
   },
-  "author": "rousnay"
+  "engines": {
+    "node": "18.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rousnay/luudhealth-consultation"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "graph api"
+  ]
 }
