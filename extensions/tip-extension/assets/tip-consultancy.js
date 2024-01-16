@@ -1,4 +1,4 @@
-const initProcessForm = function (conditional_questions) {
+const initProcessForm = function (conditionalQuestions) {
   // Global Constants
   const progressForm = document.getElementById("progress-form"),
     tabItems = progressForm.querySelectorAll('[role="tab"]'),
@@ -6,14 +6,14 @@ const initProcessForm = function (conditional_questions) {
     formProgressBar = document.getElementById("progress-form-status-bar");
 
   let currentStep = 0;
+  const givenAnswers = [];
+  console.log("conditionalQuestions:", conditionalQuestions);
+  console.log("givenAnswers:", givenAnswers);
 
-  console.log("conditional_questions:", conditional_questions);
-  const answers = [];
-
-  function findVisibleTabs(answers, conditionalQuestions) {
+  function findVisibleTabs(answers, questions) {
     const visibleTabs = [];
 
-    conditionalQuestions.forEach((cq) => {
+    questions.forEach((cq) => {
       const matchingAnswers = answers.filter((answer) => answer.id === cq.id);
 
       if (cq.unconditional) {
@@ -31,11 +31,21 @@ const initProcessForm = function (conditional_questions) {
       }
     });
 
+    // const visibleTabsSortedByTabIndex = visibleTabs.sort(
+    //   (a, b) => a.tabIndex - b.tabIndex
+    // );
+
     return visibleTabs;
   }
 
-  const visibleTabs = findVisibleTabs(answers, conditional_questions);
+  const visibleTabs = findVisibleTabs(givenAnswers, conditionalQuestions);
   console.log("visibleTabs:", visibleTabs);
+
+  function getNextTabIndex(currentIndex) {
+    const nextItem = visibleTabs.find((item) => item.tabIndex > currentIndex);
+    return nextItem ? nextItem.tabIndex : null;
+  }
+
   // Form Validation
 
   /*****************************************************************************
@@ -607,17 +617,21 @@ const initProcessForm = function (conditional_questions) {
         value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
       };
 
-      const existingAnswerIndex = answers.findIndex(
+      const existingAnswerIndex = givenAnswers.findIndex(
         (answer) => answer.id === response.id
       );
       if (isMultipleSelection || existingAnswerIndex === -1) {
-        answers.push(response);
+        givenAnswers.push(response);
       } else {
-        answers[existingAnswerIndex] = response;
+        givenAnswers[existingAnswerIndex] = response;
       }
 
-      console.log(answers);
-      let currentVisibleTabs = findVisibleTabs(answers, conditional_questions);
+      console.log(givenAnswers);
+
+      let currentVisibleTabs = findVisibleTabs(
+        givenAnswers,
+        conditionalQuestions
+      );
       console.log("currentVisibleTabs:", currentVisibleTabs);
 
       validateStep(currentStep)
@@ -628,7 +642,8 @@ const initProcessForm = function (conditional_questions) {
           // Progress to the next step
           const isLastTab = currentStep === tabItems.length - 1;
           if (!isLastTab && !isMultipleSelection && !isFreeText) {
-            activateTab(currentStep + 1);
+            const nextTabIndex = getNextTabIndex(currentStep);
+            activateTab(nextTabIndex);
             handleFromSteps(currentStep);
           }
         })

@@ -1,9 +1,5 @@
 // const { CURSOR_FLAGS } = require("mongodb");
-
-console.clear();
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("TIP Theme Ext Back-end loaded: v53");
-});
+// console.clear();
 
 const API = `/apps/tip/consultancy/generate`;
 const method = "POST";
@@ -49,19 +45,6 @@ if (currentAssessmentFormType === "condition") {
 }
 
 console.log("current targetedQuestionsSet:", targetedQuestionsSet);
-
-// if (treatmentType === "od_medicine_generic") {
-//   getConsultancyBody.conditionId = conditionId;
-//   getConsultancyBody.type = "CONDITION";
-// } else if (
-//   treatmentType === "od_medicine_treatment" ||
-//   treatmentType === "otc_medicine"
-// ) {
-//   getConsultancyBody.treatmentId = treatmentId;
-//   getConsultancyBody.type = "NEW";
-// } else {
-//   console.log("Unsupported treatment type!");
-// }
 
 function ready(fn) {
   if (
@@ -150,19 +133,20 @@ ready(function () {
     function handleConsultancy(questions) {
       consultancyHeader.style.display = "none";
       formProgressStatusContainer.style.display = "block";
-      console.log(questions);
+      console.log("question set:", questions);
 
       const conditional_questions = questions.map((question, index) => {
         const { conditional } = question;
         const tabIndex = index + 1;
+        // const unconditional = 1;
 
-        // Check if 'conditional' is an object
-        if (typeof conditional === "object" && conditional !== null) {
-          // Copy 'conditional' and add the 'index' property
-          return { ...conditional, tabIndex };
-        } else if (Array.isArray(conditional)) {
-          // If 'conditional' is an array, add only the 'index' property
+        // Check if 'conditional' is an array
+        if (Array.isArray(conditional)) {
+          // add "unconditional": true and the 'index' property
           return { unconditional: true, tabIndex };
+        } else if (typeof conditional === "object" && conditional !== null) {
+          // If 'conditional' is an object Copy 'conditional' and add the 'index' property
+          return { ...conditional, tabIndex };
         } else {
           // If 'conditional' is neither an object nor an array, set it to null
           return null;

@@ -30,12 +30,14 @@
 </div>
 <!-- partial -->
 <style>
-  .is-conditional-question {
+  /*  .is-conditional-question {
     display: none;
-  }
+  }*/
 </style>
 <script>
-  console.log('TIP Theme Ext Front-end loaded: v6');
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('TIP Theme Ext loaded: v59');
+  });
   const fullURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const urlWithoutParams = fullURL.split('?')[0];
