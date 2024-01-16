@@ -7,12 +7,13 @@ const initProcessForm = function (conditionalQuestions) {
 
   let currentStep = 0;
   const givenAnswers = [];
+  const visibleTabs = [];
   console.log("conditionalQuestions:", conditionalQuestions);
   console.log("givenAnswers:", givenAnswers);
+  console.log("visibleTabs:", visibleTabs);
 
   function findVisibleTabs(answers, questions) {
-    const visibleTabs = [];
-
+    visibleTabs = []; // Reset visibleTabs
     questions.forEach((cq) => {
       const matchingAnswers = answers.filter((answer) => answer.id === cq.id);
 
@@ -35,15 +36,25 @@ const initProcessForm = function (conditionalQuestions) {
     //   (a, b) => a.tabIndex - b.tabIndex
     // );
 
-    return visibleTabs;
+    // return visibleTabs;
   }
 
-  const visibleTabs = findVisibleTabs(givenAnswers, conditionalQuestions);
+  findVisibleTabs(givenAnswers, conditionalQuestions);
   console.log("visibleTabs:", visibleTabs);
 
-  function getNextTabIndex(currentIndex) {
-    const nextItem = visibleTabs.find((item) => item.tabIndex > currentIndex);
+  function getNextTabIndex(currentVisibleTabs, currentIndex) {
+    const nextItem = currentVisibleTabs.find(
+      (item) => item.tabIndex > currentIndex
+    );
     return nextItem ? nextItem.tabIndex : null;
+  }
+
+  function getPreviousTabIndex(currentVisibleTabs, currentIndex) {
+    const reversedArray = [...currentVisibleTabs].reverse();
+    const previousItem = reversedArray.find(
+      (item) => item.tabIndex < currentIndex
+    );
+    return previousItem ? previousItem.tabIndex : null;
   }
 
   // Form Validation
@@ -628,11 +639,8 @@ const initProcessForm = function (conditionalQuestions) {
 
       console.log(givenAnswers);
 
-      let currentVisibleTabs = findVisibleTabs(
-        givenAnswers,
-        conditionalQuestions
-      );
-      console.log("currentVisibleTabs:", currentVisibleTabs);
+      findVisibleTabs(givenAnswers, conditionalQuestions);
+      console.log("currentVisibleTabs:", visibleTabs);
 
       validateStep(currentStep)
         .then(() => {
@@ -642,7 +650,7 @@ const initProcessForm = function (conditionalQuestions) {
           // Progress to the next step
           const isLastTab = currentStep === tabItems.length - 1;
           if (!isLastTab && !isMultipleSelection && !isFreeText) {
-            const nextTabIndex = getNextTabIndex(currentStep);
+            const nextTabIndex = getNextTabIndex(visibleTabs, currentStep);
             activateTab(nextTabIndex);
             handleFromSteps(currentStep);
           }
@@ -664,7 +672,11 @@ const initProcessForm = function (conditionalQuestions) {
 
       if (target.matches('[data-action="prev"]')) {
         // Revisit the previous step
-        activateTab(currentStep - 1);
+        const previousTabIndex = getPreviousTabIndex(
+          currentVisibleTabs,
+          currentStep
+        );
+        activateTab(previousTabIndex);
         handleFromSteps(currentStep);
       }
     })
@@ -680,9 +692,9 @@ const initProcessForm = function (conditionalQuestions) {
         .then(() => {
           // Update the progress bar (step complete)
           handleProgress(true);
-
           // Progress to the next step
-          activateTab(currentStep + 1);
+          const nextTabIndex = getNextTabIndex(visibleTabs, currentStep);
+          activateTab(nextTabIndex);
           handleFromSteps(currentStep);
         })
         .catch((invalidFields) => {
@@ -701,7 +713,11 @@ const initProcessForm = function (conditionalQuestions) {
 
     if (target.matches('[data-action="prev"]')) {
       // Revisit the previous step
-      activateTab(currentStep - 1);
+      const previousTabIndex = getPreviousTabIndex(
+        currentVisibleTabs,
+        currentStep
+      );
+      activateTab(previousTabIndex);
       handleFromSteps(currentStep);
     }
   });
