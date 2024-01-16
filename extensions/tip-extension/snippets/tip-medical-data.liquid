@@ -3,7 +3,6 @@
 <script>
   console.log('TIP App: Theme extension loaded! - 3');
 </script>
-
 <!-- partial:index.partial.html -->
 <div class="mx-auto container tip-app-content tip-app-content-medical">
   <!-- Progress Form -->
@@ -134,7 +133,6 @@
       </div>
     </section>
     <!-- / End Step 1 -->
-
     <!-- Thank You -->
     {% comment %}
       <section id="progress-form__thank-you" hidden>
@@ -151,15 +149,7 @@
 
 <script type="text/javascript">
   console.log('Medical form loaded!');
-  {% comment %} const continueToNextForm = document.getElementById('continue-to-next-form');
-  const targetedTreatmentUrl = localStorage.getItem('targeted_treatment_url');
-  continueToNextForm.addEventListener('click', (e) => {
-    console.log('HIT via continue button');
-    window.location.href = targetedTreatmentUrl;
-  }); {% endcomment %}
-
   const FormSubmitBtn = document.querySelector('.tip-app-content-medical button[type=submit]');
-
   (function () {
     var dateField = document.getElementById('dob');
     dateField.addEventListener('focusout', function () {

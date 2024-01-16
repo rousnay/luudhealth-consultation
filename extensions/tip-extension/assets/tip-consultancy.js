@@ -1,19 +1,18 @@
 const initProcessForm = function (conditionalQuestions) {
   // Global Constants
-  const progressForm = document.getElementById("progress-form"),
-    tabItems = progressForm.querySelectorAll('[role="tab"]'),
-    tabPanels = progressForm.querySelectorAll('[role="tabpanel"]'),
-    formProgressBar = document.getElementById("progress-form-status-bar");
+  const progressForm = document.getElementById("progress-form");
+  const tabItems = progressForm.querySelectorAll('[role="tab"]');
+  const tabPanels = progressForm.querySelectorAll('[role="tabpanel"]');
+  const formProgressBar = document.getElementById("progress-form-status-bar");
 
+  const givenAnswers = [];
+  const visibleTabs = [];
   let currentStep = 0;
-  let givenAnswers = [];
-  let visibleTabs = [];
   console.log("conditionalQuestions:", conditionalQuestions);
-  console.log("givenAnswers:", givenAnswers);
-  console.log("visibleTabs:", visibleTabs);
 
   function findVisibleTabs(answers, questions) {
-    visibleTabs = []; // Reset visibleTabs
+    //visibleTabs = []; // Reset visibleTabs
+    visibleTabs.length = 0;
     questions.forEach((cq) => {
       const matchingAnswers = answers.filter((answer) => answer.id === cq.id);
 
@@ -31,12 +30,6 @@ const initProcessForm = function (conditionalQuestions) {
         }
       }
     });
-
-    // const visibleTabsSortedByTabIndex = visibleTabs.sort(
-    //   (a, b) => a.tabIndex - b.tabIndex
-    // );
-
-    // return visibleTabs;
   }
 
   findVisibleTabs(givenAnswers, conditionalQuestions);
@@ -629,10 +622,28 @@ const initProcessForm = function (conditionalQuestions) {
       const existingAnswerIndex = givenAnswers.findIndex(
         (answer) => answer.id === response.id
       );
-      if (isMultipleSelection || existingAnswerIndex === -1) {
-        givenAnswers.push(response);
+
+      if (isMultipleSelection) {
+        if (target.checked) {
+          // Checkbox is checked, add or update the response
+          // if (existingAnswerIndex === -1) {
+          givenAnswers.push(response);
+          // } else {
+          //   givenAnswers[existingAnswerIndex] = response;
+          // }
+        } else {
+          // Checkbox is unchecked, remove the response
+          if (existingAnswerIndex !== -1) {
+            givenAnswers.splice(existingAnswerIndex, 1);
+          }
+        }
       } else {
-        givenAnswers[existingAnswerIndex] = response;
+        // For other input types (text, radio), handle as before
+        if (existingAnswerIndex === -1) {
+          givenAnswers.push(response);
+        } else {
+          givenAnswers[existingAnswerIndex] = response;
+        }
       }
 
       console.log(givenAnswers);

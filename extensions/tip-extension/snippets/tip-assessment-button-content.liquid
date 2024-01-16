@@ -4,7 +4,6 @@
 {%- liquid
   assign section_id = section.id
   assign product_id = product.id
-  assign form_id = form.id
   assign condition_id = block.settings.condition_id
   assign treatment_id = block.settings.treatment_id
   assign treatment_type = block.settings.treatment_type
@@ -47,20 +46,9 @@
   <button type="button" class="button tip-full-width" id="start-consultancy">START ASSESSMENT</button>
 </div>
 
-<script type="text/javascript">
-  
-
-
-
-
-
-
-
-
-
-
-
-
+<script
+  type="text/javascript"
+>
 
 var product_treatment_id;
 var product_condition_id;
@@ -167,56 +155,8 @@ getReady(function () {
     }
   }
 
-  {% comment %} let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
+  {% comment %}
+  assign form_id = form.id
+  let sectionId = document.querySelector('#shopify-block-{{ block.id }}').closest('section').id;
   console.log(sectionId); {% endcomment %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
