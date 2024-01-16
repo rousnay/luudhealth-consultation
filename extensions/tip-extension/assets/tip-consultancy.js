@@ -984,7 +984,7 @@ const initProcessForm = function (conditionalQuestions) {
 
         // Filtering out all unanswered questions
         const consultancyFormData = convertedFormData.filter((data) => {
-          return visibleTabs.some((tab) => tab.id === data.question);
+          return givenAnswers.some((tab) => tab.id === data.question);
         });
 
         console.log("Answers data - final data:", consultancyFormData);
