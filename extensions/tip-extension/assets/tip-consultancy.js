@@ -42,15 +42,13 @@ const initProcessForm = function (conditionalQuestions) {
   findVisibleTabs(givenAnswers, conditionalQuestions);
   console.log("visibleTabs:", visibleTabs);
 
-  function getNextTabIndex(currentVisibleTabs, currentIndex) {
-    const nextItem = currentVisibleTabs.find(
-      (item) => item.tabIndex > currentIndex
-    );
+  function getNextTabIndex(visibleTabs, currentIndex) {
+    const nextItem = visibleTabs.find((item) => item.tabIndex > currentIndex);
     return nextItem ? nextItem.tabIndex : null;
   }
 
-  function getPreviousTabIndex(currentVisibleTabs, currentIndex) {
-    const reversedArray = [...currentVisibleTabs].reverse();
+  function getPreviousTabIndex(visibleTabs, currentIndex) {
+    const reversedArray = [...visibleTabs].reverse();
     const previousItem = reversedArray.find(
       (item) => item.tabIndex < currentIndex
     );
@@ -640,7 +638,7 @@ const initProcessForm = function (conditionalQuestions) {
       console.log(givenAnswers);
 
       findVisibleTabs(givenAnswers, conditionalQuestions);
-      console.log("currentVisibleTabs:", visibleTabs);
+      console.log("visibleTabs:", visibleTabs);
 
       validateStep(currentStep)
         .then(() => {
@@ -672,10 +670,7 @@ const initProcessForm = function (conditionalQuestions) {
 
       if (target.matches('[data-action="prev"]')) {
         // Revisit the previous step
-        const previousTabIndex = getPreviousTabIndex(
-          currentVisibleTabs,
-          currentStep
-        );
+        const previousTabIndex = getPreviousTabIndex(visibleTabs, currentStep);
         activateTab(previousTabIndex);
         handleFromSteps(currentStep);
       }
@@ -713,10 +708,7 @@ const initProcessForm = function (conditionalQuestions) {
 
     if (target.matches('[data-action="prev"]')) {
       // Revisit the previous step
-      const previousTabIndex = getPreviousTabIndex(
-        currentVisibleTabs,
-        currentStep
-      );
+      const previousTabIndex = getPreviousTabIndex(visibleTabs, currentStep);
       activateTab(previousTabIndex);
       handleFromSteps(currentStep);
     }
