@@ -646,7 +646,7 @@ const initProcessForm = function (conditionalQuestions) {
         }
       }
 
-      console.log(givenAnswers);
+      console.log("givenAnswers", givenAnswers);
 
       findVisibleTabs(givenAnswers, conditionalQuestions);
       console.log("visibleTabs:", visibleTabs);
@@ -971,7 +971,7 @@ const initProcessForm = function (conditionalQuestions) {
         //   consultancyDataIntObj
         // );
 
-        const consultancyFormData = Object.keys(updatedFormData).map((key) => {
+        const convertedFormData = Object.keys(updatedFormData).map((key) => {
           let answer = updatedFormData[key];
           if (answer === "0" || answer === "1") {
             answer = parseInt(answer);
@@ -980,6 +980,11 @@ const initProcessForm = function (conditionalQuestions) {
             question: parseInt(key),
             answer: answer,
           };
+        });
+
+        // Filtering out all unanswered questions
+        const consultancyFormData = convertedFormData.filter((data) => {
+          return visibleTabs.some((tab) => tab.id === data.question);
         });
 
         console.log("Answers data - final data:", consultancyFormData);
