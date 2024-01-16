@@ -137,16 +137,16 @@ ready(function () {
 
       const conditional_questions = questions.map((question, index) => {
         const { conditional } = question;
-        const tabIndex = index + 1;
+        // const tabIndex = index + 1;
         // const unconditional = 1;
 
         // Check if 'conditional' is an array
         if (Array.isArray(conditional)) {
           // add "unconditional": true and the 'index' property
-          return { unconditional: true, tabIndex };
+          return { unconditional: true, tabIndex: index };
         } else if (typeof conditional === "object" && conditional !== null) {
           // If 'conditional' is an object Copy 'conditional' and add the 'index' property
-          return { ...conditional, tabIndex };
+          return { ...conditional, tabIndex: index };
         } else {
           // If 'conditional' is neither an object nor an array, set it to null
           return null;
