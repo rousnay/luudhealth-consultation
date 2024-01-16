@@ -6,8 +6,8 @@ const initProcessForm = function (conditionalQuestions) {
     formProgressBar = document.getElementById("progress-form-status-bar");
 
   let currentStep = 0;
-  const givenAnswers = [];
-  const visibleTabs = [];
+  let givenAnswers = [];
+  let visibleTabs = [];
   console.log("conditionalQuestions:", conditionalQuestions);
   console.log("givenAnswers:", givenAnswers);
   console.log("visibleTabs:", visibleTabs);
