@@ -910,8 +910,23 @@ const initProcessForm = function (conditionalQuestions) {
           }
         });
 
+        // Handle radio buttons
+        const radioButtons = form.querySelectorAll(
+          'input[data-input-type="radio"]:checked'
+        );
+        const checkedRadioQuestionNames = [];
+        radioButtons.forEach((radioButton) => {
+          const name = radioButton.name;
+          if (!checkedRadioQuestionNames.includes(name)) {
+            checkedRadioQuestionNames.push(name);
+          }
+        });
+
         for (const [name, value] of formData.entries()) {
-          if (checkedQuestionNames.includes(name)) {
+          if (
+            checkedQuestionNames.includes(name) ||
+            checkedRadioQuestionNames.includes(name)
+          ) {
             if (!updatedFormData[name]) {
               updatedFormData[name] = [];
             }
@@ -927,50 +942,7 @@ const initProcessForm = function (conditionalQuestions) {
           JSON.stringify(updatedFormData)
         );
 
-        // //convert object properties to integer (except the array and string with alphabetic values)
-        // function convertIntObj(obj) {
-        //   const result = {};
-        //   for (var key in obj) {
-        //     if (obj.hasOwnProperty(key)) {
-        //       var value = obj[key];
-        //       var integerValue = parseInt(value, 10);
-        //       // Check if the value contains non-integer characters or spaces, or the value can be parsed as an integer
-        //       if (/[^0-9\s]/.test(value) || isNaN(integerValue)) {
-        //         // If it does, store it as an array with the original value
-        //         result[key] = [value];
-        //       } else {
-        //         // If not,  store it as an integer
-        //         result[key] = integerValue;
-        //       }
-        //     }
-        //   }
-        //   return result;
-        // }
-        // const consultancyDataIntObj = convertIntObj(updatedData);
-        // console.log("Answers data - prop to int:", consultancyDataIntObj);
-        // localStorage.setItem(
-        //   "2_answers_data_prop_int:",
-        //   JSON.stringify(consultancyDataIntObj)
-        // );
-
-        //convert to match TIP accepted datatype, e.g. {"90": 1, "91": 0,} into  [{"question": 90,"answer": 1},{"question": 91,"answer": 1},
-        // function convertIntoTipPayload(obj) {
-        //   var result = [];
-
-        //   for (var key in obj) {
-        //     if (obj.hasOwnProperty(key)) {
-        //       var question = parseInt(key, 10);
-        //       var answer = obj[key];
-        //       result.push({ question: question, answer: answer });
-        //     }
-        //   }
-        //   return result;
-        // }
-
-        // const consultancyFormData = convertIntoTipPayload(
-        //   consultancyDataIntObj
-        // );
-
+        //convert object properties to integer (except the array and string with alphabetic values)
         const convertedFormData = Object.keys(updatedFormData).map((key) => {
           let answer = updatedFormData[key];
           if (answer === "0" || answer === "1") {
