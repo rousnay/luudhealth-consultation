@@ -614,9 +614,27 @@ const initProcessForm = function (conditionalQuestions) {
       const isFreeText = target.type === "text";
       const isRadioSelection = target.type === "radio";
 
+      // const response = {
+      //   id: parseInt(target.name, 10),
+      //   value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
+      // };
+
+      // const response = {
+      //   id: parseInt(target.name, 10),
+      //   value: isRadioSelection
+      //     ? [parseInt(target.value, 10) || target.value]
+      //     : [target.value],
+      // };
+
       const response = {
         id: parseInt(target.name, 10),
-        value: isRadioSelection ? [parseInt(target.value, 10)] : [target.value],
+        value: isRadioSelection
+          ? [
+              target.value === "0" || target.value === "1"
+                ? parseInt(target.value, 10)
+                : target.value,
+            ]
+          : [target.value],
       };
 
       const existingAnswerIndex = givenAnswers.findIndex(

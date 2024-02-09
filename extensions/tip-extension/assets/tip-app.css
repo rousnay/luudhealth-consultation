@@ -421,6 +421,7 @@ li + li {
   height: 2rem !important;
   margin: 0;
   width: 2rem !important;
+  flex-shrink: 0;
 }
 
 .tip-app-content [type="radio"]:focus-visible,
