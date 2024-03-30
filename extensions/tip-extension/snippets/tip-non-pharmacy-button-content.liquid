@@ -1,0 +1,75 @@
+{{ 'stylesheet' | asset_url | stylesheet_tag }}
+<script src="{{ 'javascript' | asset_url }}" defer></script>
+
+{%- liquid
+  assign section_id = section.id
+  assign product_id = product.id
+-%}
+
+<div class="product-form__input">
+  <input
+    type="hidden"
+    form="product-form-{{ section_id }}-{{ product_id }}"
+    id="product-submission-uuid"
+    name="properties[_submission_uuid]"
+  >
+
+  <input
+    type="hidden"
+    form="product-form-{{ section_id }}-{{ product_id }}"
+    id="product-treatment-type"
+    name="properties[_treatment_type]"
+    value="non_pharmacy"
+  >
+</div>
+
+<script
+  type="text/javascript"
+>
+  getReady(function () {
+    console.log('non-pharmacy loaded: V5');
+    const product_treatment_type = document.getElementById('product-treatment-type');
+    const product_submission_uuid = document.getElementById('product-submission-uuid');
+    function generateUUID() {
+      var uuid = '',
+        i,
+        random;
+      for (i = 0; i < 32; i++) {
+        random = (Math.random() * 16) | 0;
+        if (i === 8 || i === 12 || i === 16 || i === 20) {
+          uuid += '-';
+        }
+        uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16);
+      }
+      return uuid;
+    }
+
+    // Check if crypto.randomUUID is available, if not, use the custom function
+    if (!window.crypto || !window.crypto.randomUUID) {
+      // Generate a random UUID using the custom function
+      var randomUUID = generateUUID();
+      console.log('custom_uuid:', randomUUID);
+
+      // Set the value of the input field to the generated UUID
+      document.getElementById('product-submission-uuid').value = randomUUID;
+    } else {
+      // Use crypto.randomUUID if available
+      var randomUUID = window.crypto.randomUUID();
+      console.log('buit in uuid:', randomUUID);
+
+      // Set the value of the input field
+      document.getElementById('product-submission-uuid').value = randomUUID;
+    }
+    console.log('product_submission_uuid:', product_submission_uuid.value);
+    console.log('Treatment Type:', product_treatment_type.value);
+  });
+
+  function getReady(fn) {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(fn, 1);
+      document.removeEventListener('DOMContentLoaded', fn);
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+</script>

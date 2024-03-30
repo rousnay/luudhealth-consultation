@@ -1,0 +1,19 @@
+<!--
+  <span style="color: {{ block.settings.color }}">
+  Online ED treatments, discreetly delivered
+  </span>
+-->
+
+{% render 'tip-non-pharmacy-button-content' %}
+
+{% schema %}
+{
+  "name": "Non Pharmacy Options",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["*"]
+  },
+  "stylesheet": "tip-app.css",
+  "settings": []
+}
+{% endschema %}
