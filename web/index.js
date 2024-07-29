@@ -13,7 +13,7 @@ import webhookHandlers from "./webhook-handlers.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 
-import { connectToDB } from "./db.js";
+import { connectToDB, DB } from "./db.js";
 import {
   conditionSubmit,
   consultancySubmit,
@@ -55,6 +55,7 @@ const tip_header = {
 
 const app = express();
 
+console.log("### SHOP:", SHOP);
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
@@ -205,6 +206,48 @@ app.post("/proxy_route/consultancy", async (req, res) => {
   res.json(response);
   res.status(200).end();
 });
+// Shopify APIs
+// /proxy_route/fulfillment
+// /api/order/fulfillment
+app.post("/proxy_route/fulfillment", async (req, res) => {
+  // orderFulfilled();
+
+  console.log("## Hit the API");
+
+  // if (!req.query.shop) {
+  //   res.status(500);
+  //   return res.send("No shop provided");
+  // }
+
+  // const url = new URL(req.url);
+  // const shop = url.searchParams.get("shop");
+  // const sanitizedShop = shopify.utils.sanitizeShop(SHOP, true);
+
+  // if (!sanitizedShop) {
+  //   throw new Error("Invalid shop provided");
+  // }
+
+  await someOfflineProcess(SHOP);
+
+  res.json("response");
+  res.status(200).end();
+});
+async function someOfflineProcess(shop) {
+  const sessionId = await shopify.api.session.getOfflineId(shop);
+  const session = await shopify.config.sessionStorage.loadSession(sessionId);
+  const client = new shopify.api.clients.Rest({ session });
+
+  console.log(sessionId);
+  console.log(session);
+  console.log(client);
+  console.log("### SHOP:", SHOP);
+
+  // Use the client, e.g. update a product:
+  // const products = await client.put({
+  //   path: `products/${product.id}.json`,
+  //   data,
+  // });
+}
 
 // Start TIP API Backend
 app.get("/api/tip", async (req, res) => {
@@ -257,50 +300,6 @@ app.post("/api/tip/consultations", async (req, res) => {
   res.json(response);
   res.status(200).end();
 });
-// Shopify APIs
-
-// /proxy_route/fulfillment
-// /api/order/fulfillment
-
-app.post("/proxy_route/fulfillment", async (req, res) => {
-  // orderFulfilled();
-
-  console.log("## Hit the API");
-
-  // if (!req.query.shop) {
-  //   res.status(500);
-  //   return res.send("No shop provided");
-  // }
-
-  // const url = new URL(req.url);
-  // const shop = url.searchParams.get("shop");
-  // const sanitizedShop = shopify.utils.sanitizeShop(SHOP, true);
-
-  // if (!sanitizedShop) {
-  //   throw new Error("Invalid shop provided");
-  // }
-
-  await someOfflineProcess(SHOP);
-
-  res.json("response");
-  res.status(200).end();
-});
-
-async function someOfflineProcess(shop) {
-  const sessionId = await shopify.api.session.getOfflineId(shop);
-  const session = await shopify.config.sessionStorage.loadSession(sessionId);
-  const client = new shopify.api.clients.Rest({ session });
-
-  console.log(sessionId);
-  console.log(session);
-  console.log(client);
-
-  // Use the client, e.g. update a product:
-  // const products = await client.put({
-  //   path: `products/${product.id}.json`,
-  //   data,
-  // });
-}
 
 app.post("/api/fulfillment", async (_req, res) => {
   const fulfillment = await shopify.api.rest.Fulfillment({
@@ -349,6 +348,103 @@ app.get("/api/products/create", async (_req, res) => {
   res.status(status).send({ success: status === 200, error });
 });
 
+app.get("/api/tip/orders/all", async (req, res) => {
+  try {
+    const ordersCollection = DB.collection("data_order");
+    const orderAggregatedCollection = DB.collection("data_aggregated");
+
+    const identityCollection = DB.collection("submitted_identity");
+    const notificationIdentityCollection = DB.collection(
+      "notification_identity"
+    );
+    const submittedOrderCollection = DB.collection("submitted_order");
+    const notificationOrderCollection = DB.collection("notification_order");
+
+    // Fetch all orders from the data_aggregated collection
+    const orders = await ordersCollection
+      .find()
+      .sort({ created_at: -1 })
+      .toArray();
+
+    // Iterate over each order and fetch the matching status and identity_verification_status
+    const ordersWithAdditionalData = await Promise.all(
+      orders.map(async (order) => {
+        const submissionUuid = order.submission_uuid;
+        const patientUuidPrefix = `LUUD-PAT-${submissionUuid}`;
+        const orderUuidPrefix = `LUUD-ORD-${submissionUuid}`;
+
+        let identity_submission_status = "--";
+        let identity_verification_status = "--";
+
+        // Fetch the matching document from submitted_identity collection
+        const identityDoc = await identityCollection.findOne({
+          patient_uuid: patientUuidPrefix,
+        });
+
+        if (identityDoc) {
+          identity_submission_status =
+            identityDoc.response_data.status === 200 ? "Submitted" : "Error";
+        }
+
+        // Fetch the matching document from notification_identity collection
+        const notificationIdentityDoc =
+          await notificationIdentityCollection.findOne({
+            submission_uuid: patientUuidPrefix,
+          });
+
+        if (notificationIdentityDoc) {
+          identity_verification_status =
+            notificationIdentityDoc.type === "USER_ID_PASS" ? "Passed" : "Fail";
+        }
+
+        // Add the identity_verification to the order
+        order.identity_verification =
+          identity_submission_status + " / " + identity_verification_status;
+
+        // Fetch the matching document from submitted_order collection
+        const submittedOrderDoc = await submittedOrderCollection.findOne({
+          order_uuid: orderUuidPrefix,
+        });
+
+        if (submittedOrderDoc) {
+          // Add the status to the order if the document is found
+          order.order_submission_status =
+            submittedOrderDoc.response_data.status === 201
+              ? "Submitted"
+              : "Failed";
+        } else {
+          // Add a default status if no document is found
+          order.order_submission_status = "--";
+        }
+
+        // Fetch the matching document from notification_order collection
+        const notificationOrderDoc = await notificationOrderCollection.findOne({
+          submission_uuid: orderUuidPrefix,
+        });
+
+        if (notificationOrderDoc) {
+          // Add the type as status if the document is found
+          order.order_fulfillment_status =
+            notificationOrderDoc.type === "ORDER_FULFILLED"
+              ? "Fulfilled"
+              : "Cancelled";
+        } else {
+          // Add a default status if no document is found
+          order.order_fulfillment_status = "--";
+        }
+
+        return order;
+      })
+    );
+
+    // Send the orders with status and identity_verification_status as the response
+    res.status(200).json(ordersWithAdditionalData);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
@@ -359,6 +455,7 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 connectToDB(() => {
+  console.log("### SHOP:", SHOP);
   console.log("### Successfully connect to the database!");
   app.listen(PORT, () => {
     console.log("### Server is listening to port: " + PORT);

@@ -108,7 +108,7 @@ export default function HomePage() {
                 autoComplete="text"
                 helpText={
                   <span>
-                    Please input your treatment ID to get the consultancy questionnaire
+                    Please input your treatment ID to get the consultancy questionnaire.
                   </span>
                 }
               />
