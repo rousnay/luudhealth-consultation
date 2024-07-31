@@ -26,8 +26,9 @@ export default function Routes({ pages }) {
   return (
     <ReactRouterRoutes>
       {routeComponents}
-      <Route path="*" element={<NotFound />} />
+      {/* <Route path="/orders/:id" element={<OrderDetails />} /> */}
       {/* <Route path="/tip-orders" element={<TIPOrder />} /> */}
+      <Route path="*" element={<NotFound />} />
     </ReactRouterRoutes>
   );
 }

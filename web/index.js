@@ -445,6 +445,79 @@ app.get("/api/tip/orders/all", async (req, res) => {
   }
 });
 
+app.get("/api/tip/orders/:number", async (req, res) => {
+  try {
+    const orderNumber = Number(req.params.number);
+    const ordersCollection = DB.collection("data_order");
+    const identityCollection = DB.collection("submitted_identity");
+    const notificationIdentityCollection = DB.collection(
+      "notification_identity"
+    );
+    const submittedOrderCollection = DB.collection("submitted_order");
+    const notificationOrderCollection = DB.collection("notification_order");
+
+    // Fetch the order from the data_order collection by order_number
+    const order = await ordersCollection.findOne({ order_number: orderNumber });
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    const submissionUuid = order.submission_uuid;
+    const patientUuidPrefix = `LUUD-PAT-${submissionUuid}`;
+    const orderUuidPrefix = `LUUD-ORD-${submissionUuid}`;
+
+    let orderDetails = {
+      ...order,
+      identity_data: {},
+      order_data: {},
+    };
+
+    // Fetch the matching document from submitted_identity collection
+    const identityDoc = await identityCollection.findOne({
+      patient_uuid: patientUuidPrefix,
+    });
+
+    if (identityDoc) {
+      orderDetails.identity_data.submitted = identityDoc;
+    }
+
+    // Fetch the matching document from notification_identity collection
+    const notificationIdentityDoc =
+      await notificationIdentityCollection.findOne({
+        submission_uuid: patientUuidPrefix,
+      });
+
+    if (notificationIdentityDoc) {
+      orderDetails.identity_data.notification = notificationIdentityDoc;
+    }
+
+    // Fetch the matching document from submitted_order collection
+    const submittedOrderDoc = await submittedOrderCollection.findOne({
+      order_uuid: orderUuidPrefix,
+    });
+
+    if (submittedOrderDoc) {
+      orderDetails.order_data.submitted = submittedOrderDoc;
+    }
+
+    // Fetch the matching document from notification_order collection
+    const notificationOrderDoc = await notificationOrderCollection.findOne({
+      submission_uuid: orderUuidPrefix,
+    });
+
+    if (notificationOrderDoc) {
+      orderDetails.order_data.notification = notificationOrderDoc;
+    }
+
+    // Send the order with status and identity_verification_status as the response
+    res.status(200).json(orderDetails);
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {

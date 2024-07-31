@@ -1,3 +1,4 @@
+// TIPOrder.jsx
 import {
   Page,
   Layout,
@@ -17,10 +18,12 @@ import { trophyImage } from "../assets";
 import React from 'react';
 import { useState, useCallback, useEffect } from "react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
-export default function TIPOrder() {
+export default function TipOrder() {
   const [orders, setOrders] = useState([]);
   const fetch = useAuthenticatedFetch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchOrders() {
@@ -44,7 +47,8 @@ export default function TIPOrder() {
 
   const rowMarkup = orders.map(
     (
-      { _id,
+      {
+        _id,
         order_number,
         customer_name,
         items,
@@ -52,14 +56,16 @@ export default function TIPOrder() {
         approved_item_count,
         approval_required_item_count,
         order_submission_status,
-        order_fulfillment_status },
+        order_fulfillment_status
+      },
       index,
     ) => (
       <IndexTable.Row
         id={_id}
         key={_id}
-        selected={selectedResources.includes(_id)}
+        selected={selectedResources.includes(order_number)}
         position={index}
+        onClick={() => navigate(`/tip-orders/${order_number}`)}
       >
         <IndexTable.Cell>
           <Text variant="bodyMd" fontWeight="bold" as="span">
@@ -81,42 +87,39 @@ export default function TIPOrder() {
         <IndexTable.Cell>
           {identity_verification !== "-- / --" ? (
             <Badge status={identity_verification === "Submitted / Passed" ? "success" : "warning"}>
-            {identity_verification}
-          </Badge>
-          ): (
+              {identity_verification}
+            </Badge>
+          ) : (
             "--"
           )}
         </IndexTable.Cell>
         <IndexTable.Cell>
           {approval_required_item_count > 0 ? (
             <Badge status={approval_required_item_count === approved_item_count ? "success" : "warning"}>
-            {approved_item_count} of {approval_required_item_count}
-          </Badge>
-          ): (
+              {approved_item_count} of {approval_required_item_count}
+            </Badge>
+          ) : (
             "--"
           )}
-
         </IndexTable.Cell>
         <IndexTable.Cell>
           {order_submission_status !== "--" ? (
             <Badge status={order_submission_status === "Submitted" ? "success" : "warning"} progress={order_submission_status === "Submitted" ? "complete" : "incomplete"}>
-            {order_submission_status}
-          </Badge>
-          ): (
+              {order_submission_status}
+            </Badge>
+          ) : (
             "--"
           )}
-          </IndexTable.Cell>
+        </IndexTable.Cell>
         <IndexTable.Cell>
           {order_fulfillment_status !== "--" ? (
             <Badge status={order_fulfillment_status === "Fulfilled" ? "success" : "error"} progress={order_fulfillment_status === "Fulfilled" ? "complete" : "incomplete"}>
-            {order_fulfillment_status}
-          </Badge>
-          ): (
+              {order_fulfillment_status}
+            </Badge>
+          ) : (
             order_fulfillment_status
           )}
-
-          </IndexTable.Cell>
-
+        </IndexTable.Cell>
       </IndexTable.Row>
     ),
   );
@@ -140,7 +143,6 @@ export default function TIPOrder() {
           { title: 'Fulfillment Status' },
         ]}
       >
-
         {rowMarkup}
       </IndexTable>
     </LegacyCard>
