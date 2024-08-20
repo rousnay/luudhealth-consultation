@@ -351,7 +351,7 @@ app.get("/api/products/create", async (_req, res) => {
 app.get("/api/tip/orders/all", async (req, res) => {
   try {
     const ordersCollection = DB.collection("data_order");
-    const orderAggregatedCollection = DB.collection("data_aggregated");
+    // const orderAggregatedCollection = DB.collection("data_aggregated");
 
     const identityCollection = DB.collection("submitted_identity");
     const notificationIdentityCollection = DB.collection(
@@ -453,6 +453,12 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     const notificationIdentityCollection = DB.collection(
       "notification_identity"
     );
+    const submittedConsultationCollection = DB.collection(
+      "submitted_consultation"
+    );
+    const notificationConsultationCollection = DB.collection(
+      "notification_consultation"
+    );
     const submittedOrderCollection = DB.collection("submitted_order");
     const notificationOrderCollection = DB.collection("notification_order");
 
@@ -465,11 +471,13 @@ app.get("/api/tip/orders/:number", async (req, res) => {
 
     const submissionUuid = order.submission_uuid;
     const patientUuidPrefix = `LUUD-PAT-${submissionUuid}`;
+    const consultationUuidRegExp = new RegExp(submissionUuid);
     const orderUuidPrefix = `LUUD-ORD-${submissionUuid}`;
 
     let orderDetails = {
       ...order,
       identity_data: {},
+      consultation_data: {},
       order_data: {},
     };
 
@@ -490,6 +498,28 @@ app.get("/api/tip/orders/:number", async (req, res) => {
 
     if (notificationIdentityDoc) {
       orderDetails.identity_data.notification = notificationIdentityDoc;
+    }
+
+    // Fetch the matching document from submitted_consultation collection
+    const submittedConsultationDoc = await submittedConsultationCollection
+      .find({
+        consultancy_uuid: consultationUuidRegExp,
+      })
+      .toArray();
+
+    if (submittedConsultationDoc) {
+      orderDetails.consultation_data.submitted = submittedConsultationDoc;
+    }
+
+    // Fetch the matching document from notification_consultation collection
+    const notificationConsultationDoc = await notificationConsultationCollection
+      .find({
+        submission_uuid: consultationUuidRegExp,
+      })
+      .toArray();
+
+    if (notificationConsultationDoc) {
+      orderDetails.consultation_data.notification = notificationConsultationDoc;
     }
 
     // Fetch the matching document from submitted_order collection
