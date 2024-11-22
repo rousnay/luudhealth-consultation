@@ -90,7 +90,7 @@ export default function OrderDetails() {
               <Text variant="bodyMd" fontWeight="bold">
                 Patient Info:
               </Text>
-              <Text>Phone number: {order?.patient_info?.phone}</Text>
+              <Text>Phone: {order?.patient_info?.phone}</Text>
               <Text>Gender: {order?.patient_info?.gender}</Text>
               <Text>Date of Birth: {order?.patient_info?.dob}</Text>
             </Card.Section>
