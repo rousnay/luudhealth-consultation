@@ -85,14 +85,16 @@ export default function OrderDetails() {
               </Text>
               <Text>Approved by TIP: {order.approved_item_count}</Text>
             </Card.Section>
+
             <Card.Section>
               <Text variant="bodyMd" fontWeight="bold">
                 Patient Info:
               </Text>
-              <Text>Phone: {order.patient_info.phone}</Text>
-              <Text>Gender: {order.patient_info.gender}</Text>
-              <Text>Date of Birth: {order.patient_info.dob}</Text>
+              <Text>Phone number: {order?.patient_info?.phone}</Text>
+              <Text>Gender: {order?.patient_info?.gender}</Text>
+              <Text>Date of Birth: {order?.patient_info?.dob}</Text>
             </Card.Section>
+
             <Card.Section>
               <Text variant="bodyMd" fontWeight="bold">
                 Billing Address:
