@@ -156,10 +156,10 @@ ready(function () {
       questions.map(function (question, i) {
         let section = document.createElement("section");
         section.classList.add("pop-in");
-        section.setAttribute("id", `progress-form__panel-${i + 1}`);
+        section.setAttribute("id", `progress-form__panel-${i}`);
         section.setAttribute("role", "tabpanel");
-        section.setAttribute("aria-labelledby", `progress-form__tab-${i + 1}`);
-        section.setAttribute("tabindex", i + 1);
+        section.setAttribute("aria-labelledby", `progress-form__tab-${i}`);
+        section.setAttribute("tabindex", i);
 
         if (i !== 0) {
           section.hidden = true;
@@ -210,6 +210,11 @@ ready(function () {
 
           let legend = document.createElement("legend");
           legend.innerHTML = `${question?.question_text}`;
+
+          let q_description = document.createElement("div");
+          q_description.classList.add("question-description");
+          q_description.innerHTML = `${question?.question_description}`;
+
           divButtons.classList.add("radio-buttons");
           // legend.insertAdjacentHTML(
           //   "afterbegin",
@@ -229,6 +234,7 @@ ready(function () {
           );
 
           fieldset.appendChild(legend);
+          fieldset.appendChild(q_description);
           fieldset.appendChild(divButtons);
 
           if (
@@ -309,6 +315,10 @@ ready(function () {
           let legend = document.createElement("legend");
           legend.innerHTML = `${question?.question_text}`;
 
+          let q_description = document.createElement("div");
+          q_description.classList.add("question-description");
+          q_description.innerHTML = `${question?.question_description}`;
+
           question?.options?.map((option) => {
             //create element
             let label = document.createElement("label");
@@ -328,6 +338,7 @@ ready(function () {
             divCheckboxes.appendChild(label);
 
             fieldset.appendChild(legend);
+            fieldset.appendChild(q_description);
             fieldset.appendChild(divCheckboxes);
             // fieldset.appendChild(label);
           });
@@ -390,6 +401,10 @@ ready(function () {
           let legend = document.createElement("legend");
           legend.innerHTML = `${question?.question_text}`;
 
+          let q_description = document.createElement("div");
+          q_description.classList.add("question-description");
+          q_description.innerHTML = `${question?.question_description}`;
+
           question?.options?.map((option) => {
             //create element
             let label = document.createElement("label");
@@ -410,6 +425,7 @@ ready(function () {
             label.appendChild(span);
             divRadioButtons.appendChild(label);
             fieldset.appendChild(legend);
+            fieldset.appendChild(q_description);
             fieldset.appendChild(divRadioButtons);
             // fieldset.appendChild(label);
           });
@@ -462,6 +478,10 @@ ready(function () {
           let legend = document.createElement("legend");
           legend.innerHTML = `${question?.question_text}`;
 
+          let q_description = document.createElement("div");
+          q_description.classList.add("question-description");
+          q_description.innerHTML = `${question?.question_description}`;
+
           //create element
           let label = document.createElement("label");
           let span = document.createElement("span");
@@ -481,6 +501,7 @@ ready(function () {
           divFreeText.appendChild(label);
 
           fieldset.appendChild(legend);
+          fieldset.appendChild(q_description);
           fieldset.appendChild(divFreeText);
           // fieldset.appendChild(label);
 

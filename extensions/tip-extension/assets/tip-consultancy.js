@@ -674,10 +674,36 @@ const initProcessForm = function (conditionalQuestions) {
           // Update the progress bar (step complete)
           handleProgress(true);
 
+          console.log("check 1");
+
           // Progress to the next step
           const isLastTab = currentStep === tabItems.length - 1;
+
+          const conditionalLastTab =
+            visibleTabs[visibleTabs.length - 1].tabIndex;
+
+          console.log(
+            "previousTabIndex:",
+            currentStep,
+            "isLastTab:",
+            isLastTab,
+            "isMultipleSelection:",
+            isMultipleSelection,
+            "isFreeText:",
+            isFreeText,
+            "conditionalLastTab:",
+            conditionalLastTab
+          );
+
+          if (currentStep === conditionalLastTab && !isLastTab) {
+            console.log("check 3");
+            processFormSubmission(progressForm);
+          }
+
           if (!isLastTab && !isMultipleSelection && !isFreeText) {
+            console.log("check 2");
             const nextTabIndex = getNextTabIndex(visibleTabs, currentStep);
+            console.log("currentTabIndex", nextTabIndex);
             activateTab(nextTabIndex);
             handleFromSteps(currentStep);
           }
@@ -861,11 +887,7 @@ const initProcessForm = function (conditionalQuestions) {
   }
 
   /****************************************************************************/
-
-  progressForm.addEventListener("submit", (e) => {
-    // Prevent the form from submitting
-    e.preventDefault();
-
+  function processFormSubmission(form) {
     /*****************************************************************************
      * Get Treatment information
      */
@@ -895,8 +917,8 @@ const initProcessForm = function (conditionalQuestions) {
     // );
 
     // Get the API endpoint using the form action attribute
-    const form = e.currentTarget,
-      API = new URL(form.action);
+    // const form = e.currentTarget;
+    const API = new URL(form.action);
 
     validateStep(currentStep)
       .then(() => {
@@ -1129,5 +1151,11 @@ const initProcessForm = function (conditionalQuestions) {
         // Focus the first found invalid field for the user
         invalidFields[0].focus();
       });
+  }
+
+  // Attach to form submit event
+  progressForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    processFormSubmission(e.currentTarget);
   });
 };

@@ -1,13 +1,18 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "Luudhealth Consultation"
 client_id = "b1836b6fc7d2c08fd814f99a16984825"
+name = "Luudhealth Consultation"
 application_url = "https://consultation.luudhealth.com"
 embedded = true
 
+[build]
+automatically_update_urls_on_dev = false
+dev_store_url = "iplaysafe-consultancy-app-store.myshopify.com"
+include_config_on_deploy = false
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products,write_orders,read_orders,read_draft_orders,read_checkouts,read_customers"
+scopes = "read_checkouts,read_customers,read_draft_orders,read_orders,write_orders,write_products"
 use_legacy_install_flow = true
 
 [auth]
@@ -27,7 +32,3 @@ prefix = "apps"
 
 [pos]
 embedded = false
-
-[build]
-automatically_update_urls_on_dev = false
-dev_store_url = "iplaysafe-consultancy-app-store.myshopify.com"
