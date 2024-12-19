@@ -382,6 +382,7 @@ li + li {
 .tip-app-content select {
   line-height: var(--field-height);
   padding: var(--field-padding);
+  height: var(--field-height);
 }
 
 .tip-app-content select {
