@@ -238,6 +238,54 @@ const initProcessForm = function (conditionalQuestions) {
   };
 
   /*****************************************************************************
+   * Expects a string.
+   *
+   * Returns a boolean if the provided value *reasonably* matches the pattern
+   * of a valid date in the format YYYY-MM-DD.
+   */
+
+  const isValidDate = (val) => {
+    const regex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
+
+    if (!regex.test(val)) {
+      return false;
+    }
+
+    const date = new Date(val);
+
+    // Ensure the date is valid and matches the input (e.g., "2023-02-30" would fail)
+    return (
+      date instanceof Date &&
+      !isNaN(date) &&
+      val === date.toISOString().split("T")[0]
+    );
+  };
+
+  /*****************************************************************************
+   * Expects a Node (input[type="date"]).
+   */
+
+  const validateDate = (field) => {
+    const val = field.value.trim();
+
+    if (val === "" && field.required) {
+      return {
+        isValid: false,
+        message: "This field is required.",
+      };
+      // } else if (val !== "" && !isValidDate(val)) {
+      //   return {
+      //     isValid: false,
+      //     message: "Please provide a valid date in the format YYYY-MM-DD.",
+      //   };
+    } else {
+      return {
+        isValid: true,
+      };
+    }
+  };
+
+  /*****************************************************************************
    * Expects a Node (field or fieldset).
    *
    * Returns an object describing the field's overall validity, as well as
@@ -261,6 +309,8 @@ const initProcessForm = function (conditionalQuestions) {
         return validatePhone(field);
       case "email":
         return validateEmail(field);
+      case "date":
+        return validateDate(field);
       default:
         throw new Error(
           `The provided field type '${field.tagName}:${field.type}' is not supported in this form.`
@@ -610,8 +660,9 @@ const initProcessForm = function (conditionalQuestions) {
     "input",
     debounce((e) => {
       const { target } = e;
-      const isMultipleSelection = target.type === "checkbox";
       const isFreeText = target.type === "text";
+      const isDateSelection = target.type === "date";
+      const isMultipleSelection = target.type === "checkbox";
       const isRadioSelection = target.type === "radio";
 
       // const response = {
@@ -700,7 +751,12 @@ const initProcessForm = function (conditionalQuestions) {
             processFormSubmission(progressForm);
           }
 
-          if (!isLastTab && !isMultipleSelection && !isFreeText) {
+          if (
+            !isLastTab &&
+            !isMultipleSelection &&
+            !isFreeText &&
+            !isDateSelection
+          ) {
             console.log("check 2");
             const nextTabIndex = getNextTabIndex(visibleTabs, currentStep);
             console.log("currentTabIndex", nextTabIndex);
@@ -1158,4 +1214,6 @@ const initProcessForm = function (conditionalQuestions) {
     e.preventDefault();
     processFormSubmission(e.currentTarget);
   });
+
+  console.log("Extension updated with: v159");
 };

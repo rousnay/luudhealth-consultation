@@ -543,10 +543,81 @@ ready(function () {
           }
 
           tipForm.appendChild(section);
-        } else if (question?.question_type === "text") {
-          console.log("API has Text field");
-        } else if (question?.question_type === "textarea") {
-          console.log("API has Textarea field");
+        } else if (question?.question_type === "date") {
+          //create element and add inner html to that element
+          let divDate = document.createElement("div");
+          let fieldset = document.createElement("fieldset");
+          fieldset.classList.add("mt-3", "form__field", "field_wrapper");
+          fieldset.setAttribute("data-question-type", "date");
+          divDate.classList.add("date");
+          let legend = document.createElement("legend");
+          legend.innerHTML = `${question?.question_text}`;
+
+          let q_description = document.createElement("div");
+          q_description.classList.add("question-description");
+          q_description.innerHTML = `${question?.question_description}`;
+
+          //create element
+          let label = document.createElement("label");
+          let span = document.createElement("span");
+          let input = document.createElement("input");
+
+          //setting attributes to the elements
+          span.innerHTML = `${question?.helper_text}`;
+          label.classList.add("form__choice-wrapper");
+          input.setAttribute("data-input-type", "date");
+          input.setAttribute("type", "date");
+          input.setAttribute("name", `${question?.question_id}`);
+          input.setAttribute("placeholder", `${question?.helper_text}`);
+          // input.setAttribute("value", `${option}`);
+          //append child elements to the parents
+          label.appendChild(input);
+          label.appendChild(span);
+          divDate.appendChild(label);
+
+          fieldset.appendChild(legend);
+          fieldset.appendChild(q_description);
+          fieldset.appendChild(divDate);
+          // fieldset.appendChild(label);
+
+          section.appendChild(fieldset);
+
+          if (i === 0) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+            <button class="next-button" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          } else if (i === questions.length - 1) {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+                <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple" data-action="prev">
+                  Back
+                </button>
+                <button class="button button-progress" type="submit">
+                  Submit
+                </button>
+              </div>`
+            );
+          } else {
+            section.insertAdjacentHTML(
+              "beforeend",
+              `<div class="button-wrapper d-flex flex-column-reverse sm:flex-row align-items-center justify-center sm:justify-end mt-4 sm:mt-5">
+              <button type="button" class="button tip-back-button mt-1 sm:mt-0 button--simple button-prev" data-action="prev">
+                Back
+              </button>
+              <button class="button button-next button-progress" type="button" data-action="next">
+              Continue
+            </button>
+          </div>`
+            );
+          }
+
+          tipForm.appendChild(section);
         } else {
           console.log("Unknown field exist!");
         }
