@@ -93,10 +93,12 @@ const initProcessForm = function (conditionalQuestions) {
 
   const validateText = (field) => {
     const val = field.value.trim();
+    let isRequired = true; //making field.required as true for all text field
 
-    if (val === "" && field.required) {
+    if (val === "" && isRequired) {
       return {
         isValid: false,
+        message: "Please answer this required question.",
       };
     } else {
       return {
@@ -268,10 +270,12 @@ const initProcessForm = function (conditionalQuestions) {
   const validateDate = (field) => {
     const val = field.value.trim();
 
-    if (val === "" && field.required) {
+    let isRequired = true; //making field.required as true for all date field
+
+    if (val === "" && isRequired) {
       return {
         isValid: false,
-        message: "This field is required.",
+        message: "Please provide a date.",
       };
       // } else if (val !== "" && !isValidDate(val)) {
       //   return {
@@ -1215,5 +1219,5 @@ const initProcessForm = function (conditionalQuestions) {
     processFormSubmission(e.currentTarget);
   });
 
-  console.log("Extension updated with: v160");
+  console.log("Extension updated with: v162");
 };
