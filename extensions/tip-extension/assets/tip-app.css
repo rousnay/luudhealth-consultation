@@ -896,6 +896,12 @@ fieldset .form__choice-wrapper {
 .tip-app-content label,legend{
   font-weight: normal;
 }
+
+.tip-app-content-medical h3.personal-info-title {
+    color: #4d2c1e;
+    text-align: center;
+}
+
 .tip-app-content-medical label {
   font-weight: 600;
   padding: 12px 0;
