@@ -97,17 +97,23 @@ ready(function () {
 
   const validateSelect = (field) => {
     const val = field.value.trim();
+    const isDateField = ["day", "month", "year"].includes(field.name);
 
-    if (val === "" && field.required) {
-      return {
-        isValid: false,
-        message: "Please select an option from the dropdown menu.",
-      };
-    } else {
-      return {
-        isValid: true,
-      };
+    if (val === "") {
+      if (field.required && !isDateField) {
+        return {
+          isValid: false,
+          message: "Please select an option from the dropdown menu.",
+        };
+      } else if (isDateField) {
+        return {
+          isValid: false,
+          message: "Please select a valid date.",
+        };
+      }
     }
+
+    return { isValid: true };
   };
 
   /*****************************************************************************
@@ -723,60 +729,36 @@ ready(function () {
 
     validateStep(currentStep)
       .then(() => {
-        // Indicate that the submission is working
-        disableSubmit();
-
         // Prepare the data
         const formData = new FormData(form);
         const formTime = new Date().toJSON();
-        const medicalFormObj = Object.fromEntries(formData);
 
-        // Format the data entries
-        // formFields = [];
-        // for (const [name, value] of formData) {
-        //   formFields.push({
-        //     name: name,
-        //     value: value,
-        //   });
-        // }
+        // Extract only the required fields
+        let medicalFormObj = {
+          phone: formData.get("phone"),
+          dob: formData.get("dob"), // Initial dob (before confirmation)
+          gender: formData.get("gender"),
+        };
 
-        // Get the user's IP address (for fun)
-        // Build the final data structure, including the IP
-        // POST the data and handle success or error
-        // getIP()
-        //   .then((response) => {
-        //     return {
-        //       fields: formFields,
-        //       meta: {
-        //         submittedAt: formTime,
-        //         ipAddress: response.ip,
-        //       },
-        //     };
-        //   })
-        //   .then((data) => postData(API, data))
+        console.log("Form Data Before Confirmation:", medicalFormObj);
 
-        getUUID()
-          .then((uuid) => {
-            return {
-              submission_uuid: uuid,
-              treatment_type: current_treatment_type,
-              condition_id: parseInt(current_condition_id),
-              treatment_id: parseInt(current_treatment_id),
-              submitted_at: formTime,
-              medical: medicalFormObj,
-            };
-          })
-          .then((data) => postData(API, data))
-          .then((response) => {
-            setTimeout(() => {
-              handleSuccess(response);
-            }, 3000); // An artificial delay to show the state of the submit button
-          })
-          .catch((error) => {
-            setTimeout(() => {
-              handleError(error);
-            }, 3000); // An artificial delay to show the state of the submit button
-          });
+        // Convert `yyyy-mm-dd` to `dd/mm/yyyy` format for display
+        let [year, month, day] = medicalFormObj.dob.split("-");
+        let displayDob = `${day}/${month}/${year}`;
+
+        // Show the confirmation popup with selected DOB
+        document.getElementById(
+          "dob-display"
+        ).innerText = `You selected: ${displayDob}`;
+        document.getElementById("confirmation-popup").style.display = "flex";
+
+        // Store form reference to submit later
+        window.pendingFormSubmission = {
+          form: form,
+          api: API,
+          formTime: formTime,
+          medicalFormObj: medicalFormObj, // Store for modification
+        };
       })
       .catch((invalidFields) => {
         // Show errors for any invalid fields
@@ -787,5 +769,56 @@ ready(function () {
         // Focus the first found invalid field for the user
         invalidFields[0].focus();
       });
+  });
+
+  // Confirm button: Update `medicalFormObj.dob` and submit
+  document.getElementById("confirm-btn").addEventListener("click", function () {
+    document.getElementById("confirmation-popup").style.display = "none"; // Hide popup
+
+    if (window.pendingFormSubmission) {
+      let { form, api, formTime, medicalFormObj } =
+        window.pendingFormSubmission;
+
+      // Update the dob with confirmed value
+      medicalFormObj.dob = document.getElementById("dob").value;
+
+      console.log("Confirmed DOB:", medicalFormObj.dob);
+      console.log("Updated Form Data Before Submission:", medicalFormObj);
+
+      // Indicate that the submission is working
+      disableSubmit();
+
+      getUUID()
+        .then((uuid) => {
+          return {
+            submission_uuid: uuid,
+            treatment_type: current_treatment_type,
+            condition_id: parseInt(current_condition_id),
+            treatment_id: parseInt(current_treatment_id),
+            submitted_at: formTime,
+            medical: medicalFormObj, // Now has the updated DOB
+          };
+        })
+        .then((data) => postData(api, data))
+        .then((response) => {
+          setTimeout(() => {
+            handleSuccess(response);
+          }, 3000); // An artificial delay to show the state of the submit button
+        })
+        .catch((error) => {
+          setTimeout(() => {
+            handleError(error);
+          }, 3000); // An artificial delay to show the state of the submit button
+        });
+
+      // Clear pending submission object
+      window.pendingFormSubmission = null;
+    }
+  });
+
+  // Modify button: Close popup without submitting
+  document.getElementById("modify-btn").addEventListener("click", function () {
+    document.getElementById("confirmation-popup").style.display = "none"; // Close popup
+    window.pendingFormSubmission = null; // Clear stored form submission
   });
 });
