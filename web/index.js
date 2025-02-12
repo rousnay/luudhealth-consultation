@@ -468,7 +468,7 @@ app.get("/api/tip/orders/:number", async (req, res) => {
       "notification_consultation"
     );
 
-    const OrderDataCollection = DB.collection("data_order");
+    const orderDataCollection = DB.collection("data_order");
     const submittedOrderCollection = DB.collection("submitted_order");
     const notificationOrderCollection = DB.collection("notification_order");
 
@@ -538,18 +538,20 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     })
     .toArray();
 
-    if (consultancyDataDoc) {
-      orderDetails.consultation_data.consultancy = consultancyDataDoc;
-    }
-
     // Fetch the matching document from data_condition collection
     const conditionDataDoc = await conditionDataCollection.find({
       submission_uuid: consultationUuidRegExp,
     })
     .toArray();
 
-    if (conditionDataDoc) {
-      orderDetails.consultation_data.condition = conditionDataDoc;
+    // Merge consultancyDataDoc and conditionDataDoc into a single array
+    const mergedConsultationData = [
+      ...consultancyDataDoc,
+      ...conditionDataDoc,
+    ];
+
+    if (consultancyDataDoc || conditionDataDoc) {
+      orderDetails.consultation_data.consultancy_data = mergedConsultationData;
     }
 
     // Fetch the matching document from submitted_order collection
@@ -571,12 +573,12 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     }
 
     // Fetch the matching document from data_order collection
-    const OrderDataDoc = await OrderDataCollection.findOne({
+    const orderDataDoc = await orderDataCollection.findOne({
       submission_uuid: orderUuidPrefix,
     });
 
-    if (OrderDataDoc) {
-      orderDetails.order_data.order = OrderDataDoc;
+    if (orderDataDoc) {
+      orderDetails.order_data.order_info = orderDataDoc;
     }
 
     // Send the order with status and identity_verification_status as the response

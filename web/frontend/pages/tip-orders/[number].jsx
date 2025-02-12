@@ -138,6 +138,28 @@ export default function OrderDetails() {
           </Card>
         </Layout.Section>
 
+
+        {!order.consultation_data.submitted && order.consultation_data.consultancy_data?.length > 0 ? (
+          order.consultation_data.consultancy_data.map((item, index) => (
+            <Layout.Section>
+              <Card fontWeight="bold" title={`Raw Data: Consultation: ${index + 1}`}>
+                <Card.Section>
+                  <Text variant="bodyMd" fontWeight="bold">
+                    Stored in database as:
+                  </Text>
+                  <pre>
+                    {JSON.stringify(
+                      order.consultation_data.consultancy_data[index],
+                      null,
+                      2
+                    )}
+                  </pre>
+                </Card.Section>
+              </Card>
+            </Layout.Section>
+          ))
+        ) : null}
+
         {order.consultation_data.submitted.map((item, index) => (
           <Layout.Section key={index}>
             <Card fontWeight="bold" title={`Consultation Data: ${index + 1}`}>
