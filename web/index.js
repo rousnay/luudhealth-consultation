@@ -453,12 +453,22 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     const notificationIdentityCollection = DB.collection(
       "notification_identity"
     );
+
+    const consultancyDataCollection = DB.collection(
+      "data_consultancy"
+    );
+    const conditionDataCollection = DB.collection(
+      "data_condition"
+    );
+
     const submittedConsultationCollection = DB.collection(
       "submitted_consultation"
     );
     const notificationConsultationCollection = DB.collection(
       "notification_consultation"
     );
+
+    const OrderDataCollection = DB.collection("data_order");
     const submittedOrderCollection = DB.collection("submitted_order");
     const notificationOrderCollection = DB.collection("notification_order");
 
@@ -522,6 +532,26 @@ app.get("/api/tip/orders/:number", async (req, res) => {
       orderDetails.consultation_data.notification = notificationConsultationDoc;
     }
 
+    // Fetch the matching document from data_consultancy collection
+    const consultancyDataDoc = await consultancyDataCollection.findOne({
+      submission_uuid: consultationUuidRegExp,
+    })
+    .toArray();
+
+    if (consultancyDataDoc) {
+      orderDetails.consultation_data.consultancy = consultancyDataDoc;
+    }
+
+    // Fetch the matching document from data_condition collection
+    const conditionDataDoc = await conditionDataCollection.findOne({
+      submission_uuid: consultationUuidRegExp,
+    })
+    .toArray();
+
+    if (conditionDataDoc) {
+      orderDetails.consultation_data.condition = conditionDataDoc;
+    }
+
     // Fetch the matching document from submitted_order collection
     const submittedOrderDoc = await submittedOrderCollection.findOne({
       order_uuid: orderUuidPrefix,
@@ -538,6 +568,16 @@ app.get("/api/tip/orders/:number", async (req, res) => {
 
     if (notificationOrderDoc) {
       orderDetails.order_data.notification = notificationOrderDoc;
+    }
+
+    // Fetch the matching document from data_order collection
+    const OrderDataDoc = await OrderDataCollection.findOne({
+      submission_uuid: orderUuidPrefix,
+    })
+    .toArray();
+
+    if (OrderDataDoc) {
+      orderDetails.order_data.order = OrderDataDoc;
     }
 
     // Send the order with status and identity_verification_status as the response
