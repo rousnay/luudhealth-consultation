@@ -139,7 +139,7 @@ export default function OrderDetails() {
         </Layout.Section>
 
 
-        {!order.consultation_data.submitted && order.consultation_data.consultancy_data?.length > 0 ? (
+        {!order.consultation_data.submitted || order.consultation_data.submitted.length === 0 ? (
           order.consultation_data.consultancy_data.map((item, index) => (
             <Layout.Section>
               <Card fontWeight="bold" title={`Raw Data: Consultation: ${index + 1}`}>
