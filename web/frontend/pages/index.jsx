@@ -143,11 +143,11 @@ export default function HomePage() {
             <Card title="Identity Data">
               <Card.Section>
                 <Text variant="bodyMd" fontWeight="bold">Submitted:</Text>
-                <pre>{JSON.stringify(order.identity_data.submitted, null, 2)}</pre>
+                <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.identity_data.submitted, null, 2)}</pre>
               </Card.Section>
               <Card.Section>
                 <Text variant="bodyMd" fontWeight="bold">Notification:</Text>
-                <pre>{JSON.stringify(order.identity_data.notification, null, 2)}</pre>
+                <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.identity_data.notification, null, 2)}</pre>
               </Card.Section>
             </Card>
 
@@ -155,30 +155,42 @@ export default function HomePage() {
               <Card key={index} title={`Consultation Data: ${index + 1}`}>
                 <Card.Section>
                   <Text variant="bodyMd" fontWeight="bold">Submitted:</Text>
-                  <pre>{JSON.stringify(order.consultation_data.submitted[index], null, 2)}</pre>
+                  <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.consultation_data.submitted[index], null, 2)}</pre>
                 </Card.Section>
                 <Card.Section>
                   <Text variant="bodyMd" fontWeight="bold">Notification:</Text>
-                  <pre>{JSON.stringify(order.consultation_data.notification[index], null, 2)}</pre>
+                  <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.consultation_data.notification[index], null, 2)}</pre>
                 </Card.Section>
               </Card>
             ))}
 
+            {/* Raw Consultation Data when no submitted data exists */}
+            {!order.consultation_data.submitted || order.consultation_data.submitted.length === 0 ? (
+              order.consultation_data.consultancy_data.map((item, index) => (
+                <Card key={index} title={`Raw Consultancy Data ${index + 1}`}>
+                  <Card.Section>
+                    <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.consultation_data.consultancy_data[index], null, 2)}</pre>
+                  </Card.Section>
+                </Card>
+              ))
+            ) : null}
+
+            {/* Order Data Section */}
             {order.order_data.submitted != null ? (
               <Card title="Order Data">
                 <Card.Section>
                   <Text variant="bodyMd" fontWeight="bold">Submitted:</Text>
-                  <pre>{JSON.stringify(order.order_data.submitted, null, 2)}</pre>
+                  <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.order_data.submitted, null, 2)}</pre>
                 </Card.Section>
                 <Card.Section>
                   <Text variant="bodyMd" fontWeight="bold">Notification:</Text>
-                  <pre>{JSON.stringify(order.order_data.notification, null, 2)}</pre>
+                  <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.order_data.notification, null, 2)}</pre>
                 </Card.Section>
               </Card>
             ) : (
-              <Card title="The raw order data stored in the database">
+              <Card title="Raw Order Data">
                 <Card.Section>
-                  <pre>{order.order_data.order_info ? JSON.stringify(order.order_data.order_info, null, 2) : "No order data available"}</pre>
+                  <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{order.order_data.order_info ? JSON.stringify(order.order_data.order_info, null, 2) : "No order data available"}</pre>
                 </Card.Section>
               </Card>
             )}
