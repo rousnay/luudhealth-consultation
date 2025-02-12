@@ -123,7 +123,7 @@ export default function OrderDetails() {
               <Text variant="bodyMd" fontWeight="bold">
                 Submitted:
               </Text>
-              <pre>
+              <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>
                 {JSON.stringify(order.identity_data.submitted, null, 2)}
               </pre>
             </Card.Section>
@@ -131,7 +131,7 @@ export default function OrderDetails() {
               <Text variant="bodyMd" fontWeight="bold">
                 Notification:
               </Text>
-              <pre>
+              <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>
                 {JSON.stringify(order.identity_data.notification, null, 2)}
               </pre>
             </Card.Section>
@@ -145,7 +145,7 @@ export default function OrderDetails() {
                 <Text variant="bodyMd" fontWeight="bold">
                   Submitted:
                 </Text>
-                <pre>
+                <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>
                   {JSON.stringify(
                     order.consultation_data.submitted[index],
                     null,
@@ -157,7 +157,7 @@ export default function OrderDetails() {
                 <Text variant="bodyMd" fontWeight="bold">
                   Notification:
                 </Text>
-                <pre>
+                <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>
                   {JSON.stringify(
                     order.consultation_data.notification[index],
                     null,
@@ -174,7 +174,7 @@ export default function OrderDetails() {
             <Layout.Section>
               <Card fontWeight="bold" title={`The raw data stored in the database for the consultancy no: ${index + 1}`}>
                 <Card.Section>
-                  <pre>
+                  <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>
                     {JSON.stringify(
                       order.consultation_data.consultancy_data[index],
                       null,
@@ -194,7 +194,7 @@ export default function OrderDetails() {
                 <Text variant="bodyMd" fontWeight="bold">
                   Submitted:
                 </Text>
-                <pre>{JSON.stringify(order.order_data.submitted, null, 2)}</pre>
+                <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>{JSON.stringify(order.order_data.submitted, null, 2)}</pre>
               </Card.Section>
               <Card.Section>
                 <Text variant="bodyMd" fontWeight="bold">
@@ -212,7 +212,7 @@ export default function OrderDetails() {
           <Layout.Section>
             <Card fontWeight="bold" title="The raw order data stored in the database:">
               <Card.Section>
-                <pre>
+                <pre style={{whiteSpace: "pre-wrap", wordBreak: "break-word"}}>
                   {order.order_data.order_info
                     ? JSON.stringify(order.order_data.order_info, null, 2)
                     : "No order data available"}

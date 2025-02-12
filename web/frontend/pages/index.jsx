@@ -65,7 +65,7 @@ export default function HomePage() {
               <Stack.Item fill>
                 <TextContainer spacing="loose">
                   <Heading>TIP Consultancy APP 🎉</Heading>
-                  <p>App to display dynamic form in product page based on the chosen medication.</p>
+                  <p>Retrieve and manage order details seamlessly.</p>
                 </TextContainer>
               </Stack.Item>
               <Stack.Item>
