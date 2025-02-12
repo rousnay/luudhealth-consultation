@@ -574,7 +574,7 @@ app.get("/api/tip/orders/:number", async (req, res) => {
 
     // Fetch the matching document from data_order collection
     const orderDataDoc = await orderDataCollection.findOne({
-      submission_uuid: orderUuidPrefix,
+      submission_uuid: submissionUuid,
     });
 
     if (orderDataDoc) {
