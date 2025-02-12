@@ -533,7 +533,7 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     }
 
     // Fetch the matching document from data_consultancy collection
-    const consultancyDataDoc = await consultancyDataCollection.findOne({
+    const consultancyDataDoc = await consultancyDataCollection.find({
       submission_uuid: consultationUuidRegExp,
     })
     .toArray();
@@ -543,7 +543,7 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     }
 
     // Fetch the matching document from data_condition collection
-    const conditionDataDoc = await conditionDataCollection.findOne({
+    const conditionDataDoc = await conditionDataCollection.find({
       submission_uuid: consultationUuidRegExp,
     })
     .toArray();
@@ -573,8 +573,7 @@ app.get("/api/tip/orders/:number", async (req, res) => {
     // Fetch the matching document from data_order collection
     const OrderDataDoc = await OrderDataCollection.findOne({
       submission_uuid: orderUuidPrefix,
-    })
-    .toArray();
+    });
 
     if (OrderDataDoc) {
       orderDetails.order_data.order = OrderDataDoc;
