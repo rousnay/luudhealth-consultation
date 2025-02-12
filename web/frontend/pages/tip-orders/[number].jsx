@@ -138,28 +138,6 @@ export default function OrderDetails() {
           </Card>
         </Layout.Section>
 
-
-        {!order.consultation_data.submitted || order.consultation_data.submitted.length === 0 ? (
-          order.consultation_data.consultancy_data.map((item, index) => (
-            <Layout.Section>
-              <Card fontWeight="bold" title={`Raw Data: Consultation: ${index + 1}`}>
-                <Card.Section>
-                  <Text variant="bodyMd" fontWeight="bold">
-                    Stored in database as:
-                  </Text>
-                  <pre>
-                    {JSON.stringify(
-                      order.consultation_data.consultancy_data[index],
-                      null,
-                      2
-                    )}
-                  </pre>
-                </Card.Section>
-              </Card>
-            </Layout.Section>
-          ))
-        ) : null}
-
         {order.consultation_data.submitted.map((item, index) => (
           <Layout.Section key={index}>
             <Card fontWeight="bold" title={`Consultation Data: ${index + 1}`}>
@@ -191,24 +169,59 @@ export default function OrderDetails() {
           </Layout.Section>
         ))}
 
-        <Layout.Section>
-          <Card title="Order Data">
-            <Card.Section>
-              <Text variant="bodyMd" fontWeight="bold">
-                Submitted:
-              </Text>
-              <pre>{JSON.stringify(order.order_data.submitted, null, 2)}</pre>
-            </Card.Section>
-            <Card.Section>
-              <Text variant="bodyMd" fontWeight="bold">
-                Notification:
-              </Text>
-              <pre>
-                {JSON.stringify(order.order_data.notification, null, 2)}
-              </pre>
-            </Card.Section>
-          </Card>
-        </Layout.Section>
+        {!order.consultation_data.submitted || order.consultation_data.submitted.length === 0 ? (
+          order.consultation_data.consultancy_data.map((item, index) => (
+            <Layout.Section>
+              <Card fontWeight="bold" title={`The raw data stored in the database for the consultancy no: ${index + 1}`}>
+                <Card.Section>
+                  <pre>
+                    {JSON.stringify(
+                      order.consultation_data.consultancy_data[index],
+                      null,
+                      2
+                    )}
+                  </pre>
+                </Card.Section>
+              </Card>
+            </Layout.Section>
+          ))
+        ) : null}
+
+        {order.order_data.submitted != null && (
+          <Layout.Section>
+            <Card title="Order Data">
+              <Card.Section>
+                <Text variant="bodyMd" fontWeight="bold">
+                  Submitted:
+                </Text>
+                <pre>{JSON.stringify(order.order_data.submitted, null, 2)}</pre>
+              </Card.Section>
+              <Card.Section>
+                <Text variant="bodyMd" fontWeight="bold">
+                  Notification:
+                </Text>
+                <pre>
+                  {JSON.stringify(order.order_data.notification, null, 2)}
+                </pre>
+              </Card.Section>
+            </Card>
+          </Layout.Section>
+        )}
+
+        {order.order_data.submitted == null && (
+          <Layout.Section>
+            <Card fontWeight="bold" title="The raw order data stored in the database:">
+              <Card.Section>
+                <pre>
+                  {order.order_data.order_info
+                    ? JSON.stringify(order.order_data.order_info, null, 2)
+                    : "No order data available"}
+                </pre>
+              </Card.Section>
+            </Card>
+          </Layout.Section>
+        )}
+
       </Layout>
     </Page>
   );
