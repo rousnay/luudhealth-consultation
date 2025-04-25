@@ -701,20 +701,38 @@ ready(function () {
    */
 
   async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    // console.log("postData:url", url, "data:", data);
 
-      body: JSON.stringify(data),
-    });
+    try {
+      // Force string url and include a dummy method for safety
+      const safeUrl = String(url);
+      const options = {
+        method: "POST", // important for the wrapper
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
+      // Defensive: set fetch input to something that won’t break the override
+      const response = await fetch(safeUrl, options);
+
+      // console.log("response", response);
+      // console.log("response.ok", response.ok);
+
+      const responseData = await response.json();
+      // console.log("responseData", responseData);
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error("Error in postData:", error);
+      throw error;
     }
-
-    return response.json();
   }
 
   /****************************************************************************/

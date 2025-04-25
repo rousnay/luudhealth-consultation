@@ -929,21 +929,38 @@ const initProcessForm = function (conditionalQuestions) {
    */
 
   async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+    // console.log("postData:url", url, "data:", data);
 
-      body: JSON.stringify(data),
-    });
+    try {
+      // Force string url and include a dummy method for safety
+      const safeUrl = String(url);
+      const options = {
+        method: "POST", // important for the wrapper
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
+      // Defensive: set fetch input to something that won’t break the override
+      const response = await fetch(safeUrl, options);
+
+      // console.log("response", response);
+      // console.log("response.ok", response.ok);
+
+      const responseData = await response.json();
+      // console.log("responseData", responseData);
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error("Error in postData:", error);
+      throw error;
     }
-
-    return response.json();
   }
 
   /****************************************************************************/
@@ -1080,17 +1097,17 @@ const initProcessForm = function (conditionalQuestions) {
         //   })
         //   .then((data) => postData(API, data))
 
-        // console.log(
-        //   "#____1____> hasAnotherTreatmentForm:",
-        //   hasAnotherTreatmentForm
-        // );
+        console.log(
+          "#____1____> hasAnotherTreatmentForm:",
+          hasAnotherTreatmentForm
+        );
         getUUID()
           .then((uuid) => {
             var setUUID;
-            // console.log(
-            //   "#____2____> hasAnotherTreatmentForm:",
-            //   hasAnotherTreatmentForm
-            // );
+            console.log(
+              "#____2____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
 
             if (currentAssessmentFormType === "treatment") {
               if (!!current_condition_id) {
@@ -1124,10 +1141,10 @@ const initProcessForm = function (conditionalQuestions) {
             //   );
             // }
 
-            // console.log(
-            //   "#____3____> hasAnotherTreatmentForm:",
-            //   hasAnotherTreatmentForm
-            // );
+            console.log(
+              "#____3____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
             return {
               submission_uuid: setUUID,
               treatment_type: current_treatment_type,
@@ -1142,11 +1159,13 @@ const initProcessForm = function (conditionalQuestions) {
           })
           .then((data) => postData(API, data))
           .then((response) => {
+            console.log("setNextURL hit");
+            console.log("Response:", response);
             var setNextURL;
-            // console.log(
-            //   "#____4____> hasAnotherTreatmentForm:",
-            //   hasAnotherTreatmentForm
-            // );
+            console.log(
+              "#____4____> hasAnotherTreatmentForm:",
+              hasAnotherTreatmentForm
+            );
             if (currentAssessmentFormType === "condition") {
               if (!current_treatment_id) {
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
@@ -1171,6 +1190,8 @@ const initProcessForm = function (conditionalQuestions) {
                 // );
                 setNextURL = `/pages/medical-information/?treatmentType=${current_treatment_type}&conditionId=${current_condition_id}&treatmentId=${current_treatment_id}`;
               }
+
+              console.log("setNextURL:" + setNextURL);
             }
 
             // if (currentAssessmentFormType === "condition") {
@@ -1219,5 +1240,5 @@ const initProcessForm = function (conditionalQuestions) {
     processFormSubmission(e.currentTarget);
   });
 
-  console.log("Extension updated with: v163");
+  console.log("Extension updated with: v174");
 };
